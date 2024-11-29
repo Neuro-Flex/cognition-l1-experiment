@@ -28,7 +28,6 @@ jobs:
 
     - name: Run tests
       run: pytest
-      continue-on-error: true
 
     - name: Archive test results
       if: failure()

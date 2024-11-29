@@ -3,10 +3,15 @@ import os
 import jax
 import jax.numpy as jnp
 from typing import Tuple
+import logging
 
 from core.config import ModelConfig, TrainingConfig, HardwareConfig
 from core.hardware import HardwareManager
 from models.base_model import BaseModel, create_train_state
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 def initialize_system() -> Tuple[BaseModel, HardwareConfig, ModelConfig, TrainingConfig]:
     """Initialize the AI consciousness system with CPU optimization."""
@@ -40,18 +45,19 @@ def initialize_system() -> Tuple[BaseModel, HardwareConfig, ModelConfig, Trainin
         # Test forward pass
         params = model.init(rng, test_input)
         output, pooled = model.apply(params, test_input)
-        print("Model initialization successful")
-        print(f"Output shape: {output.shape}")
-        print(f"Pooled output shape: {pooled.shape}")
+        logger.info("Model initialization successful")
+        logger.info(f"Output shape: {output.shape}")
+        logger.info(f"Pooled output shape: {pooled.shape}")
+        logger.info(f"Params: {params}")
 
         # Log hardware configuration
         hw_info = hw_manager.get_hardware_info()
-        print("\nHardware Configuration:")
+        logger.info("\nHardware Configuration:")
         for key, value in hw_info.items():
-            print(f"{key}: {value}")
+            logger.info(f"{key}: {value}")
 
     except Exception as e:
-        print(f"Error during initialization: {str(e)}")
+        logger.error(f"Error during initialization: {str(e)}")
         raise
 
     return model, hw_config, model_config, train_config
