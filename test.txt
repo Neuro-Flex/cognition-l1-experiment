@@ -1,0 +1,1318 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.3.3, pluggy-1.5.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/kasinadhsarma/experiments/cognition-l1-experiment
+configfile: pytest.ini
+testpaths: tests
+plugins: anyio-4.6.2.post1
+collecting ... collected 45 items
+
+tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_pattern_recognition FAILED [  2%]
+tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_abstraction_capability FAILED [  4%]
+tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_conscious_adaptation FAILED [  6%]
+tests/benchmarks/test_bigbench_reasoning.py::TestBigBenchReasoning::test_reasoning_capabilities FAILED [  8%]
+tests/benchmarks/test_bigbench_reasoning.py::TestBigBenchReasoning::test_meta_learning FAILED [ 11%]
+tests/benchmarks/test_bigbench_reasoning.py::TestBigBenchReasoning::test_consciousness_emergence FAILED [ 13%]
+tests/test_consciousness.py::TestConsciousnessModel::test_model_initialization PASSED [ 15%]
+tests/test_consciousness.py::TestConsciousnessModel::test_model_forward_pass FAILED [ 17%]
+tests/test_consciousness.py::TestConsciousnessModel::test_model_config PASSED [ 20%]
+tests/test_environment.py::EnvironmentTests::test_core_imports PASSED    [ 22%]
+tests/test_environment.py::EnvironmentTests::test_framework_versions PASSED [ 24%]
+tests/test_environment.py::EnvironmentTests::test_hardware_detection PASSED [ 26%]
+tests/test_environment.py::EnvironmentTests::test_memory_allocation PASSED [ 28%]
+tests/test_environment.py::EnvironmentTests::test_python_version PASSED  [ 31%]
+tests/unit/attention/test_attention.py::TestConsciousnessAttention::test_scaled_dot_product_attention PASSED [ 33%]
+tests/unit/attention/test_attention.py::TestConsciousnessAttention::test_attention_dropout PASSED [ 35%]
+tests/unit/attention/test_attention.py::TestGlobalWorkspace::test_global_workspace_broadcasting PASSED [ 37%]
+tests/unit/attention/test_attention_mechanisms.py::TestAttentionMechanisms::test_scaled_dot_product PASSED [ 40%]
+tests/unit/attention/test_attention_mechanisms.py::TestAttentionMechanisms::test_attention_mask PASSED [ 42%]
+tests/unit/attention/test_attention_mechanisms.py::TestAttentionMechanisms::test_consciousness_broadcasting PASSED [ 44%]
+tests/unit/attention/test_attention_mechanisms.py::TestAttentionMechanisms::test_global_workspace_integration PASSED [ 46%]
+tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_cross_modal_attention FAILED [ 48%]
+tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_modality_specific_processing FAILED [ 51%]
+tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_integration_stability FAILED [ 53%]
+tests/unit/integration/test_state_management.py::TestConsciousnessStateManager::test_state_updates PASSED [ 55%]
+tests/unit/integration/test_state_management.py::TestConsciousnessStateManager::test_rl_optimization PASSED [ 57%]
+tests/unit/integration/test_state_management.py::TestConsciousnessStateManager::test_adaptive_gating FAILED [ 60%]
+tests/unit/integration/test_state_management.py::TestConsciousnessStateManager::test_state_consistency PASSED [ 62%]
+tests/unit/memory/test_integration.py::TestInformationIntegration::test_phi_metric_computation FAILED [ 64%]
+tests/unit/memory/test_integration.py::TestInformationIntegration::test_information_flow PASSED [ 66%]
+tests/unit/memory/test_integration.py::TestInformationIntegration::test_entropy_calculations FAILED [ 68%]
+tests/unit/memory/test_memory.py::TestGRUCell::test_gru_state_updates FAILED [ 71%]
+tests/unit/memory/test_memory.py::TestGRUCell::test_gru_reset_gate PASSED [ 73%]
+tests/unit/memory/test_memory.py::TestWorkingMemory::test_sequence_processing FAILED [ 75%]
+tests/unit/memory/test_memory.py::TestWorkingMemory::test_memory_retention FAILED [ 77%]
+tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_gru_state_updates FAILED [ 80%]
+tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_memory_sequence_processing FAILED [ 82%]
+tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_context_aware_gating FAILED [ 84%]
+tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_information_integration FAILED [ 86%]
+tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_memory_retention FAILED [ 88%]
+tests/unit/state/test_consciousness_state_management.py::TestStateManagement::test_state_updates PASSED [ 91%]
+tests/unit/state/test_consciousness_state_management.py::TestStateManagement::test_rl_optimization PASSED [ 93%]
+tests/unit/state/test_consciousness_state_management.py::TestStateManagement::test_energy_efficiency PASSED [ 95%]
+tests/unit/state/test_consciousness_state_management.py::TestStateManagement::test_state_value_estimation PASSED [ 97%]
+tests/unit/state/test_consciousness_state_management.py::TestStateManagement::test_adaptive_gating PASSED [100%]
+
+=================================== FAILURES ===================================
+__________________ TestARCReasoning.test_pattern_recognition ___________________
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x7ecc61c9b0a0>
+key = Array([0, 0], dtype=uint32)
+consciousness_model = ConsciousnessModel(
+    # attributes
+    hidden_dim = 512
+    num_heads = 8
+    num_layers = 6
+    num_states = 4
+    dropout_rate = 0.1
+)
+
+    def test_pattern_recognition(self, key, consciousness_model):
+        # Load sample ARC task
+        inputs, expected = self.load_arc_sample()
+    
+        # Initialize model
+>       variables = consciousness_model.init(key, inputs)
+
+tests/benchmarks/test_arc_reasoning.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/consciousness_model.py:96: in __call__
+    memory_output, memory_state = self.working_memory(
+models/memory.py:107: in __call__
+    final_state, outputs = jax.lax.scan(
+models/memory.py:99: in scan_fn
+    h_new = gru(x, h)
+models/memory.py:32: in __call__
+    update_dense = nn.Dense(
+../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
+    dataclass_init(self, *args, **kwargs)
+<string>:14: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+base_level = 0
+
+    def check_trace_level(base_level):
+      level = trace_level(current_trace())
+      if level != base_level:
+>       raise errors.JaxTransformError()
+E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+
+../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+------------------------------ Captured log setup ------------------------------
+WARNING  jax._src.xla_bridge:xla_bridge.py:948 An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+_________________ TestARCReasoning.test_abstraction_capability _________________
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x7ecc61c9af20>
+key = Array([0, 0], dtype=uint32)
+consciousness_model = ConsciousnessModel(
+    # attributes
+    hidden_dim = 512
+    num_heads = 8
+    num_layers = 6
+    num_states = 4
+    dropout_rate = 0.1
+)
+
+    def test_abstraction_capability(self, key, consciousness_model):
+        # Test ability to abstract patterns across different representations
+        inputs, _ = self.load_arc_sample()
+    
+        # Create variations of the same pattern
+        variations = {
+            'original': inputs['visual'],
+            'rotated': jnp.rot90(inputs['visual'].reshape(3, 3)).reshape(1, 9, 1),
+            'scaled': inputs['visual'] * 2
+        }
+    
+>       variables = consciousness_model.init(key, {'visual': variations['original']})
+
+tests/benchmarks/test_arc_reasoning.py:96: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/consciousness_model.py:96: in __call__
+    memory_output, memory_state = self.working_memory(
+models/memory.py:107: in __call__
+    final_state, outputs = jax.lax.scan(
+models/memory.py:99: in scan_fn
+    h_new = gru(x, h)
+models/memory.py:32: in __call__
+    update_dense = nn.Dense(
+../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
+    dataclass_init(self, *args, **kwargs)
+<string>:14: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+base_level = 0
+
+    def check_trace_level(base_level):
+      level = trace_level(current_trace())
+      if level != base_level:
+>       raise errors.JaxTransformError()
+E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+
+../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+__________________ TestARCReasoning.test_conscious_adaptation __________________
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x7ecc61c9ad40>
+key = Array([0, 0], dtype=uint32)
+consciousness_model = ConsciousnessModel(
+    # attributes
+    hidden_dim = 512
+    num_heads = 8
+    num_layers = 6
+    num_states = 4
+    dropout_rate = 0.1
+)
+
+    def test_conscious_adaptation(self, key, consciousness_model):
+        inputs, _ = self.load_arc_sample()
+>       variables = consciousness_model.init(key, inputs)
+
+tests/benchmarks/test_arc_reasoning.py:129: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/consciousness_model.py:96: in __call__
+    memory_output, memory_state = self.working_memory(
+models/memory.py:107: in __call__
+    final_state, outputs = jax.lax.scan(
+models/memory.py:99: in scan_fn
+    h_new = gru(x, h)
+models/memory.py:32: in __call__
+    update_dense = nn.Dense(
+../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
+    dataclass_init(self, *args, **kwargs)
+<string>:14: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+base_level = 0
+
+    def check_trace_level(base_level):
+      level = trace_level(current_trace())
+      if level != base_level:
+>       raise errors.JaxTransformError()
+E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+
+../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+______________ TestBigBenchReasoning.test_reasoning_capabilities _______________
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x7ecc61c991e0>
+key = Array([0, 0], dtype=uint32)
+consciousness_model = ConsciousnessModel(
+    # attributes
+    hidden_dim = 512
+    num_heads = 8
+    num_layers = 6
+    num_states = 4
+    dropout_rate = 0.1
+)
+
+    def test_reasoning_capabilities(self, key, consciousness_model):
+        tasks = self.load_sample_tasks()
+>       variables = consciousness_model.init(key, {'textual': jnp.zeros((1, 1, 512))})
+
+tests/benchmarks/test_bigbench_reasoning.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/consciousness_model.py:96: in __call__
+    memory_output, memory_state = self.working_memory(
+models/memory.py:107: in __call__
+    final_state, outputs = jax.lax.scan(
+models/memory.py:99: in scan_fn
+    h_new = gru(x, h)
+models/memory.py:32: in __call__
+    update_dense = nn.Dense(
+../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
+    dataclass_init(self, *args, **kwargs)
+<string>:14: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+base_level = 0
+
+    def check_trace_level(base_level):
+      level = trace_level(current_trace())
+      if level != base_level:
+>       raise errors.JaxTransformError()
+E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+
+../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+___________________ TestBigBenchReasoning.test_meta_learning ___________________
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x7ecc61c9b4f0>
+key = Array([0, 0], dtype=uint32)
+consciousness_model = ConsciousnessModel(
+    # attributes
+    hidden_dim = 512
+    num_heads = 8
+    num_layers = 6
+    num_states = 4
+    dropout_rate = 0.1
+)
+
+    def test_meta_learning(self, key, consciousness_model):
+        """Test model's ability to adapt to new reasoning patterns."""
+        # Create sequence of related but progressively complex tasks
+        sequence = [
+            {'textual': "1, 2, 3, _", 'expected': "4"},
+            {'textual': "2, 4, 6, _", 'expected': "8"},
+            {'textual': "3, 6, 9, _", 'expected': "12"}
+        ]
+    
+>       variables = consciousness_model.init(
+            key,
+            {'textual': jnp.zeros((1, 1, 512))}
+        )
+
+tests/benchmarks/test_bigbench_reasoning.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/consciousness_model.py:96: in __call__
+    memory_output, memory_state = self.working_memory(
+models/memory.py:107: in __call__
+    final_state, outputs = jax.lax.scan(
+models/memory.py:99: in scan_fn
+    h_new = gru(x, h)
+models/memory.py:32: in __call__
+    update_dense = nn.Dense(
+../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
+    dataclass_init(self, *args, **kwargs)
+<string>:14: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+base_level = 0
+
+    def check_trace_level(base_level):
+      level = trace_level(current_trace())
+      if level != base_level:
+>       raise errors.JaxTransformError()
+E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+
+../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+______________ TestBigBenchReasoning.test_consciousness_emergence ______________
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x7ecc61c9b6d0>
+key = Array([0, 0], dtype=uint32)
+consciousness_model = ConsciousnessModel(
+    # attributes
+    hidden_dim = 512
+    num_heads = 8
+    num_layers = 6
+    num_states = 4
+    dropout_rate = 0.1
+)
+
+    def test_consciousness_emergence(self, key, consciousness_model):
+        """
+        Test for emergence of consciousness-like behaviors:
+        1. Integration of information
+        2. Adaptive processing
+        3. Self-monitoring
+        """
+        # Complex multi-step reasoning task
+        task_embedding = random.normal(key, (1, 128, 512))
+>       variables = consciousness_model.init(
+            key,
+            {'textual': task_embedding}
+        )
+
+tests/benchmarks/test_bigbench_reasoning.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/consciousness_model.py:96: in __call__
+    memory_output, memory_state = self.working_memory(
+models/memory.py:107: in __call__
+    final_state, outputs = jax.lax.scan(
+models/memory.py:99: in scan_fn
+    h_new = gru(x, h)
+models/memory.py:32: in __call__
+    update_dense = nn.Dense(
+../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
+    dataclass_init(self, *args, **kwargs)
+<string>:14: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+base_level = 0
+
+    def check_trace_level(base_level):
+      level = trace_level(current_trace())
+      if level != base_level:
+>       raise errors.JaxTransformError()
+E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+
+../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+________________ TestConsciousnessModel.test_model_forward_pass ________________
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+self = <tests.test_consciousness.TestConsciousnessModel object at 0x7ecc61c99e70>
+model = ConsciousnessModel(
+    # attributes
+    hidden_dim = 64
+    num_heads = 4
+    num_layers = 4
+    num_states = 4
+    dropout_rate = 0.1
+)
+sample_input = {'attention': Array([[[-0.02862089,  1.5240539 , -1.0556508 , ..., -0.27188757,
+         -0.88195777,  0.11891642],
+  ...        [-0.5756394 , -0.20118208, -0.08988765, ...,  0.23238769,
+          1.5470275 , -1.2839596 ]]], dtype=float32)}
+key = Array([ 0, 42], dtype=uint32), deterministic = True
+
+    def test_model_forward_pass(self, model, sample_input, key, deterministic):
+        """Test forward pass through consciousness model."""
+        # Initialize model
+>       variables = model.init(key, sample_input, deterministic=deterministic)
+
+tests/test_consciousness.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/consciousness_model.py:96: in __call__
+    memory_output, memory_state = self.working_memory(
+models/memory.py:107: in __call__
+    final_state, outputs = jax.lax.scan(
+models/memory.py:99: in scan_fn
+    h_new = gru(x, h)
+models/memory.py:32: in __call__
+    update_dense = nn.Dense(
+../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
+    dataclass_init(self, *args, **kwargs)
+<string>:14: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+base_level = 0
+
+    def check_trace_level(base_level):
+      level = trace_level(current_trace())
+      if level != base_level:
+>       raise errors.JaxTransformError()
+E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+
+../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+__________ TestCognitiveProcessIntegration.test_cross_modal_attention __________
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x7ecc61cd5960>
+key = Array([0, 0], dtype=uint32)
+integration_module = CognitiveProcessIntegration(
+    # attributes
+    hidden_dim = 64
+    num_heads = 4
+    num_layers = 3
+    dropout_rate = 0.1
+)
+
+    def test_cross_modal_attention(self, key, integration_module):
+        # Test dimensions
+        batch_size = 2
+        seq_length = 8
+        input_dim = 32
+    
+        # Create multi-modal inputs
+        inputs = {
+            'visual': random.normal(key, (batch_size, seq_length, input_dim)),
+            'textual': random.normal(
+                random.PRNGKey(1),
+                (batch_size, seq_length, input_dim)
+            ),
+            'numerical': random.normal(
+                random.PRNGKey(2),
+                (batch_size, seq_length, input_dim)
+            )
+        }
+    
+        # Initialize parameters
+>       variables = integration_module.init(key, inputs)
+
+tests/unit/integration/test_cognitive_integration.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = CognitiveProcessIntegration(
+    # attributes
+    hidden_dim = 64
+    num_heads = 4
+    num_layers = 3
+    dropout_rat...ral = None
+        out_dot_general = None
+        qkv_dot_general_cls = None
+        out_dot_general_cls = None
+    )
+)
+inputs = {'numerical': Array([[[-3.40341614e-03,  4.90928352e-01,  1.52762413e+00,
+         -1.07081391e-01, -2.98910916e-01, -...6593276,  0.17548549, -2.5559947 ,
+          0.0899727 , -1.434366  ,  0.5375884 ,  1.2183367 ]]],      dtype=float32)}
+deterministic = True
+
+    @nn.compact
+    def __call__(self, inputs: Dict[str, jnp.ndarray], deterministic: bool = True):
+        """
+        Process multiple modalities through integrated consciousness architecture.
+    
+        Args:
+            inputs: Dictionary of input tensors for different modalities
+            deterministic: If True, disable dropout
+        """
+        # Process each modality separately first
+        processed_modalities = {}
+        for modality, x in inputs.items():
+            # Modality-specific processing
+            x = nn.LayerNorm()(x)
+            x = nn.Dense(self.hidden_dim)(x)
+            x = nn.gelu(x)
+            if not deterministic:
+                x = nn.dropout(x, rate=self.dropout_rate, deterministic=deterministic)
+            processed_modalities[modality] = x
+    
+        # Cross-modal attention integration
+        integrated_features = []
+        attention_maps = {}
+    
+        for target_modality, target_features in processed_modalities.items():
+            cross_modal_contexts = []
+    
+            for source_modality, source_features in processed_modalities.items():
+                if source_modality != target_modality:
+                    # Cross-attention between modalities
+                    attention = nn.MultiHeadDotProductAttention(
+                        num_heads=self.num_heads,
+                        dropout_rate=self.dropout_rate
+                    )
+>                   attended, attention_weights = attention(
+                        queries=target_features,
+                        keys=source_features,
+                        values=source_features,
+                        deterministic=deterministic
+                    )
+E                   TypeError: MultiHeadDotProductAttention.__call__() got an unexpected keyword argument 'queries'
+
+models/consciousness_state.py:53: TypeError
+______ TestCognitiveProcessIntegration.test_modality_specific_processing _______
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x7ecc61cd5b40>
+key = Array([0, 0], dtype=uint32)
+integration_module = CognitiveProcessIntegration(
+    # attributes
+    hidden_dim = 64
+    num_heads = 4
+    num_layers = 3
+    dropout_rate = 0.1
+)
+
+    def test_modality_specific_processing(self, key, integration_module):
+        batch_size = 2
+        seq_length = 8
+        input_dim = 32
+    
+        # Test with single modality
+        single_input = {
+            'visual': random.normal(key, (batch_size, seq_length, input_dim))
+        }
+        variables = integration_module.init(key, single_input)
+    
+        consciousness_state1, _ = integration_module.apply(
+            variables,
+            single_input,
+            deterministic=True
+        )
+    
+        # Test with multiple modalities
+        multi_input = {
+            'visual': single_input['visual'],
+            'textual': random.normal(key, (batch_size, seq_length, input_dim))
+        }
+    
+>       consciousness_state2, _ = integration_module.apply(
+            variables,
+            multi_input,
+            deterministic=True
+        )
+
+tests/unit/integration/test_cognitive_integration.py:96: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/consciousness_state.py:32: in __call__
+    x = nn.LayerNorm()(x)
+../../.local/lib/python3.10/site-packages/flax/linen/normalization.py:490: in __call__
+    return _normalize(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+mdl = LayerNorm(
+    # attributes
+    epsilon = 1e-06
+    dtype = None
+    param_dtype = float32
+    use_bias = True
+    use...-1
+    axis_name = None
+    axis_index_groups = None
+    use_fast_variance = True
+    force_float32_reductions = True
+)
+x = Array([[[-2.0545669 ,  0.33981755,  0.2619878 , -0.9536857 ,
+          1.1861376 ,  1.2227523 ,  0.1118008 , -0.327318...86593276,  0.17548549, -2.5559947 ,
+          0.0899727 , -1.434366  ,  0.5375884 ,  1.2183367 ]]],      dtype=float32)
+mean = Array([[[ 0.316849  ],
+        [ 0.15681918],
+        [-0.09266028],
+        [-0.09894891],
+        [-0.3263538 ],
+   ...16475785],
+        [-0.13104448],
+        [ 0.06134801],
+        [-0.21195135],
+        [-0.32997662]]], dtype=float32)
+var = Array([[[0.85883766],
+        [0.66789114],
+        [0.95650977],
+        [1.002326  ],
+        [0.5636929 ],
+        ... [0.5845102 ],
+        [1.0722553 ],
+        [1.0433921 ],
+        [0.83152187],
+        [1.3724558 ]]], dtype=float32)
+reduction_axes = (2,), feature_axes = (2,), dtype = None
+param_dtype = <class 'jax.numpy.float32'>, epsilon = 1e-06, use_bias = True
+use_scale = True, bias_init = <function zeros at 0x7ecc628acc10>
+scale_init = <function ones at 0x7ecc628acdc0>
+
+    def _normalize(
+      mdl: Module,
+      x: Array,
+      mean: Array,
+      var: Array,
+      reduction_axes: Axes,
+      feature_axes: Axes,
+      dtype: Optional[Dtype],
+      param_dtype: Dtype,
+      epsilon: float,
+      use_bias: bool,
+      use_scale: bool,
+      bias_init: Initializer,
+      scale_init: Initializer,
+    ):
+      """Normalizes the input of a normalization layer and optionally applies a learned scale and bias.
+    
+      Arguments:
+        mdl: Module to apply the normalization in (normalization params will reside
+          in this module).
+        x: The input.
+        mean: Mean to use for normalization.
+        var: Variance to use for normalization.
+        reduction_axes: The axes in ``x`` to reduce.
+        feature_axes: Axes containing features. A separate bias and scale is learned
+          for each specified feature.
+        dtype: The dtype of the result (default: infer from input and params).
+        param_dtype: The dtype of the parameters.
+        epsilon: Normalization epsilon.
+        use_bias: If true, add a bias term to the output.
+        use_scale: If true, scale the output.
+        bias_init: Initialization function for the bias term.
+        scale_init: Initialization function for the scaling function.
+    
+      Returns:
+        The normalized input.
+      """
+      reduction_axes = _canonicalize_axes(x.ndim, reduction_axes)
+      feature_axes = _canonicalize_axes(x.ndim, feature_axes)
+      feature_shape = [1] * x.ndim
+      reduced_feature_shape = []
+      for ax in feature_axes:
+        feature_shape[ax] = x.shape[ax]
+        reduced_feature_shape.append(x.shape[ax])
+    
+      mean = jnp.expand_dims(mean, reduction_axes)
+      var = jnp.expand_dims(var, reduction_axes)
+      y = x - mean
+      mul = lax.rsqrt(var + epsilon)
+      args = [x]
+      if use_scale:
+>       scale = mdl.param(
+          'scale', scale_init, reduced_feature_shape, param_dtype
+        ).reshape(feature_shape)
+E       flax.errors.ScopeParamNotFoundError: Could not find parameter named "scale" in scope "/LayerNorm_1". (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.ScopeParamNotFoundError)
+
+../../.local/lib/python3.10/site-packages/flax/linen/normalization.py:199: ScopeParamNotFoundError
+__________ TestCognitiveProcessIntegration.test_integration_stability __________
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x7ecc61cd5d20>
+key = Array([0, 0], dtype=uint32)
+integration_module = CognitiveProcessIntegration(
+    # attributes
+    hidden_dim = 64
+    num_heads = 4
+    num_layers = 3
+    dropout_rate = 0.1
+)
+
+    def test_integration_stability(self, key, integration_module):
+        batch_size = 2
+        seq_length = 8
+        input_dim = 32
+    
+        inputs = {
+            'modality1': random.normal(key, (batch_size, seq_length, input_dim)),
+            'modality2': random.normal(key, (batch_size, seq_length, input_dim))
+        }
+    
+>       variables = integration_module.init(key, inputs)
+
+tests/unit/integration/test_cognitive_integration.py:115: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = CognitiveProcessIntegration(
+    # attributes
+    hidden_dim = 64
+    num_heads = 4
+    num_layers = 3
+    dropout_rat...ral = None
+        out_dot_general = None
+        qkv_dot_general_cls = None
+        out_dot_general_cls = None
+    )
+)
+inputs = {'modality1': Array([[[-2.0545669 ,  0.33981755,  0.2619878 , -0.9536857 ,
+          1.1861376 ,  1.2227523 ,  0.11180...6593276,  0.17548549, -2.5559947 ,
+          0.0899727 , -1.434366  ,  0.5375884 ,  1.2183367 ]]],      dtype=float32)}
+deterministic = True
+
+    @nn.compact
+    def __call__(self, inputs: Dict[str, jnp.ndarray], deterministic: bool = True):
+        """
+        Process multiple modalities through integrated consciousness architecture.
+    
+        Args:
+            inputs: Dictionary of input tensors for different modalities
+            deterministic: If True, disable dropout
+        """
+        # Process each modality separately first
+        processed_modalities = {}
+        for modality, x in inputs.items():
+            # Modality-specific processing
+            x = nn.LayerNorm()(x)
+            x = nn.Dense(self.hidden_dim)(x)
+            x = nn.gelu(x)
+            if not deterministic:
+                x = nn.dropout(x, rate=self.dropout_rate, deterministic=deterministic)
+            processed_modalities[modality] = x
+    
+        # Cross-modal attention integration
+        integrated_features = []
+        attention_maps = {}
+    
+        for target_modality, target_features in processed_modalities.items():
+            cross_modal_contexts = []
+    
+            for source_modality, source_features in processed_modalities.items():
+                if source_modality != target_modality:
+                    # Cross-attention between modalities
+                    attention = nn.MultiHeadDotProductAttention(
+                        num_heads=self.num_heads,
+                        dropout_rate=self.dropout_rate
+                    )
+>                   attended, attention_weights = attention(
+                        queries=target_features,
+                        keys=source_features,
+                        values=source_features,
+                        deterministic=deterministic
+                    )
+E                   TypeError: MultiHeadDotProductAttention.__call__() got an unexpected keyword argument 'queries'
+
+models/consciousness_state.py:53: TypeError
+______________ TestConsciousnessStateManager.test_adaptive_gating ______________
+
+self = <test_state_management.TestConsciousnessStateManager object at 0x7ecc61cd6770>
+key = Array([0, 0], dtype=uint32)
+state_manager = ConsciousnessStateManager(
+    # attributes
+    hidden_dim = 64
+    num_states = 4
+    dropout_rate = 0.1
+)
+
+    def test_adaptive_gating(self, key, state_manager):
+        batch_size = 2
+        hidden_dim = 64
+    
+        state = random.normal(key, (batch_size, hidden_dim))
+        variables = state_manager.init(key, state, state)
+    
+        # Test adaptation to different input patterns
+        # Case 1: Similar input to current state
+        similar_input = state + random.normal(key, state.shape) * 0.1
+        _, metrics1 = state_manager.apply(
+            variables,
+            state,
+            similar_input,
+            deterministic=True
+        )
+    
+        # Case 2: Very different input
+        different_input = random.normal(key, state.shape)
+        _, metrics2 = state_manager.apply(
+            variables,
+            state,
+            different_input,
+            deterministic=True
+        )
+    
+        # Memory gate should be more open (lower values) for different inputs
+        assert jnp.mean(metrics1['memory_gate']) > jnp.mean(metrics2['memory_gate'])
+    
+        # Energy cost should be higher for more different inputs
+>       assert metrics2['energy_cost'] > metrics1['energy_cost']
+E       assert Array(0.70095605, dtype=float32) > Array(0.712776, dtype=float32)
+
+tests/unit/integration/test_state_management.py:124: AssertionError
+____________ TestInformationIntegration.test_phi_metric_computation ____________
+
+self = <test_integration.TestInformationIntegration object at 0x7ecc61cd7340>
+key = Array([0, 0], dtype=uint32)
+integration_module = InformationIntegration(
+    # attributes
+    hidden_dim = 64
+    num_modules = 4
+    dropout_rate = 0.1
+)
+
+    def test_phi_metric_computation(self, key, integration_module):
+        # Test dimensions
+        batch_size = 2
+        num_modules = 4
+        input_dim = 32
+    
+        # Create sample inputs
+        inputs = random.normal(key, (batch_size, num_modules, input_dim))
+    
+        # Initialize parameters
+        variables = integration_module.init(key, inputs)
+    
+        # Process through integration
+        output, phi = integration_module.apply(
+            variables,
+            inputs,
+            deterministic=True
+        )
+    
+        # Test output shapes
+        assert output.shape == inputs.shape
+>       assert phi.shape == ()  # Phi should be a scalar
+E       assert (2,) == ()
+E         
+E         Left contains one more item: 2
+E         
+E         Full diff:
+E         - ()
+E         + (
+E         +     2,
+E         + )
+
+tests/unit/memory/test_integration.py:46: AssertionError
+_____________ TestInformationIntegration.test_entropy_calculations _____________
+
+self = <test_integration.TestInformationIntegration object at 0x7ecc61cd7700>
+key = Array([0, 0], dtype=uint32)
+integration_module = InformationIntegration(
+    # attributes
+    hidden_dim = 64
+    num_modules = 4
+    dropout_rate = 0.1
+)
+
+    def test_entropy_calculations(self, key, integration_module):
+        batch_size = 2
+        num_modules = 4
+        input_dim = 32
+    
+        # Test with different input distributions
+        # Uniform distribution
+        uniform_input = jnp.ones((batch_size, num_modules, input_dim))
+        variables = integration_module.init(key, uniform_input)
+    
+        _, phi_uniform = integration_module.apply(
+            variables,
+            uniform_input,
+            deterministic=True
+        )
+    
+        # Concentrated distribution
+        concentrated_input = jnp.zeros((batch_size, num_modules, input_dim))
+        concentrated_input = concentrated_input.at[:, :, 0].set(1.0)
+        _, phi_concentrated = integration_module.apply(
+            variables,
+            concentrated_input,
+            deterministic=True
+        )
+    
+        # Uniform distribution should have higher entropy
+>       assert phi_uniform > phi_concentrated
+
+tests/unit/memory/test_integration.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/lib/python3.10/site-packages/jax/_src/array.py:293: in __bool__
+    core.check_bool_conversion(self)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+arr = Array([False,  True], dtype=bool)
+
+    def check_bool_conversion(arr: Array):
+      if arr.size == 0:
+        raise ValueError("The truth value of an empty array is ambiguous. Use"
+                         " `array.size > 0` to check that an array is not empty.")
+      if arr.size > 1:
+>       raise ValueError("The truth value of an array with more than one element"
+                         " is ambiguous. Use a.any() or a.all()")
+E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+../../.local/lib/python3.10/site-packages/jax/_src/core.py:676: ValueError
+______________________ TestGRUCell.test_gru_state_updates ______________________
+
+self = <test_memory.TestGRUCell object at 0x7ecc61cd7e20>
+key = Array([0, 0], dtype=uint32)
+gru_cell = GRUCell(
+    # attributes
+    hidden_dim = 64
+)
+
+    def test_gru_state_updates(self, key, gru_cell):
+        # Test dimensions
+        batch_size = 2
+        input_dim = 32
+        hidden_dim = 64
+    
+        # Create sample inputs
+        x = random.normal(key, (batch_size, input_dim))
+        h = random.normal(key, (batch_size, hidden_dim))
+    
+        # Initialize parameters
+        variables = gru_cell.init(key, x, h)
+    
+        # Apply GRU cell
+        new_h = gru_cell.apply(variables, x, h)
+    
+        # Test output shape
+        assert new_h.shape == (batch_size, hidden_dim)
+    
+        # Test state update properties
+        # Values should be bounded by tanh activation
+>       assert jnp.all(jnp.abs(new_h) <= 1.0)
+E       assert Array(False, dtype=bool)
+E        +  where Array(False, dtype=bool) = <function all at 0x7ecc75b2d3f0>(Array([[0.50694835, 0.30970913, 1.0483147 , 0.2971793 , 0.5183319 ,\n        1.021511  , 0.5006172 , 0.37889504, 0.25739902, 0.31568795,\n        0.15669708, 0.46756837, 0.8578607 , 0.01353674, 0.15282202,\n        0.20107451, 0.02317349, 0.6907812 , 0.5083374 , 0.7127954 ,\n        0.2091153 , 1.2715523 , 0.27340746, 0.5439285 , 0.26729783,\n        1.1938479 , 0.37502122, 0.6294161 , 0.2658452 , 0.15656555,\n        0.1620783 , 0.5467196 , 0.9315285 , 1.230475  , 0.602612  ,\n        0.5880212 , 0.5191237 , 0.38018548, 0.8522512 , 0.26190284,\n        0.8202814 , 0.15962315, 0.5789221 , 1.2993885 , 0.13919754,\n        0.8607982 , 0.6780343 , 0.02110142, 0.364023  , 0.42226005,\n        0.09432815, 0.78590155, 0.16561498, 0.13247566, 0.00382191,\n        0.33534092, 0.53253293, 0.7144125 , 1.3679162 , 0.41429377,\n        0.19982366, 0.16172108, 0.5542995 , 0.7606949 ],\n       [0.22975205, 0.02878729, 0.5449711 , 0.02949583, 0.8692614 ,\n        0.51954466, 0.75022507, 0.85511744, 0.25026062, 0.39560795,\n        0.38004875, 0.76923615, 0.25684965, 0.49881732, 1.300483  ,\n        0.06370783, 0.311657  , 0.1720401 , 0.7398916 , 0.71885866,\n        0.45458293, 0.22340196, 1.2285545 , 1.6554561 , 0.8708465 ,\n        0.43277258, 0.18350828, 0.6020147 , 0.67679894, 0.44123328,\n        0.47411048, 0.47458655, 0.10203615, 0.08886662, 1.3405949 ,\n        0.43682826, 0.36005154, 0.51806426, 0.17735687, 0.7185146 ,\n        0.4663297 , 0.67202103, 0.7300765 , 0.94554484, 1.0347339 ,\n        0.22911246, 0.31353402, 0.9689413 , 0.04275844, 0.15500447,\n        0.09075749, 0.2950866 , 0.74030983, 0.59036887, 0.34294564,\n        0.5528107 , 0.3721168 , 0.1056773 , 0.84371805, 0.5860183 ,\n        0.00968871, 0.959426  , 0.08026018, 0.6619667 ]], dtype=float32) <= 1.0)
+E        +    where <function all at 0x7ecc75b2d3f0> = jnp.all
+E        +    and   Array([[0.50694835, 0.30970913, 1.0483147 , 0.2971793 , 0.5183319 ,\n        1.021511  , 0.5006172 , 0.37889504, 0.25739902, 0.31568795,\n        0.15669708, 0.46756837, 0.8578607 , 0.01353674, 0.15282202,\n        0.20107451, 0.02317349, 0.6907812 , 0.5083374 , 0.7127954 ,\n        0.2091153 , 1.2715523 , 0.27340746, 0.5439285 , 0.26729783,\n        1.1938479 , 0.37502122, 0.6294161 , 0.2658452 , 0.15656555,\n        0.1620783 , 0.5467196 , 0.9315285 , 1.230475  , 0.602612  ,\n        0.5880212 , 0.5191237 , 0.38018548, 0.8522512 , 0.26190284,\n        0.8202814 , 0.15962315, 0.5789221 , 1.2993885 , 0.13919754,\n        0.8607982 , 0.6780343 , 0.02110142, 0.364023  , 0.42226005,\n        0.09432815, 0.78590155, 0.16561498, 0.13247566, 0.00382191,\n        0.33534092, 0.53253293, 0.7144125 , 1.3679162 , 0.41429377,\n        0.19982366, 0.16172108, 0.5542995 , 0.7606949 ],\n       [0.22975205, 0.02878729, 0.5449711 , 0.02949583, 0.8692614 ,\n        0.51954466, 0.75022507, 0.85511744, 0.25026062, 0.39560795,\n        0.38004875, 0.76923615, 0.25684965, 0.49881732, 1.300483  ,\n        0.06370783, 0.311657  , 0.1720401 , 0.7398916 , 0.71885866,\n        0.45458293, 0.22340196, 1.2285545 , 1.6554561 , 0.8708465 ,\n        0.43277258, 0.18350828, 0.6020147 , 0.67679894, 0.44123328,\n        0.47411048, 0.47458655, 0.10203615, 0.08886662, 1.3405949 ,\n        0.43682826, 0.36005154, 0.51806426, 0.17735687, 0.7185146 ,\n        0.4663297 , 0.67202103, 0.7300765 , 0.94554484, 1.0347339 ,\n        0.22911246, 0.31353402, 0.9689413 , 0.04275844, 0.15500447,\n        0.09075749, 0.2950866 , 0.74030983, 0.59036887, 0.34294564,\n        0.5528107 , 0.3721168 , 0.1056773 , 0.84371805, 0.5860183 ,\n        0.00968871, 0.959426  , 0.08026018, 0.6619667 ]], dtype=float32) = <PjitFunction of <function abs at 0x7ecc75bf25f0>>(Array([[-0.50694835,  0.30970913, -1.0483147 , -0.2971793 ,  0.5183319 ,\n        -1.021511  , -0.5006172 ,  0.37889504, -0.25739902, -0.31568795,\n         0.15669708,  0.46756837, -0.8578607 , -0.01353674, -0.15282202,\n        -0.20107451, -0.02317349, -0.6907812 , -0.5083374 , -0.7127954 ,\n         0.2091153 , -1.2715523 , -0.27340746, -0.5439285 , -0.26729783,\n         1.1938479 , -0.37502122, -0.6294161 ,  0.2658452 ,  0.15656555,\n         0.1620783 , -0.5467196 , -0.9315285 ,  1.230475  ,  0.602612  ,\n        -0.5880212 ,  0.5191237 , -0.38018548, -0.8522512 ,  0.26190284,\n        -0.8202814 , -0.15962315, -0.5789221 ,  1.2993885 ,  0.13919754,\n         0.8607982 , -0.6780343 ,  0.02110142, -0.364023  , -0.42226005,\n         0.09432815, -0.78590155, -0.16561498, -0.13247566, -0.00382191,\n         0.33534092,  0.53253293,  0.7144125 ,  1.3679162 , -0.41429377,\n        -0.19982366, -0.16172108,  0.5542995 , -0.7606949 ],\n       [ 0.22975205, -0.02878729,  0.5449711 , -0.02949583,  0.8692614 ,\n        -0.51954466,  0.75022507, -0.85511744,  0.25026062, -0.39560795,\n         0.38004875, -0.76923615,  0.25684965,  0.49881732,  1.300483  ,\n        -0.06370783,  0.311657  , -0.1720401 ,  0.7398916 , -0.71885866,\n        -0.45458293, -0.22340196,  1.2285545 ,  1.6554561 , -0.8708465 ,\n         0.43277258,  0.18350828,  0.6020147 , -0.67679894,  0.44123328,\n         0.47411048, -0.47458655, -0.10203615,  0.08886662, -1.3405949 ,\n        -0.43682826,  0.36005154,  0.51806426,  0.17735687,  0.7185146 ,\n         0.4663297 , -0.67202103,  0.7300765 , -0.94554484, -1.0347339 ,\n        -0.22911246,  0.31353402, -0.9689413 , -0.04275844, -0.15500447,\n         0.09075749, -0.2950866 , -0.74030983, -0.59036887, -0.34294564,\n        -0.5528107 ,  0.3721168 ,  0.1056773 , -0.84371805,  0.5860183 ,\n         0.00968871, -0.959426  ,  0.08026018, -0.6619667 ]],      dtype=float32))
+E        +      where <PjitFunction of <function abs at 0x7ecc75bf25f0>> = jnp.abs
+
+tests/unit/memory/test_memory.py:42: AssertionError
+__________________ TestWorkingMemory.test_sequence_processing __________________
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+self = <test_memory.TestWorkingMemory object at 0x7ecc61cfc370>
+key = Array([0, 0], dtype=uint32)
+memory_module = WorkingMemory(
+    # attributes
+    hidden_dim = 64
+    dropout_rate = 0.1
+)
+
+    def test_sequence_processing(self, key, memory_module):
+        batch_size = 2
+        seq_length = 8
+        input_dim = 32
+        hidden_dim = 64
+    
+        # Create sample sequence
+        inputs = random.normal(key, (batch_size, seq_length, input_dim))
+    
+        # Initialize parameters
+>       variables = memory_module.init(key, inputs)
+
+tests/unit/memory/test_memory.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/memory.py:107: in __call__
+    final_state, outputs = jax.lax.scan(
+models/memory.py:99: in scan_fn
+    h_new = gru(x, h)
+models/memory.py:32: in __call__
+    update_dense = nn.Dense(
+../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
+    dataclass_init(self, *args, **kwargs)
+<string>:14: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+base_level = 0
+
+    def check_trace_level(base_level):
+      level = trace_level(current_trace())
+      if level != base_level:
+>       raise errors.JaxTransformError()
+E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+
+../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+___________________ TestWorkingMemory.test_memory_retention ____________________
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+self = <test_memory.TestWorkingMemory object at 0x7ecc61cfc550>
+key = Array([0, 0], dtype=uint32)
+memory_module = WorkingMemory(
+    # attributes
+    hidden_dim = 64
+    dropout_rate = 0.1
+)
+
+    def test_memory_retention(self, key, memory_module):
+        batch_size = 2
+        seq_length = 8
+        input_dim = 32
+    
+        inputs = random.normal(key, (batch_size, seq_length, input_dim))
+>       variables = memory_module.init(key, inputs)
+
+tests/unit/memory/test_memory.py:130: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/memory.py:107: in __call__
+    final_state, outputs = jax.lax.scan(
+models/memory.py:99: in scan_fn
+    h_new = gru(x, h)
+models/memory.py:32: in __call__
+    update_dense = nn.Dense(
+../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
+    dataclass_init(self, *args, **kwargs)
+<string>:14: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+base_level = 0
+
+    def check_trace_level(base_level):
+      level = trace_level(current_trace())
+      if level != base_level:
+>       raise errors.JaxTransformError()
+E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+
+../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+_________________ TestMemoryComponents.test_gru_state_updates __________________
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+self = <test_memory_components.TestMemoryComponents object at 0x7ecc61cfd240>
+working_memory = WorkingMemory(
+    # attributes
+    hidden_dim = 64
+    dropout_rate = 0.1
+)
+key = Array([ 0, 42], dtype=uint32), batch_size = 2, seq_length = 8
+hidden_dim = 64
+
+    def test_gru_state_updates(self, working_memory, key, batch_size, seq_length, hidden_dim):
+        """Test GRU cell state updates."""
+        inputs = self.create_inputs(key, batch_size, seq_length, hidden_dim)
+        initial_state = jnp.zeros((batch_size, hidden_dim))
+    
+        # Initialize and run forward pass
+>       variables = working_memory.init(
+            key, inputs, initial_state=initial_state, deterministic=True
+        )
+
+tests/unit/memory/test_memory_components.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/memory.py:107: in __call__
+    final_state, outputs = jax.lax.scan(
+models/memory.py:99: in scan_fn
+    h_new = gru(x, h)
+models/memory.py:32: in __call__
+    update_dense = nn.Dense(
+../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
+    dataclass_init(self, *args, **kwargs)
+<string>:14: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+base_level = 0
+
+    def check_trace_level(base_level):
+      level = trace_level(current_trace())
+      if level != base_level:
+>       raise errors.JaxTransformError()
+E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+
+../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+_____________ TestMemoryComponents.test_memory_sequence_processing _____________
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+self = <test_memory_components.TestMemoryComponents object at 0x7ecc61cfd450>
+working_memory = WorkingMemory(
+    # attributes
+    hidden_dim = 64
+    dropout_rate = 0.1
+)
+key = Array([ 0, 42], dtype=uint32), batch_size = 2, seq_length = 8
+hidden_dim = 64
+
+    def test_memory_sequence_processing(self, working_memory, key, batch_size, seq_length, hidden_dim):
+        """Test working memory sequence processing."""
+        # Test with different sequence lengths
+        for test_length in [4, 8, 16]:
+            inputs = self.create_inputs(key, batch_size, test_length, hidden_dim)
+            initial_state = jnp.zeros((batch_size, hidden_dim))
+    
+>           variables = working_memory.init(
+                key, inputs, initial_state=initial_state, deterministic=True
+            )
+
+tests/unit/memory/test_memory_components.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/memory.py:107: in __call__
+    final_state, outputs = jax.lax.scan(
+models/memory.py:99: in scan_fn
+    h_new = gru(x, h)
+models/memory.py:32: in __call__
+    update_dense = nn.Dense(
+../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
+    dataclass_init(self, *args, **kwargs)
+<string>:14: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+base_level = 0
+
+    def check_trace_level(base_level):
+      level = trace_level(current_trace())
+      if level != base_level:
+>       raise errors.JaxTransformError()
+E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+
+../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+________________ TestMemoryComponents.test_context_aware_gating ________________
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+self = <test_memory_components.TestMemoryComponents object at 0x7ecc61cfd660>
+working_memory = WorkingMemory(
+    # attributes
+    hidden_dim = 64
+    dropout_rate = 0.1
+)
+key = Array([ 0, 42], dtype=uint32), batch_size = 2, seq_length = 8
+hidden_dim = 64
+
+    def test_context_aware_gating(self, working_memory, key, batch_size, seq_length, hidden_dim):
+        """Test context-aware gating mechanisms."""
+        # Create two different input sequences with controlled differences
+        base_inputs = self.create_inputs(key, batch_size, seq_length, hidden_dim)
+    
+        # Create similar and different inputs
+        similar_inputs = base_inputs + jax.random.normal(key, base_inputs.shape) * 0.1
+        different_inputs = jax.random.normal(
+            jax.random.fold_in(key, 1),
+            base_inputs.shape
+        )
+    
+        initial_state = jnp.zeros((batch_size, hidden_dim))
+>       variables = working_memory.init(
+            key, base_inputs, initial_state=initial_state, deterministic=True
+        )
+
+tests/unit/memory/test_memory_components.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/memory.py:107: in __call__
+    final_state, outputs = jax.lax.scan(
+models/memory.py:99: in scan_fn
+    h_new = gru(x, h)
+models/memory.py:32: in __call__
+    update_dense = nn.Dense(
+../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
+    dataclass_init(self, *args, **kwargs)
+<string>:14: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+base_level = 0
+
+    def check_trace_level(base_level):
+      level = trace_level(current_trace())
+      if level != base_level:
+>       raise errors.JaxTransformError()
+E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+
+../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+______________ TestMemoryComponents.test_information_integration _______________
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+self = <test_memory_components.TestMemoryComponents object at 0x7ecc61cfd870>
+info_integration = InformationIntegration(
+    # attributes
+    hidden_dim = 64
+    num_modules = 4
+    dropout_rate = 0.1
+)
+key = Array([ 0, 42], dtype=uint32), batch_size = 2, seq_length = 8
+hidden_dim = 64
+
+    def test_information_integration(self, info_integration, key, batch_size, seq_length, hidden_dim):
+        """Test information integration computation."""
+        # Create inputs with proper shape for information integration
+        inputs = jnp.stack([
+            self.create_inputs(jax.random.fold_in(key, i), batch_size, seq_length, hidden_dim)
+            for i in range(info_integration.num_modules)
+        ], axis=1)  # Shape: [batch, num_modules, seq_length, hidden_dim]
+    
+        # Initialize and run forward pass
+>       variables = info_integration.init(key, inputs, deterministic=True)
+
+tests/unit/memory/test_memory_components.py:109: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/memory.py:173: in __call__
+    phi = avg_module_entropy - system_entropy  # Shape: [batch_size]
+../../.local/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:573: in deferring_binary_op
+    return binary_op(*args)
+../../.local/lib/python3.10/site-packages/jax/_src/numpy/ufunc_api.py:177: in __call__
+    return call(*args)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = Traced<ShapedArray(float32[2,4])>with<DynamicJaxprTrace(level=1/0)>
+y = Traced<ShapedArray(float32[2,8])>with<DynamicJaxprTrace(level=1/0)>
+
+    @partial(jit, inline=True)
+    def _subtract(x: ArrayLike, y: ArrayLike, /) -> Array:
+      """Subtract two arrays element-wise.
+    
+      JAX implementation of :obj:`numpy.subtract`. This is a universal function,
+      and supports the additional APIs described at :class:`jax.numpy.ufunc`.
+      This function provides the implementation of the ``-`` operator for
+      JAX arrays.
+    
+      Args:
+        x, y: arrays to subtract. Must be broadcastable to a common shape.
+    
+      Returns:
+        Array containing the result of the element-wise subtraction.
+    
+      Examples:
+        Calling ``subtract`` explicitly:
+    
+        >>> x = jnp.arange(4)
+        >>> jnp.subtract(x, 10)
+        Array([-10,  -9,  -8,  -7], dtype=int32)
+    
+        Calling ``subtract`` via the ``-`` operator:
+    
+        >>> x - 10
+        Array([-10,  -9,  -8,  -7], dtype=int32)
+      """
+>     return lax.sub(*promote_args("subtract", x, y))
+E     TypeError: sub got incompatible shapes for broadcasting: (2, 4), (2, 8).
+
+../../.local/lib/python3.10/site-packages/jax/_src/numpy/ufuncs.py:1463: TypeError
+__________________ TestMemoryComponents.test_memory_retention __________________
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+self = <test_memory_components.TestMemoryComponents object at 0x7ecc61cfda80>
+working_memory = WorkingMemory(
+    # attributes
+    hidden_dim = 64
+    dropout_rate = 0.1
+)
+key = Array([ 0, 42], dtype=uint32), batch_size = 2, seq_length = 8
+hidden_dim = 64
+
+    def test_memory_retention(self, working_memory, key, batch_size, seq_length, hidden_dim):
+        """Test memory retention over sequences."""
+        # Create a sequence with a distinctive pattern
+        pattern = jnp.ones((batch_size, 1, hidden_dim))
+        inputs = jnp.concatenate([
+            pattern,
+            self.create_inputs(key, batch_size, seq_length-2, hidden_dim),
+            pattern
+        ], axis=1)
+    
+        initial_state = jnp.zeros((batch_size, hidden_dim))
+    
+>       variables = working_memory.init(
+            key, inputs, initial_state=initial_state, deterministic=True
+        )
+
+tests/unit/memory/test_memory_components.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/memory.py:107: in __call__
+    final_state, outputs = jax.lax.scan(
+models/memory.py:99: in scan_fn
+    h_new = gru(x, h)
+models/memory.py:32: in __call__
+    update_dense = nn.Dense(
+../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
+    dataclass_init(self, *args, **kwargs)
+<string>:14: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+base_level = 0
+
+    def check_trace_level(base_level):
+      level = trace_level(current_trace())
+      if level != base_level:
+>       raise errors.JaxTransformError()
+E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+
+../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+=========================== short test summary info ============================
+FAILED tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_pattern_recognition
+FAILED tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_abstraction_capability
+FAILED tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_conscious_adaptation
+FAILED tests/benchmarks/test_bigbench_reasoning.py::TestBigBenchReasoning::test_reasoning_capabilities
+FAILED tests/benchmarks/test_bigbench_reasoning.py::TestBigBenchReasoning::test_meta_learning
+FAILED tests/benchmarks/test_bigbench_reasoning.py::TestBigBenchReasoning::test_consciousness_emergence
+FAILED tests/test_consciousness.py::TestConsciousnessModel::test_model_forward_pass
+FAILED tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_cross_modal_attention
+FAILED tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_modality_specific_processing
+FAILED tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_integration_stability
+FAILED tests/unit/integration/test_state_management.py::TestConsciousnessStateManager::test_adaptive_gating
+FAILED tests/unit/memory/test_integration.py::TestInformationIntegration::test_phi_metric_computation
+FAILED tests/unit/memory/test_integration.py::TestInformationIntegration::test_entropy_calculations
+FAILED tests/unit/memory/test_memory.py::TestGRUCell::test_gru_state_updates
+FAILED tests/unit/memory/test_memory.py::TestWorkingMemory::test_sequence_processing
+FAILED tests/unit/memory/test_memory.py::TestWorkingMemory::test_memory_retention
+FAILED tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_gru_state_updates
+FAILED tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_memory_sequence_processing
+FAILED tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_context_aware_gating
+FAILED tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_information_integration
+FAILED tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_memory_retention
+======================== 21 failed, 24 passed in 12.96s ========================

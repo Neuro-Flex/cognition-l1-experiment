@@ -1,4 +1,4 @@
-name: CI
+name: cognition-l1-experiment
 
 on:
   push:
