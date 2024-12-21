@@ -43,6 +43,7 @@ class CognitiveProcessIntegration(nn.Module):
                     for modality_input in inputs.values():
                         attended = attention(modality_input, modality_input, mask=mask, deterministic=deterministic)
                     cross_modal_contexts.append(attended)
+                    attention_maps[f"{target_modality}-{source_modality}"] = attended
 
             # Ensure tensor shapes match before combining
             if cross_modal_contexts:

@@ -72,6 +72,14 @@ class TestARCReasoning:
             assert 'attention_weights' in metrics
             assert metrics['attention_weights'].ndim >= 3  # (batch, heads, seq)
 
+            # Validate attention maps
+            assert 'attention_maps' in metrics
+            for attn_map in metrics['attention_maps'].values():
+                assert jnp.allclose(
+                    jnp.sum(attn_map, axis=-1),
+                    jnp.ones((batch_size, 8, 64))  # (batch, heads, seq_length)
+                )
+
         except Exception as e:
             pytest.fail(f"Pattern recognition test failed: {str(e)}")
 
@@ -160,6 +168,20 @@ class TestARCReasoning:
             assert complex_metrics['phi'] > simple_metrics['phi']
             assert 'attention_weights' in simple_metrics
             assert 'attention_weights' in complex_metrics
+
+            # Validate attention maps
+            assert 'attention_maps' in simple_metrics
+            assert 'attention_maps' in complex_metrics
+            for attn_map in simple_metrics['attention_maps'].values():
+                assert jnp.allclose(
+                    jnp.sum(attn_map, axis=-1),
+                    jnp.ones((batch_size, 8, 64))  # (batch, heads, seq_length)
+                )
+            for attn_map in complex_metrics['attention_maps'].values():
+                assert jnp.allclose(
+                    jnp.sum(attn_map, axis=-1),
+                    jnp.ones((batch_size, 8, 64))  # (batch, heads, seq_length)
+                )
 
         except Exception as e:
             pytest.fail(f"Conscious adaptation test failed: {str(e)}")
