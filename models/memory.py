@@ -73,6 +73,7 @@ class WorkingMemory(nn.Module):
         self.dropout = nn.Dropout(rate=self.dropout_rate)
         self.gru = GRUCell(hidden_dim=self.hidden_dim)
 
+    @nn.compact
     def __call__(self, inputs, initial_state=None, mask=None, deterministic=True):
         """
         Process sequence through working memory.
