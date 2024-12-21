@@ -145,7 +145,7 @@ class TestCognitiveProcessIntegration:
             for state in states_dropout[1:]
         )
 
-    def test_cognitive_integration(self):
+    def test_cognitive_integration(self, key, integration_module):
         # Test dimensions
         batch_size = 2
         seq_length = 8

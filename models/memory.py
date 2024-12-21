@@ -73,6 +73,7 @@ class WorkingMemory(nn.Module):
         self.dropout = nn.Dropout(rate=self.dropout_rate)
         self.gru = GRUCell(hidden_dim=self.hidden_dim)
 
+    @nn.compact
     def __call__(self, inputs, initial_state=None, mask=None, deterministic=True):
         """
         Process sequence through working memory.
@@ -91,18 +92,22 @@ class WorkingMemory(nn.Module):
         rnn_cell = nn.LSTMCell(features=self.hidden_dim)
 
         # Process sequence using pure function for JAX compatibility
-        def scan_fn(h, x):
-            h_new, y = rnn_cell(h, x)
-            return h_new, y
+        def scan_fn(carry, x):
+            h, y = carry
+            h_new, y_new = rnn_cell(h, x)
+            return (h_new, y_new), y_new
 
         # Ensure inputs and state are float32
         inputs = jnp.asarray(inputs, dtype=jnp.float32)
         initial_state = jnp.asarray(initial_state, dtype=jnp.float32)
 
+        # Initialize carry correctly
+        initial_carry = (initial_state, jnp.zeros((batch_size, self.hidden_dim)))
+
         # Use scan with explicit axis for sequence processing
-        final_state, outputs = jax.lax.scan(
+        (final_state, _), outputs = jax.lax.scan(
             scan_fn,
-            init=initial_state,
+            init=initial_carry,
             xs=inputs.swapaxes(0, 1)
         )
         outputs = outputs.swapaxes(0, 1)

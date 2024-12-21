@@ -5,7 +5,7 @@ import pytest
 import jax
 import jax.numpy as jnp
 from tests.unit.test_base import ConsciousnessTestBase
-from models.memory import WorkingMemory, InformationIntegration
+from models.memory import WorkingMemory, InformationIntegration, GRUCell
 
 class TestMemoryComponents(ConsciousnessTestBase):
     """Test suite for memory components."""
@@ -43,25 +43,25 @@ class TestMemoryComponents(ConsciousnessTestBase):
             dropout_rate=0.1
         )
 
-    def test_gru_state_updates(self, working_memory, key, batch_size, seq_length, hidden_dim):
+    @pytest.fixture
+    def gru_cell(self, hidden_dim):
+        """Create GRU cell for testing."""
+        return GRUCell(hidden_dim=hidden_dim)
+
+    def test_gru_state_updates(self, gru_cell, key, batch_size, hidden_dim):
         """Test GRU cell state updates."""
-        inputs = self.create_inputs(key, batch_size, seq_length, hidden_dim)
-        initial_state = jnp.zeros((batch_size, hidden_dim))
+        x = jax.random.normal(key, (batch_size, hidden_dim))
+        h = jax.random.normal(key, (batch_size, hidden_dim))
 
         # Initialize and run forward pass
-        variables = working_memory.init(
-            key, inputs, initial_state=initial_state, deterministic=True
-        )
-        output, final_state = working_memory.apply(
-            variables, inputs, initial_state=initial_state, deterministic=True
-        )
+        variables = gru_cell.init(key, x, h)
+        new_h = gru_cell.apply(variables, x, h)
 
         # Verify shapes
-        self.assert_output_shape(output, (batch_size, seq_length, hidden_dim))
-        self.assert_output_shape(final_state, (batch_size, hidden_dim))
+        self.assert_output_shape(new_h, (batch_size, hidden_dim))
 
         # State should be updated (different from initial state)
-        assert not jnp.allclose(final_state, initial_state, rtol=1e-5)
+        assert not jnp.allclose(new_h, h, rtol=1e-5)
 
     def test_memory_sequence_processing(self, working_memory, key, batch_size, seq_length, hidden_dim):
         """Test working memory sequence processing."""

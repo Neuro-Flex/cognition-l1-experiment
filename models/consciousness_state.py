@@ -22,7 +22,7 @@ class CognitiveProcessIntegration(nn.Module):
             x = nn.Dense(self.hidden_dim)(x)
             x = nn.gelu(x)
             if not deterministic:
-                x = nn.dropout(x, rate=self.dropout_rate, deterministic=deterministic)
+                x = nn.Dropout(rate=self.dropout_rate, deterministic=deterministic)(x)
             processed_modalities[modality] = x
 
         # Cross-modal attention integration
@@ -43,6 +43,7 @@ class CognitiveProcessIntegration(nn.Module):
                     for modality_input in inputs.values():
                         attended = attention(modality_input, modality_input, mask=mask, deterministic=deterministic)
                     cross_modal_contexts.append(attended)
+                    attention_maps[f"{target_modality}-{source_modality}"] = attended
 
             # Ensure tensor shapes match before combining
             if cross_modal_contexts:
@@ -84,7 +85,7 @@ class ConsciousnessStateManager(nn.Module):
         candidate_state = nn.Dense(self.hidden_dim)(inputs)
         candidate_state = nn.gelu(candidate_state)
         if not deterministic:
-            candidate_state = nn.dropout(candidate_state, rate=self.dropout_rate, deterministic=deterministic)
+            candidate_state = nn.Dropout(rate=self.dropout_rate, deterministic=deterministic)(candidate_state)
 
         # State update with smooth gating
         new_state = memory_gate * state + (1 - memory_gate) * candidate_state

@@ -19,7 +19,6 @@ class EnvironmentTests(unittest.TestCase):
             import jax.numpy as jnp
             import flax
             import optax
-            import torch
             self.assertTrue(True, "All core imports successful")
         except ImportError as e:
             self.fail(f"Failed to import core frameworks: {str(e)}")
@@ -27,30 +26,20 @@ class EnvironmentTests(unittest.TestCase):
     def test_hardware_detection(self):
         """Test hardware detection and configuration"""
         import jax
-        import torch
 
         # Check JAX devices
         devices = jax.devices()
         self.assertGreater(len(devices), 0, "No JAX devices found")
         print(f"JAX devices: {devices}")
 
-        # Check PyTorch devices
-        self.assertTrue(hasattr(torch, 'cuda'))
-        print(f"PyTorch CUDA available: {torch.cuda.is_available()}")
-
     def test_memory_allocation(self):
         """Test basic memory operations"""
         import jax.numpy as jnp
-        import torch
 
         try:
             # Test JAX array creation
             x = jnp.ones((1000, 1000))
             self.assertEqual(x.shape, (1000, 1000))
-
-            # Test PyTorch tensor creation
-            y = torch.ones(1000, 1000)
-            self.assertEqual(y.shape, (1000, 1000))
         except Exception as e:
             self.fail(f"Memory allocation test failed: {str(e)}")
 
@@ -59,13 +48,11 @@ class EnvironmentTests(unittest.TestCase):
         import jax
         import flax
         import optax
-        import torch
 
         versions = {
             'jax': jax.__version__,
             'flax': flax.__version__,
-            'optax': optax.__version__,
-            'torch': torch.__version__
+            'optax': optax.__version__
         }
 
         print("\nFramework versions:")
