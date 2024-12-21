@@ -45,7 +45,7 @@ class TestConsciousnessModel(ConsciousnessTestBase):
     def test_model_forward_pass(self, model, sample_input, key, deterministic):
         """Test forward pass through consciousness model."""
         # Initialize model
-        input_shape = (sample_input['attention'].shape[0],)
+        input_shape = (model.hidden_dim,)
         variables = model.init(key, sample_input, deterministic=deterministic)
 
         # Run forward pass
@@ -85,14 +85,14 @@ class TestConsciousnessModel(ConsciousnessTestBase):
 
     def test_model_state_initialization(self, model, sample_input, key, deterministic):
         """Test initialization of the model state."""
-        input_shape = (sample_input['attention'].shape[0],)
+        input_shape = (model.hidden_dim,)
         variables = model.init(key, sample_input, deterministic=deterministic)
         assert 'params' in variables
         assert 'batch_stats' in variables
 
     def test_model_state_update(self, model, sample_input, key, deterministic):
         """Test updating the model state."""
-        input_shape = (sample_input['attention'].shape[0],)
+        input_shape = (model.hidden_dim,)
         variables = model.init(key, sample_input, deterministic=deterministic)
         new_state, metrics = model.apply(
             variables,
@@ -104,7 +104,7 @@ class TestConsciousnessModel(ConsciousnessTestBase):
 
     def test_model_attention_weights(self, model, sample_input, key, deterministic):
         """Test attention weights in the model."""
-        input_shape = (sample_input['attention'].shape[0],)
+        input_shape = (model.hidden_dim,)
         variables = model.init(key, sample_input, deterministic=deterministic)
         _, metrics = model.apply(
             variables,

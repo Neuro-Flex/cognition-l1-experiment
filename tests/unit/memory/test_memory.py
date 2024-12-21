@@ -92,7 +92,7 @@ class TestWorkingMemory:
         inputs = random.normal(key, (batch_size, seq_length, input_dim))
         
         # Initialize parameters
-        input_shape = (batch_size,)
+        input_shape = (hidden_dim,)
         variables = memory_module.init(key, inputs, deterministic=True)
         
         # Process sequence

@@ -51,7 +51,7 @@ class TestARCReasoning:
         }
 
         # Ensure input_shape is a tuple
-        input_shape = (batch_size,)
+        input_shape = (consciousness_model.hidden_dim,)
         # Initialize model
         variables = consciousness_model.init(key, model_inputs)
 
@@ -98,7 +98,7 @@ class TestARCReasoning:
 
         try:
             # Ensure input_shape is a tuple
-            input_shape = (batch_size,)
+            input_shape = (consciousness_model.hidden_dim,)
             variables = consciousness_model.init(
                 key, 
                 {'visual': variations['original'], 
@@ -154,7 +154,7 @@ class TestARCReasoning:
             }
 
             # Ensure input_shape is a tuple
-            input_shape = (batch_size,)
+            input_shape = (consciousness_model.hidden_dim,)
             variables = consciousness_model.init(key, simple_input)
 
             # Process both patterns
