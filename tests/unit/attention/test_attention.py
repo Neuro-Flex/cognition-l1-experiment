@@ -122,7 +122,7 @@ class TestConsciousnessAttention:
         # Outputs should be identical with dropout disabled
         assert jnp.allclose(output3, output4)
 
-    def test_attention_output_shape(self):
+    def test_attention_output_shape(self, key, attention_module):
         batch_size = 2
         seq_length = 8
         input_dim = 128
