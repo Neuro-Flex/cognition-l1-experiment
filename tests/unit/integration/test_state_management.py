@@ -32,6 +32,7 @@ class TestConsciousnessStateManager:
         inputs = random.normal(key, (batch_size, hidden_dim))
 
         # Initialize parameters
+        input_shape = (hidden_dim,)
         variables = state_manager.init(key, state, inputs)
 
         # Process state update
@@ -98,7 +99,7 @@ class TestConsciousnessStateManager:
         hidden_dim = 64
 
         state = random.normal(key, (batch_size, hidden_dim))
-        input_shape = (batch_size,)
+        input_shape = (hidden_dim,)
         variables = state_manager.init(key, state, state)
 
         # Test adaptation to different input patterns

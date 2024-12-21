@@ -32,7 +32,7 @@ class TestInformationIntegration:
         inputs = random.normal(key, (batch_size, num_modules, input_dim))
 
         # Initialize parameters
-        input_shape = (batch_size,)
+        input_shape = (integration_module.hidden_dim,)
         variables = integration_module.init(key, inputs)
 
         # Process through integration
@@ -78,7 +78,7 @@ class TestInformationIntegration:
         input_dim = 32
 
         inputs = jnp.zeros((2, 4, 64), dtype=jnp.float32)  # ensure shape matches the model
-        input_shape = (batch_size,)
+        input_shape = (integration_module.hidden_dim,)
         variables = integration_module.init(key, inputs)
 
         # Test with and without dropout
@@ -149,7 +149,7 @@ class TestInformationIntegration:
         input_dim = 32
 
         inputs = random.normal(key, (batch_size, num_modules, input_dim))
-        input_shape = (batch_size,)
+        input_shape = (integration_module.hidden_dim,)
         variables = integration_module.init(key, inputs)
 
         # Process through integration
