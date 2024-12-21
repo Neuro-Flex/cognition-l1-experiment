@@ -82,5 +82,35 @@ class TestConsciousnessModel(ConsciousnessTestBase):
             'hidden_dim', 'num_heads', 'num_layers', 'num_states', 'dropout_rate'
         ])
 
+    def test_model_state_initialization(self, model, sample_input, key, deterministic):
+        """Test initialization of the model state."""
+        variables = model.init(key, sample_input, deterministic=deterministic)
+        assert 'params' in variables
+        assert 'batch_stats' in variables
+
+    def test_model_state_update(self, model, sample_input, key, deterministic):
+        """Test updating the model state."""
+        variables = model.init(key, sample_input, deterministic=deterministic)
+        new_state, metrics = model.apply(
+            variables,
+            sample_input,
+            deterministic=deterministic
+        )
+        assert new_state is not None
+        assert 'memory_state' in metrics
+
+    def test_model_attention_weights(self, model, sample_input, key, deterministic):
+        """Test attention weights in the model."""
+        variables = model.init(key, sample_input, deterministic=deterministic)
+        _, metrics = model.apply(
+            variables,
+            sample_input,
+            deterministic=deterministic
+        )
+        attention_weights = metrics['attention_weights']
+        assert attention_weights.ndim == 4  # (batch, heads, seq, seq)
+        assert jnp.all(attention_weights >= 0)
+        assert jnp.allclose(jnp.sum(attention_weights, axis=-1), 1.0)
+
 if __name__ == '__main__':
     pytest.main([__file__])

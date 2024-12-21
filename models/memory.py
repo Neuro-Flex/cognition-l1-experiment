@@ -92,7 +92,8 @@ class WorkingMemory(nn.Module):
         rnn_cell = nn.LSTMCell(features=self.hidden_dim)
 
         # Process sequence using pure function for JAX compatibility
-        def scan_fn(h, x):
+        def scan_fn(carry, x):
+            h, _ = carry
             h_new, y = rnn_cell(h, x)
             return (h_new, y), y
 
