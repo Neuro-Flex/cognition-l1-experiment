@@ -94,16 +94,16 @@ class WorkingMemory(nn.Module):
         # Process sequence using pure function for JAX compatibility
         def scan_fn(h, x):
             h_new, y = rnn_cell(h, x)
-            return h_new, y
+            return (h_new, y), y
 
         # Ensure inputs and state are float32
         inputs = jnp.asarray(inputs, dtype=jnp.float32)
         initial_state = jnp.asarray(initial_state, dtype=jnp.float32)
 
         # Use scan with explicit axis for sequence processing
-        final_state, outputs = jax.lax.scan(
+        (final_state, _), outputs = jax.lax.scan(
             scan_fn,
-            init=initial_state,
+            init=(initial_state, None),
             xs=inputs.swapaxes(0, 1)
         )
         outputs = outputs.swapaxes(0, 1)
