@@ -144,3 +144,40 @@ class TestCognitiveProcessIntegration:
             jnp.allclose(states_dropout[0], state)
             for state in states_dropout[1:]
         )
+
+    def test_cognitive_integration(self):
+        # Test dimensions
+        batch_size = 2
+        seq_length = 8
+        input_dim = 32
+
+        # Create multi-modal inputs
+        inputs = {
+            'visual': random.normal(random.PRNGKey(0), (batch_size, seq_length, input_dim)),
+            'textual': random.normal(random.PRNGKey(1), (batch_size, seq_length, input_dim)),
+            'numerical': random.normal(random.PRNGKey(2), (batch_size, seq_length, input_dim))
+        }
+
+        # Initialize parameters
+        variables = integration_module.init(random.PRNGKey(0), inputs)
+
+        # Process through integration
+        consciousness_state, attention_maps = integration_module.apply(
+            variables,
+            inputs,
+            deterministic=True
+        )
+
+        # Adjust assertions as needed
+        assert consciousness_state.shape == (batch_size, seq_length, 64)
+        for source in inputs.keys():
+            for target in inputs.keys():
+                if source != target:
+                    map_key = f"{target}-{source}"
+                    assert map_key in attention_maps
+                    attention_map = attention_maps[map_key]
+                    assert attention_map.shape[-2:] == (seq_length, seq_length)
+                    assert jnp.allclose(
+                        jnp.sum(attention_map, axis=-1),
+                        jnp.ones((batch_size, 4, seq_length))
+                    )

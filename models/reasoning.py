@@ -1,4 +1,3 @@
-"""Reasoning components for AI consciousness implementation."""
 import jax
 import jax.numpy as jnp
 import flax.linen as nn
@@ -34,6 +33,8 @@ class ReasoningModule(nn.Module):
         # Process context if provided
         if context is not None:
             context_features = self.context_processor(context)
+            # Ensure context_features matches the shape of hidden_states
+            context_features = jnp.expand_dims(context_features, axis=1)
             hidden_states = hidden_states + context_features
 
         # Apply reasoning transformations
@@ -87,3 +88,23 @@ class MathematicalReasoning(ReasoningModule):
     ) -> jnp.ndarray:
         """Process symbolic mathematical expressions."""
         return self.symbolic_processor(symbolic_input)
+
+    def __call__(
+        self,
+        input_ids: jnp.ndarray,
+        symbolic_input: Optional[jnp.ndarray] = None,
+        attention_mask: Optional[jnp.ndarray] = None,
+        deterministic: bool = True
+    ) -> Tuple[jnp.ndarray, jnp.ndarray]:
+        # Process symbolic input if provided
+        context = None
+        if symbolic_input is not None:
+            processed_symbolic = self.process_symbolic(symbolic_input)
+            context = processed_symbolic
+
+        return super().__call__(
+            input_ids,
+            attention_mask=attention_mask,
+            context=context,
+            deterministic=deterministic
+        )

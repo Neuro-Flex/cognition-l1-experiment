@@ -39,6 +39,7 @@ class TestConsciousnessStateManager:
             variables,
             state,
             inputs,
+            threshold=0.5,
             deterministic=True
         )
 
@@ -73,6 +74,7 @@ class TestConsciousnessStateManager:
             variables,
             state,
             inputs,
+            threshold=0.5,
             deterministic=True
         )
 
@@ -105,6 +107,7 @@ class TestConsciousnessStateManager:
             variables,
             state,
             similar_input,
+            threshold=0.5,
             deterministic=True
         )
 
@@ -114,6 +117,7 @@ class TestConsciousnessStateManager:
             variables,
             state,
             different_input,
+            threshold=0.5,
             deterministic=True
         )
 
@@ -141,6 +145,7 @@ class TestConsciousnessStateManager:
                 variables,
                 current_state,
                 inputs,
+                threshold=0.5,
                 deterministic=True
             )
             states.append(new_state)

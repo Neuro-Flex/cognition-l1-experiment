@@ -11,6 +11,22 @@ class TestMemoryComponents(ConsciousnessTestBase):
     """Test suite for memory components."""
 
     @pytest.fixture
+    def key(self):
+        return jax.random.PRNGKey(0)
+
+    @pytest.fixture
+    def batch_size(self):
+        return 2
+
+    @pytest.fixture
+    def seq_length(self):
+        return 8
+
+    @pytest.fixture
+    def hidden_dim(self):
+        return 64
+
+    @pytest.fixture
     def working_memory(self, hidden_dim):
         """Create working memory module for testing."""
         return WorkingMemory(

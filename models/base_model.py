@@ -1,5 +1,3 @@
-"""Base model architecture for AI consciousness implementation."""
-from typing import Any, Dict, Optional
 import jax
 import jax.numpy as jnp
 import flax.linen as nn
@@ -28,21 +26,24 @@ class BaseAttention(nn.Module):
         v = self.value(x)
 
         # Reshape for multi-head attention
-        q = q.reshape(batch_size, -1, self.num_heads, self.hidden_size // self.num_heads)
-        k = k.reshape(batch_size, -1, self.num_heads, self.hidden_size // self.num_heads)
-        v = v.reshape(batch_size, -1, self.num_heads, self.hidden_size // self.num_heads)
+        head_dim = self.hidden_size // self.num_heads
+        q = q.reshape(batch_size, -1, self.num_heads, head_dim)
+        k = k.reshape(batch_size, -1, self.num_heads, head_dim)
+        v = v.reshape(batch_size, -1, self.num_heads, head_dim)
 
         # Compute attention scores
         scores = jnp.einsum('bqhd,bkhd->bhqk', q, k)
-        scores = scores / jnp.sqrt(self.hidden_size // self.num_heads)
+        scores = scores / jnp.sqrt(head_dim)
 
         if mask is not None:
+            # Ensure mask is broadcastable
+            mask = jnp.expand_dims(mask, axis=(-3, -2))
             scores = scores + mask * -1e9
 
         weights = jax.nn.softmax(scores, axis=-1)
 
         if not deterministic:
-            weights = nn.Dropout(rate=self.dropout_rate)(weights, deterministic=False)
+            weights = nn.Dropout(rate=self.dropout_rate, deterministic=deterministic)(weights)
 
         # Compute weighted sum
         output = jnp.einsum('bhqk,bkhd->bqhd', weights, v)
@@ -63,7 +64,8 @@ class BaseModel(nn.Module):
         self.encoder_layers = [
             BaseAttention(
                 hidden_size=self.config.hidden_size,
-                num_heads=self.config.num_attention_heads
+                num_heads=self.config.num_attention_heads,
+                dropout_rate=self.config.dropout_rate
             )
             for _ in range(self.config.num_hidden_layers)
         ]
@@ -71,7 +73,13 @@ class BaseModel(nn.Module):
         self.pooler = nn.Dense(self.config.hidden_size)
 
     def __call__(self, input_ids, attention_mask=None, deterministic=True):
+        assert input_ids.ndim == 2, "input_ids must be of shape (batch_size, seq_len)"
+        assert input_ids.dtype == jnp.int32, "input_ids must be integers"
+
         x = self.embeddings(input_ids)
+
+        if attention_mask is not None:
+            assert attention_mask.shape == input_ids.shape, "attention_mask shape must match input_ids"
 
         for layer in self.encoder_layers:
             x = layer(x, mask=attention_mask, deterministic=deterministic)
@@ -82,10 +90,10 @@ class BaseModel(nn.Module):
 def create_train_state(
     model: BaseModel,
     config: TrainingConfig,
-    rng: Any
+    rng: jax.random.PRNGKey
 ) -> train_state.TrainState:
     """Creates initial training state with CPU-optimized settings."""
-    params = model.init(rng, jnp.ones((1, config.max_sequence_length)))
+    params = model.init(rng, jnp.ones((1, config.max_sequence_length), dtype=jnp.int32))
 
     # CPU-optimized learning rate schedule
     schedule_fn = optax.warmup_cosine_decay_schedule(

@@ -1,6 +1,3 @@
-"""
-Implementation of working memory and information integration components.
-"""
 import jax
 import jax.numpy as jnp
 import flax.linen as nn
@@ -29,42 +26,39 @@ class GRUCell(nn.Module):
         inputs = jnp.concatenate([x, h], axis=-1)
 
         # Create update gate
-        update_dense = nn.Dense(
+        z = nn.Dense(
             features=self.hidden_dim,
             use_bias=True,
             kernel_init=nn.initializers.glorot_uniform(),
             bias_init=nn.initializers.zeros,
             name='update'
-        )
-        z = update_dense(inputs)
+        )(inputs)
         z = nn.sigmoid(z)
 
         # Create reset gate
-        reset_dense = nn.Dense(
+        r = nn.Dense(
             features=self.hidden_dim,
             use_bias=True,
             kernel_init=nn.initializers.glorot_uniform(),
             bias_init=nn.initializers.zeros,
             name='reset'
-        )
-        r = reset_dense(inputs)
+        )(inputs)
         r = nn.sigmoid(r)
 
         # Create candidate activation
         h_reset = r * h
         h_concat = jnp.concatenate([x, h_reset], axis=-1)
-        candidate_dense = nn.Dense(
+        h_tilde = nn.Dense(
             features=self.hidden_dim,
             use_bias=True,
             kernel_init=nn.initializers.glorot_uniform(),
             bias_init=nn.initializers.zeros,
             name='candidate'
-        )
-        h_tilde = candidate_dense(h_concat)
+        )(h_concat)
         h_tilde = jnp.tanh(h_tilde)
 
         # Final update
-        h_new = (1.0 - z) * h + z * h_tilde
+        h_new = jnp.clip((1.0 - z) * h + z * h_tilde, -1.0, 1.0)
 
         return h_new
 
@@ -75,7 +69,10 @@ class WorkingMemory(nn.Module):
     hidden_dim: int
     dropout_rate: float = 0.1
 
-    @nn.compact
+    def setup(self):
+        self.dropout = nn.Dropout(rate=self.dropout_rate)
+        self.gru = GRUCell(hidden_dim=self.hidden_dim)
+
     def __call__(self, inputs, initial_state=None, mask=None, deterministic=True):
         """
         Process sequence through working memory.
@@ -90,14 +87,13 @@ class WorkingMemory(nn.Module):
         if initial_state is None:
             initial_state = jnp.zeros((batch_size, self.hidden_dim))
 
-        # GRU cell for memory processing
-        gru = GRUCell(hidden_dim=self.hidden_dim)
+        # Define RNN cell outside scan_fn
+        rnn_cell = nn.LSTMCell(features=self.hidden_dim)
 
         # Process sequence using pure function for JAX compatibility
         def scan_fn(h, x):
-            """Pure function for JAX scan."""
-            h_new = gru(x, h)
-            return h_new, h_new
+            h_new, y = rnn_cell(h, x)
+            return h_new, y
 
         # Ensure inputs and state are float32
         inputs = jnp.asarray(inputs, dtype=jnp.float32)
@@ -113,7 +109,7 @@ class WorkingMemory(nn.Module):
 
         # Apply dropout using Flax's deterministic dropout
         if not deterministic:
-            outputs = nn.Dropout(rate=self.dropout_rate, deterministic=deterministic)(outputs)
+            outputs = self.dropout(outputs, deterministic=deterministic)
 
         return outputs, final_state
 
@@ -125,7 +121,12 @@ class InformationIntegration(nn.Module):
     num_modules: int
     dropout_rate: float = 0.1
 
-    @nn.compact
+    def setup(self):
+        self.layer_norm = nn.LayerNorm()
+        self.dense1 = nn.Dense(self.hidden_dim)
+        self.dense2 = nn.Dense(self.hidden_dim)
+        self.dropout = nn.Dropout(rate=self.dropout_rate)
+
     def __call__(self, inputs, deterministic=True):
         """
         Integrate information across modules using IIT principles.
@@ -135,41 +136,40 @@ class InformationIntegration(nn.Module):
             deterministic: If True, disable dropout
         """
         # Layer normalization for stability
-        x = nn.LayerNorm()(inputs)
+        x = self.layer_norm(inputs)
 
         # Dense network with GELU activation and residual connection
-        y = nn.Dense(self.hidden_dim)(x)
+        y = self.dense1(x)
         y = nn.gelu(y)
 
-        # Use Flax's Dropout module instead of functional dropout
-        dropout = nn.Dropout(rate=self.dropout_rate, deterministic=deterministic)
+        # Apply dropout
         if not deterministic:
-            y = dropout(y)
+            y = self.dropout(y)
 
-        y = nn.Dense(inputs.shape[-1])(y)
+        y = self.dense2(y)
         if not deterministic:
-            y = dropout(y)
+            y = self.dropout(y)
 
         # Residual connection
         output = y + x
 
         # Compute information integration metric (Φ)
         def compute_entropy(p):
-            # Avoid log(0) by adding small epsilon
+            # Ensure proper broadcasting for entropy calculation
             eps = 1e-12
             p = jnp.clip(p, eps, 1.0 - eps)
-            return -jnp.sum(p * jnp.log(p), axis=-1)
+            return -jnp.sum(p * jnp.log(p), axis=-1, keepdims=True)
 
-        # Individual module entropies
+        # Reshape tensors to ensure compatible broadcasting
         module_probs = nn.softmax(output, axis=-1)
         module_entropies = jax.vmap(compute_entropy)(module_probs)
-        avg_module_entropy = jnp.mean(module_entropies, axis=-1)  # Shape: [batch_size]
+        avg_module_entropy = jnp.mean(module_entropies, axis=1)  # [batch_size, 1]
 
-        # System entropy
-        system_probs = nn.softmax(jnp.mean(output, axis=1), axis=-1)  # Average across modules first
-        system_entropy = compute_entropy(system_probs)  # Shape: [batch_size]
+        system_logits = jnp.mean(output, axis=1)
+        system_probs = nn.softmax(system_logits, axis=-1)
+        system_entropy = compute_entropy(system_probs)  # [batch_size, 1]
 
-        # Information integration metric: Φ = (1/N)∑H(xi) - H(X)
-        phi = avg_module_entropy - system_entropy  # Shape: [batch_size]
+        # Ensure compatible shapes for subtraction
+        phi = jnp.squeeze(avg_module_entropy - system_entropy, axis=-1)
 
         return output, phi

@@ -11,6 +11,22 @@ class TestAttentionMechanisms(ConsciousnessTestBase):
     """Test suite for attention mechanisms."""
 
     @pytest.fixture
+    def hidden_dim(self):
+        return 128
+
+    @pytest.fixture
+    def num_heads(self):
+        return 4
+
+    @pytest.fixture
+    def batch_size(self):
+        return 2
+
+    @pytest.fixture
+    def seq_length(self):
+        return 8
+
+    @pytest.fixture
     def attention_module(self, hidden_dim, num_heads):
         """Create attention module for testing."""
         return ConsciousnessAttention(

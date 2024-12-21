@@ -1,57 +1,23 @@
 ============================= test session starts ==============================
-platform linux -- Python 3.10.12, pytest-8.3.3, pluggy-1.5.0 -- /usr/bin/python3
-cachedir: .pytest_cache
-rootdir: /home/kasinadhsarma/experiments/cognition-l1-experiment
+platform linux -- Python 3.10.12, pytest-8.3.4, pluggy-1.5.0
+rootdir: /home/kasinadhsarma/experiment/cognition-l1-experiment
 configfile: pytest.ini
 testpaths: tests
-plugins: anyio-4.6.2.post1
-collecting ... collected 45 items
+plugins: cov-6.0.0, anyio-4.7.0
+collected 48 items
 
-tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_pattern_recognition FAILED [  2%]
-tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_abstraction_capability FAILED [  4%]
-tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_conscious_adaptation FAILED [  6%]
-tests/benchmarks/test_bigbench_reasoning.py::TestBigBenchReasoning::test_reasoning_capabilities FAILED [  8%]
-tests/benchmarks/test_bigbench_reasoning.py::TestBigBenchReasoning::test_meta_learning FAILED [ 11%]
-tests/benchmarks/test_bigbench_reasoning.py::TestBigBenchReasoning::test_consciousness_emergence FAILED [ 13%]
-tests/test_consciousness.py::TestConsciousnessModel::test_model_initialization PASSED [ 15%]
-tests/test_consciousness.py::TestConsciousnessModel::test_model_forward_pass FAILED [ 17%]
-tests/test_consciousness.py::TestConsciousnessModel::test_model_config PASSED [ 20%]
-tests/test_environment.py::EnvironmentTests::test_core_imports PASSED    [ 22%]
-tests/test_environment.py::EnvironmentTests::test_framework_versions PASSED [ 24%]
-tests/test_environment.py::EnvironmentTests::test_hardware_detection PASSED [ 26%]
-tests/test_environment.py::EnvironmentTests::test_memory_allocation PASSED [ 28%]
-tests/test_environment.py::EnvironmentTests::test_python_version PASSED  [ 31%]
-tests/unit/attention/test_attention.py::TestConsciousnessAttention::test_scaled_dot_product_attention PASSED [ 33%]
-tests/unit/attention/test_attention.py::TestConsciousnessAttention::test_attention_dropout PASSED [ 35%]
-tests/unit/attention/test_attention.py::TestGlobalWorkspace::test_global_workspace_broadcasting PASSED [ 37%]
-tests/unit/attention/test_attention_mechanisms.py::TestAttentionMechanisms::test_scaled_dot_product PASSED [ 40%]
-tests/unit/attention/test_attention_mechanisms.py::TestAttentionMechanisms::test_attention_mask PASSED [ 42%]
-tests/unit/attention/test_attention_mechanisms.py::TestAttentionMechanisms::test_consciousness_broadcasting PASSED [ 44%]
-tests/unit/attention/test_attention_mechanisms.py::TestAttentionMechanisms::test_global_workspace_integration PASSED [ 46%]
-tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_cross_modal_attention FAILED [ 48%]
-tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_modality_specific_processing FAILED [ 51%]
-tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_integration_stability FAILED [ 53%]
-tests/unit/integration/test_state_management.py::TestConsciousnessStateManager::test_state_updates PASSED [ 55%]
-tests/unit/integration/test_state_management.py::TestConsciousnessStateManager::test_rl_optimization PASSED [ 57%]
-tests/unit/integration/test_state_management.py::TestConsciousnessStateManager::test_adaptive_gating FAILED [ 60%]
-tests/unit/integration/test_state_management.py::TestConsciousnessStateManager::test_state_consistency PASSED [ 62%]
-tests/unit/memory/test_integration.py::TestInformationIntegration::test_phi_metric_computation FAILED [ 64%]
-tests/unit/memory/test_integration.py::TestInformationIntegration::test_information_flow PASSED [ 66%]
-tests/unit/memory/test_integration.py::TestInformationIntegration::test_entropy_calculations FAILED [ 68%]
-tests/unit/memory/test_memory.py::TestGRUCell::test_gru_state_updates FAILED [ 71%]
-tests/unit/memory/test_memory.py::TestGRUCell::test_gru_reset_gate PASSED [ 73%]
-tests/unit/memory/test_memory.py::TestWorkingMemory::test_sequence_processing FAILED [ 75%]
-tests/unit/memory/test_memory.py::TestWorkingMemory::test_memory_retention FAILED [ 77%]
-tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_gru_state_updates FAILED [ 80%]
-tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_memory_sequence_processing FAILED [ 82%]
-tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_context_aware_gating FAILED [ 84%]
-tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_information_integration FAILED [ 86%]
-tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_memory_retention FAILED [ 88%]
-tests/unit/state/test_consciousness_state_management.py::TestStateManagement::test_state_updates PASSED [ 91%]
-tests/unit/state/test_consciousness_state_management.py::TestStateManagement::test_rl_optimization PASSED [ 93%]
-tests/unit/state/test_consciousness_state_management.py::TestStateManagement::test_energy_efficiency PASSED [ 95%]
-tests/unit/state/test_consciousness_state_management.py::TestStateManagement::test_state_value_estimation PASSED [ 97%]
-tests/unit/state/test_consciousness_state_management.py::TestStateManagement::test_adaptive_gating PASSED [100%]
+tests/benchmarks/test_arc_reasoning.py FFF                               [  6%]
+tests/benchmarks/test_bigbench_reasoning.py FFF                          [ 12%]
+tests/test_consciousness.py .F.                                          [ 18%]
+tests/test_environment.py .....                                          [ 29%]
+tests/unit/attention/test_attention.py ..F.                              [ 37%]
+tests/unit/attention/test_attention_mechanisms.py ....                   [ 45%]
+tests/unit/integration/test_cognitive_integration.py FFFF                [ 54%]
+tests/unit/integration/test_state_management.py .FF.                     [ 62%]
+tests/unit/memory/test_integration.py FFFF                               [ 70%]
+tests/unit/memory/test_memory.py ..FF                                    [ 79%]
+tests/unit/memory/test_memory_components.py FFFFF                        [ 89%]
+tests/unit/state/test_consciousness_state_management.py .....            [100%]
 
 =================================== FAILURES ===================================
 __________________ TestARCReasoning.test_pattern_recognition ___________________
@@ -59,7 +25,7 @@ jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal fra
 
 The above exception was the direct cause of the following exception:
 
-self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x7ecc61c9b0a0>
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x776c9d437430>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -71,45 +37,59 @@ consciousness_model = ConsciousnessModel(
 )
 
     def test_pattern_recognition(self, key, consciousness_model):
-        # Load sample ARC task
         inputs, expected = self.load_arc_sample()
+        batch_size = inputs['visual'].shape[0]
+    
+        # Initialize model state
+        model_inputs = {
+            'visual': inputs['visual'],
+            'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))
+        }
     
         # Initialize model
->       variables = consciousness_model.init(key, inputs)
+>       variables = consciousness_model.init(key, model_inputs)
 
-tests/benchmarks/test_arc_reasoning.py:59: 
+tests/benchmarks/test_arc_reasoning.py:54: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/consciousness_model.py:96: in __call__
+models/consciousness_model.py:101: in __call__
     memory_output, memory_state = self.working_memory(
-models/memory.py:107: in __call__
-    final_state, outputs = jax.lax.scan(
-models/memory.py:99: in scan_fn
-    h_new = gru(x, h)
-models/memory.py:32: in __call__
-    update_dense = nn.Dense(
+models/memory.py:91: in __call__
+    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
 ../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
     dataclass_init(self, *args, **kwargs)
-<string>:14: in __init__
-    ???
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-base_level = 0
+self = LSTMCell(
+    # attributes
+    features = 512
+    gate_fn = sigmoid
+    activation_fn = tanh
+    kernel_init = init
+    recurrent_kernel_init = init
+    bias_init = zeros
+    dtype = None
+    param_dtype = float32
+    carry_init = zeros
+)
+features = 512, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
+activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
+kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
+recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
+bias_init = <function zeros at 0x776c9e065480>, dtype = None
+param_dtype = <class 'jax.numpy.float32'>
+carry_init = <function zeros at 0x776c9e065480>
+parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
 
-    def check_trace_level(base_level):
-      level = trace_level(current_trace())
-      if level != base_level:
->       raise errors.JaxTransformError()
-E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+>   ???
+E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
 
-../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
------------------------------- Captured log setup ------------------------------
-WARNING  jax._src.xla_bridge:xla_bridge.py:948 An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+<string>:14: AssignSubModuleError
 _________________ TestARCReasoning.test_abstraction_capability _________________
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x7ecc61c9af20>
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x776c9d434d00>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -121,49 +101,128 @@ consciousness_model = ConsciousnessModel(
 )
 
     def test_abstraction_capability(self, key, consciousness_model):
-        # Test ability to abstract patterns across different representations
         inputs, _ = self.load_arc_sample()
+        batch_size = inputs['visual'].shape[0]
     
-        # Create variations of the same pattern
+        # Create transformed versions
         variations = {
             'original': inputs['visual'],
-            'rotated': jnp.rot90(inputs['visual'].reshape(3, 3)).reshape(1, 9, 1),
-            'scaled': inputs['visual'] * 2
+            'rotated': jnp.rot90(inputs['visual'][:, :, :, 0], k=1)[:, :, None],
+            'scaled': inputs['visual'] * 2.0
         }
     
->       variables = consciousness_model.init(key, {'visual': variations['original']})
+        try:
+>           variables = consciousness_model.init(
+                key,
+                {'visual': variations['original'],
+                 'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))}
+            )
 
-tests/benchmarks/test_arc_reasoning.py:96: 
+tests/benchmarks/test_arc_reasoning.py:90: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/consciousness_model.py:96: in __call__
+models/consciousness_model.py:101: in __call__
     memory_output, memory_state = self.working_memory(
-models/memory.py:107: in __call__
-    final_state, outputs = jax.lax.scan(
-models/memory.py:99: in scan_fn
-    h_new = gru(x, h)
-models/memory.py:32: in __call__
-    update_dense = nn.Dense(
+models/memory.py:91: in __call__
+    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
 ../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
     dataclass_init(self, *args, **kwargs)
-<string>:14: in __init__
-    ???
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-base_level = 0
+self = LSTMCell(
+    # attributes
+    features = 512
+    gate_fn = sigmoid
+    activation_fn = tanh
+    kernel_init = init
+    recurrent_kernel_init = init
+    bias_init = zeros
+    dtype = None
+    param_dtype = float32
+    carry_init = zeros
+)
+features = 512, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
+activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
+kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
+recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
+bias_init = <function zeros at 0x776c9e065480>, dtype = None
+param_dtype = <class 'jax.numpy.float32'>
+carry_init = <function zeros at 0x776c9e065480>
+parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
 
-    def check_trace_level(base_level):
-      level = trace_level(current_trace())
-      if level != base_level:
->       raise errors.JaxTransformError()
-E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+>   ???
+E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
 
-../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+<string>:14: AssignSubModuleError
+
+During handling of the above exception, another exception occurred:
+
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x776c9d434d00>
+key = Array([0, 0], dtype=uint32)
+consciousness_model = ConsciousnessModel(
+    # attributes
+    hidden_dim = 512
+    num_heads = 8
+    num_layers = 6
+    num_states = 4
+    dropout_rate = 0.1
+)
+
+    def test_abstraction_capability(self, key, consciousness_model):
+        inputs, _ = self.load_arc_sample()
+        batch_size = inputs['visual'].shape[0]
+    
+        # Create transformed versions
+        variations = {
+            'original': inputs['visual'],
+            'rotated': jnp.rot90(inputs['visual'][:, :, :, 0], k=1)[:, :, None],
+            'scaled': inputs['visual'] * 2.0
+        }
+    
+        try:
+            variables = consciousness_model.init(
+                key,
+                {'visual': variations['original'],
+                 'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))}
+            )
+    
+            states = {}
+            for name, visual_input in variations.items():
+                output, metrics = consciousness_model.apply(
+                    variables,
+                    {'visual': visual_input,
+                     'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))},
+                    deterministic=True
+                )
+                states[name] = output
+    
+            # Test representation similarity
+            def cosine_similarity(x, y):
+                return jnp.sum(x * y) / (jnp.linalg.norm(x) * jnp.linalg.norm(y))
+    
+            orig_rot_sim = cosine_similarity(
+                states['original'].ravel(),
+                states['rotated'].ravel()
+            )
+            orig_scaled_sim = cosine_similarity(
+                states['original'].ravel(),
+                states['scaled'].ravel()
+            )
+    
+            # Transformed versions should maintain similar representations
+            assert orig_rot_sim > 0.5
+            assert orig_scaled_sim > 0.7
+    
+        except Exception as e:
+>           pytest.fail(f"Abstraction capability test failed: {str(e)}")
+E           Failed: Abstraction capability test failed: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
+
+tests/benchmarks/test_arc_reasoning.py:124: Failed
 __________________ TestARCReasoning.test_conscious_adaptation __________________
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x7ecc61c9ad40>
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x776c9d436dd0>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -176,39 +235,122 @@ consciousness_model = ConsciousnessModel(
 
     def test_conscious_adaptation(self, key, consciousness_model):
         inputs, _ = self.load_arc_sample()
->       variables = consciousness_model.init(key, inputs)
+        batch_size = inputs['visual'].shape[0]
+    
+        try:
+            # Create simple and complex patterns
+            simple_input = {
+                'visual': inputs['visual'],
+                'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))
+            }
+    
+            # More complex pattern (doubled size)
+            complex_visual = jnp.tile(inputs['visual'], (1, 2, 2, 1))
+            complex_input = {
+                'visual': complex_visual,
+                'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))
+            }
+    
+>           variables = consciousness_model.init(key, simple_input)
 
-tests/benchmarks/test_arc_reasoning.py:129: 
+tests/benchmarks/test_arc_reasoning.py:144: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/consciousness_model.py:96: in __call__
+models/consciousness_model.py:101: in __call__
     memory_output, memory_state = self.working_memory(
-models/memory.py:107: in __call__
-    final_state, outputs = jax.lax.scan(
-models/memory.py:99: in scan_fn
-    h_new = gru(x, h)
-models/memory.py:32: in __call__
-    update_dense = nn.Dense(
+models/memory.py:91: in __call__
+    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
 ../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
     dataclass_init(self, *args, **kwargs)
-<string>:14: in __init__
-    ???
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-base_level = 0
+self = LSTMCell(
+    # attributes
+    features = 512
+    gate_fn = sigmoid
+    activation_fn = tanh
+    kernel_init = init
+    recurrent_kernel_init = init
+    bias_init = zeros
+    dtype = None
+    param_dtype = float32
+    carry_init = zeros
+)
+features = 512, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
+activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
+kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
+recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
+bias_init = <function zeros at 0x776c9e065480>, dtype = None
+param_dtype = <class 'jax.numpy.float32'>
+carry_init = <function zeros at 0x776c9e065480>
+parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
 
-    def check_trace_level(base_level):
-      level = trace_level(current_trace())
-      if level != base_level:
->       raise errors.JaxTransformError()
-E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+>   ???
+E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
 
-../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+<string>:14: AssignSubModuleError
+
+During handling of the above exception, another exception occurred:
+
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x776c9d436dd0>
+key = Array([0, 0], dtype=uint32)
+consciousness_model = ConsciousnessModel(
+    # attributes
+    hidden_dim = 512
+    num_heads = 8
+    num_layers = 6
+    num_states = 4
+    dropout_rate = 0.1
+)
+
+    def test_conscious_adaptation(self, key, consciousness_model):
+        inputs, _ = self.load_arc_sample()
+        batch_size = inputs['visual'].shape[0]
+    
+        try:
+            # Create simple and complex patterns
+            simple_input = {
+                'visual': inputs['visual'],
+                'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))
+            }
+    
+            # More complex pattern (doubled size)
+            complex_visual = jnp.tile(inputs['visual'], (1, 2, 2, 1))
+            complex_input = {
+                'visual': complex_visual,
+                'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))
+            }
+    
+            variables = consciousness_model.init(key, simple_input)
+    
+            # Process both patterns
+            _, simple_metrics = consciousness_model.apply(
+                variables,
+                simple_input,
+                deterministic=True
+            )
+    
+            _, complex_metrics = consciousness_model.apply(
+                variables,
+                complex_input,
+                deterministic=True
+            )
+    
+            # Validate complexity adaptation
+            assert complex_metrics['phi'] > simple_metrics['phi']
+            assert 'attention_weights' in simple_metrics
+            assert 'attention_weights' in complex_metrics
+    
+        except Exception as e:
+>           pytest.fail(f"Conscious adaptation test failed: {str(e)}")
+E           Failed: Conscious adaptation test failed: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
+
+tests/benchmarks/test_arc_reasoning.py:165: Failed
 ______________ TestBigBenchReasoning.test_reasoning_capabilities _______________
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x7ecc61c991e0>
+self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x776c9d4374f0>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -225,35 +367,45 @@ consciousness_model = ConsciousnessModel(
 
 tests/benchmarks/test_bigbench_reasoning.py:57: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/consciousness_model.py:96: in __call__
+models/consciousness_model.py:101: in __call__
     memory_output, memory_state = self.working_memory(
-models/memory.py:107: in __call__
-    final_state, outputs = jax.lax.scan(
-models/memory.py:99: in scan_fn
-    h_new = gru(x, h)
-models/memory.py:32: in __call__
-    update_dense = nn.Dense(
+models/memory.py:91: in __call__
+    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
 ../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
     dataclass_init(self, *args, **kwargs)
-<string>:14: in __init__
-    ???
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-base_level = 0
+self = LSTMCell(
+    # attributes
+    features = 512
+    gate_fn = sigmoid
+    activation_fn = tanh
+    kernel_init = init
+    recurrent_kernel_init = init
+    bias_init = zeros
+    dtype = None
+    param_dtype = float32
+    carry_init = zeros
+)
+features = 512, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
+activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
+kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
+recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
+bias_init = <function zeros at 0x776c9e065480>, dtype = None
+param_dtype = <class 'jax.numpy.float32'>
+carry_init = <function zeros at 0x776c9e065480>
+parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
 
-    def check_trace_level(base_level):
-      level = trace_level(current_trace())
-      if level != base_level:
->       raise errors.JaxTransformError()
-E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+>   ???
+E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
 
-../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+<string>:14: AssignSubModuleError
 ___________________ TestBigBenchReasoning.test_meta_learning ___________________
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x7ecc61c9b4f0>
+self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x776c9d436440>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -280,35 +432,45 @@ consciousness_model = ConsciousnessModel(
 
 tests/benchmarks/test_bigbench_reasoning.py:94: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/consciousness_model.py:96: in __call__
+models/consciousness_model.py:101: in __call__
     memory_output, memory_state = self.working_memory(
-models/memory.py:107: in __call__
-    final_state, outputs = jax.lax.scan(
-models/memory.py:99: in scan_fn
-    h_new = gru(x, h)
-models/memory.py:32: in __call__
-    update_dense = nn.Dense(
+models/memory.py:91: in __call__
+    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
 ../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
     dataclass_init(self, *args, **kwargs)
-<string>:14: in __init__
-    ???
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-base_level = 0
+self = LSTMCell(
+    # attributes
+    features = 512
+    gate_fn = sigmoid
+    activation_fn = tanh
+    kernel_init = init
+    recurrent_kernel_init = init
+    bias_init = zeros
+    dtype = None
+    param_dtype = float32
+    carry_init = zeros
+)
+features = 512, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
+activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
+kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
+recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
+bias_init = <function zeros at 0x776c9e065480>, dtype = None
+param_dtype = <class 'jax.numpy.float32'>
+carry_init = <function zeros at 0x776c9e065480>
+parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
 
-    def check_trace_level(base_level):
-      level = trace_level(current_trace())
-      if level != base_level:
->       raise errors.JaxTransformError()
-E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+>   ???
+E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
 
-../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+<string>:14: AssignSubModuleError
 ______________ TestBigBenchReasoning.test_consciousness_emergence ______________
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x7ecc61c9b6d0>
+self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x776c9d436770>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -335,35 +497,45 @@ consciousness_model = ConsciousnessModel(
 
 tests/benchmarks/test_bigbench_reasoning.py:124: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/consciousness_model.py:96: in __call__
+models/consciousness_model.py:101: in __call__
     memory_output, memory_state = self.working_memory(
-models/memory.py:107: in __call__
-    final_state, outputs = jax.lax.scan(
-models/memory.py:99: in scan_fn
-    h_new = gru(x, h)
-models/memory.py:32: in __call__
-    update_dense = nn.Dense(
+models/memory.py:91: in __call__
+    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
 ../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
     dataclass_init(self, *args, **kwargs)
-<string>:14: in __init__
-    ???
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-base_level = 0
+self = LSTMCell(
+    # attributes
+    features = 512
+    gate_fn = sigmoid
+    activation_fn = tanh
+    kernel_init = init
+    recurrent_kernel_init = init
+    bias_init = zeros
+    dtype = None
+    param_dtype = float32
+    carry_init = zeros
+)
+features = 512, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
+activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
+kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
+recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
+bias_init = <function zeros at 0x776c9e065480>, dtype = None
+param_dtype = <class 'jax.numpy.float32'>
+carry_init = <function zeros at 0x776c9e065480>
+parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
 
-    def check_trace_level(base_level):
-      level = trace_level(current_trace())
-      if level != base_level:
->       raise errors.JaxTransformError()
-E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+>   ???
+E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
 
-../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+<string>:14: AssignSubModuleError
 ________________ TestConsciousnessModel.test_model_forward_pass ________________
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <tests.test_consciousness.TestConsciousnessModel object at 0x7ecc61c99e70>
+self = <tests.test_consciousness.TestConsciousnessModel object at 0x776c9d4683a0>
 model = ConsciousnessModel(
     # attributes
     hidden_dim = 64
@@ -385,35 +557,55 @@ key = Array([ 0, 42], dtype=uint32), deterministic = True
 
 tests/test_consciousness.py:44: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/consciousness_model.py:96: in __call__
+models/consciousness_model.py:101: in __call__
     memory_output, memory_state = self.working_memory(
-models/memory.py:107: in __call__
-    final_state, outputs = jax.lax.scan(
-models/memory.py:99: in scan_fn
-    h_new = gru(x, h)
-models/memory.py:32: in __call__
-    update_dense = nn.Dense(
+models/memory.py:91: in __call__
+    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
 ../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
     dataclass_init(self, *args, **kwargs)
-<string>:14: in __init__
-    ???
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-base_level = 0
+self = LSTMCell(
+    # attributes
+    features = 64
+    gate_fn = sigmoid
+    activation_fn = tanh
+    kernel_init = init
+    recurrent_kernel_init = init
+    bias_init = zeros
+    dtype = None
+    param_dtype = float32
+    carry_init = zeros
+)
+features = 64, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
+activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
+kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
+recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
+bias_init = <function zeros at 0x776c9e065480>, dtype = None
+param_dtype = <class 'jax.numpy.float32'>
+carry_init = <function zeros at 0x776c9e065480>
+parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
 
-    def check_trace_level(base_level):
-      level = trace_level(current_trace())
-      if level != base_level:
->       raise errors.JaxTransformError()
-E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+>   ???
+E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
 
-../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+<string>:14: AssignSubModuleError
+____________ TestConsciousnessAttention.test_attention_output_shape ____________
+
+self = <test_attention.TestConsciousnessAttention object at 0x776c9d469e10>
+
+    def test_attention_output_shape(self):
+        batch_size = 2
+        seq_length = 8
+        input_dim = 128
+    
+>       inputs_q = random.normal(key, (batch_size, seq_length, input_dim))
+E       NameError: name 'key' is not defined
+
+tests/unit/attention/test_attention.py:130: NameError
 __________ TestCognitiveProcessIntegration.test_cross_modal_attention __________
-jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-The above exception was the direct cause of the following exception:
-
-self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x7ecc61cd5960>
+self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x776c9d46b940>
 key = Array([0, 0], dtype=uint32)
 integration_module = CognitiveProcessIntegration(
     # attributes
@@ -443,76 +635,33 @@ integration_module = CognitiveProcessIntegration(
         }
     
         # Initialize parameters
->       variables = integration_module.init(key, inputs)
-
-tests/unit/integration/test_cognitive_integration.py:46: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = CognitiveProcessIntegration(
-    # attributes
-    hidden_dim = 64
-    num_heads = 4
-    num_layers = 3
-    dropout_rat...ral = None
-        out_dot_general = None
-        qkv_dot_general_cls = None
-        out_dot_general_cls = None
-    )
-)
-inputs = {'numerical': Array([[[-3.40341614e-03,  4.90928352e-01,  1.52762413e+00,
-         -1.07081391e-01, -2.98910916e-01, -...6593276,  0.17548549, -2.5559947 ,
-          0.0899727 , -1.434366  ,  0.5375884 ,  1.2183367 ]]],      dtype=float32)}
-deterministic = True
-
-    @nn.compact
-    def __call__(self, inputs: Dict[str, jnp.ndarray], deterministic: bool = True):
-        """
-        Process multiple modalities through integrated consciousness architecture.
+        variables = integration_module.init(key, inputs)
     
-        Args:
-            inputs: Dictionary of input tensors for different modalities
-            deterministic: If True, disable dropout
-        """
-        # Process each modality separately first
-        processed_modalities = {}
-        for modality, x in inputs.items():
-            # Modality-specific processing
-            x = nn.LayerNorm()(x)
-            x = nn.Dense(self.hidden_dim)(x)
-            x = nn.gelu(x)
-            if not deterministic:
-                x = nn.dropout(x, rate=self.dropout_rate, deterministic=deterministic)
-            processed_modalities[modality] = x
+        # Process through integration
+        consciousness_state, attention_maps = integration_module.apply(
+            variables,
+            inputs,
+            deterministic=True
+        )
     
-        # Cross-modal attention integration
-        integrated_features = []
-        attention_maps = {}
+        # Test output shapes
+        assert consciousness_state.shape == (batch_size, seq_length, 64)
     
-        for target_modality, target_features in processed_modalities.items():
-            cross_modal_contexts = []
-    
-            for source_modality, source_features in processed_modalities.items():
-                if source_modality != target_modality:
-                    # Cross-attention between modalities
-                    attention = nn.MultiHeadDotProductAttention(
-                        num_heads=self.num_heads,
-                        dropout_rate=self.dropout_rate
-                    )
->                   attended, attention_weights = attention(
-                        queries=target_features,
-                        keys=source_features,
-                        values=source_features,
-                        deterministic=deterministic
-                    )
-E                   TypeError: MultiHeadDotProductAttention.__call__() got an unexpected keyword argument 'queries'
+        # Test attention maps
+        for source in inputs.keys():
+            for target in inputs.keys():
+                if source != target:
+                    map_key = f"{target}-{source}"
+>                   assert map_key in attention_maps
+E                   AssertionError: assert 'textual-visual' in {}
 
-models/consciousness_state.py:53: TypeError
+tests/unit/integration/test_cognitive_integration.py:63: AssertionError
 ______ TestCognitiveProcessIntegration.test_modality_specific_processing _______
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x7ecc61cd5b40>
+self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x776c9d46bb20>
 key = Array([0, 0], dtype=uint32)
 integration_module = CognitiveProcessIntegration(
     # attributes
@@ -553,9 +702,9 @@ integration_module = CognitiveProcessIntegration(
 
 tests/unit/integration/test_cognitive_integration.py:96: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/consciousness_state.py:32: in __call__
+models/consciousness_state.py:21: in __call__
     x = nn.LayerNorm()(x)
-../../.local/lib/python3.10/site-packages/flax/linen/normalization.py:490: in __call__
+../../.local/lib/python3.10/site-packages/flax/linen/normalization.py:518: in __call__
     return _normalize(
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
@@ -596,8 +745,8 @@ var = Array([[[0.85883766],
         [1.3724558 ]]], dtype=float32)
 reduction_axes = (2,), feature_axes = (2,), dtype = None
 param_dtype = <class 'jax.numpy.float32'>, epsilon = 1e-06, use_bias = True
-use_scale = True, bias_init = <function zeros at 0x7ecc628acc10>
-scale_init = <function ones at 0x7ecc628acdc0>
+use_scale = True, bias_init = <function zeros at 0x776c9e065480>
+scale_init = <function ones at 0x776c9df00a60>, force_float32_reductions = True
 
     def _normalize(
       mdl: Module,
@@ -606,13 +755,14 @@ scale_init = <function ones at 0x7ecc628acdc0>
       var: Array,
       reduction_axes: Axes,
       feature_axes: Axes,
-      dtype: Optional[Dtype],
+      dtype: Dtype | None,
       param_dtype: Dtype,
       epsilon: float,
       use_bias: bool,
       use_scale: bool,
       bias_init: Initializer,
       scale_init: Initializer,
+      force_float32_reductions: bool = True
     ):
       """Normalizes the input of a normalization layer and optionally applies a learned scale and bias.
     
@@ -632,6 +782,9 @@ scale_init = <function ones at 0x7ecc628acdc0>
         use_scale: If true, scale the output.
         bias_init: Initialization function for the bias term.
         scale_init: Initialization function for the scaling function.
+        force_float32_reductions: If false, the scale and bias parameters use the
+          param_dtype. Otherwise, they will have at least float32 precision due to
+          the mean and var being promoted to float32.
     
       Returns:
         The normalized input.
@@ -655,13 +808,13 @@ scale_init = <function ones at 0x7ecc628acdc0>
         ).reshape(feature_shape)
 E       flax.errors.ScopeParamNotFoundError: Could not find parameter named "scale" in scope "/LayerNorm_1". (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.ScopeParamNotFoundError)
 
-../../.local/lib/python3.10/site-packages/flax/linen/normalization.py:199: ScopeParamNotFoundError
+../../.local/lib/python3.10/site-packages/flax/linen/normalization.py:204: ScopeParamNotFoundError
 __________ TestCognitiveProcessIntegration.test_integration_stability __________
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x7ecc61cd5d20>
+self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x776c9d46bd00>
 key = Array([0, 0], dtype=uint32)
 integration_module = CognitiveProcessIntegration(
     # attributes
@@ -681,9 +834,33 @@ integration_module = CognitiveProcessIntegration(
             'modality2': random.normal(key, (batch_size, seq_length, input_dim))
         }
     
->       variables = integration_module.init(key, inputs)
+        variables = integration_module.init(key, inputs)
+    
+        # Test stability across multiple forward passes
+        states = []
+        for _ in range(5):
+            state, _ = integration_module.apply(
+                variables,
+                inputs,
+                deterministic=True
+            )
+            states.append(state)
+    
+        # All forward passes should produce identical results
+        for i in range(1, len(states)):
+            assert jnp.allclose(states[0], states[i])
+    
+        # Test with dropout
+        states_dropout = []
+        for i in range(5):
+>           state, _ = integration_module.apply(
+                variables,
+                inputs,
+                deterministic=False,
+                rngs={'dropout': random.PRNGKey(i)}
+            )
 
-tests/unit/integration/test_cognitive_integration.py:115: 
+tests/unit/integration/test_cognitive_integration.py:134: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = CognitiveProcessIntegration(
@@ -691,63 +868,105 @@ self = CognitiveProcessIntegration(
     hidden_dim = 64
     num_heads = 4
     num_layers = 3
-    dropout_rat...ral = None
-        out_dot_general = None
-        qkv_dot_general_cls = None
-        out_dot_general_cls = None
+    dropout_rat...
+        kernel_init = init
+        bias_init = zeros
+        dot_general = None
+        dot_general_cls = None
     )
 )
 inputs = {'modality1': Array([[[-2.0545669 ,  0.33981755,  0.2619878 , -0.9536857 ,
           1.1861376 ,  1.2227523 ,  0.11180...6593276,  0.17548549, -2.5559947 ,
           0.0899727 , -1.434366  ,  0.5375884 ,  1.2183367 ]]],      dtype=float32)}
-deterministic = True
+deterministic = False
 
     @nn.compact
     def __call__(self, inputs: Dict[str, jnp.ndarray], deterministic: bool = True):
-        """
-        Process multiple modalities through integrated consciousness architecture.
-    
-        Args:
-            inputs: Dictionary of input tensors for different modalities
-            deterministic: If True, disable dropout
-        """
         # Process each modality separately first
         processed_modalities = {}
         for modality, x in inputs.items():
-            # Modality-specific processing
             x = nn.LayerNorm()(x)
             x = nn.Dense(self.hidden_dim)(x)
             x = nn.gelu(x)
             if not deterministic:
-                x = nn.dropout(x, rate=self.dropout_rate, deterministic=deterministic)
-            processed_modalities[modality] = x
-    
-        # Cross-modal attention integration
-        integrated_features = []
-        attention_maps = {}
-    
-        for target_modality, target_features in processed_modalities.items():
-            cross_modal_contexts = []
-    
-            for source_modality, source_features in processed_modalities.items():
-                if source_modality != target_modality:
-                    # Cross-attention between modalities
-                    attention = nn.MultiHeadDotProductAttention(
-                        num_heads=self.num_heads,
-                        dropout_rate=self.dropout_rate
-                    )
->                   attended, attention_weights = attention(
-                        queries=target_features,
-                        keys=source_features,
-                        values=source_features,
-                        deterministic=deterministic
-                    )
-E                   TypeError: MultiHeadDotProductAttention.__call__() got an unexpected keyword argument 'queries'
+>               x = nn.dropout(x, rate=self.dropout_rate, deterministic=deterministic)
+E               AttributeError: module 'flax.linen' has no attribute 'dropout'. Did you mean: 'Dropout'?
 
-models/consciousness_state.py:53: TypeError
+models/consciousness_state.py:25: AttributeError
+__________ TestCognitiveProcessIntegration.test_cognitive_integration __________
+
+self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x776c9d46beb0>
+
+    def test_cognitive_integration(self):
+        # Test dimensions
+        batch_size = 2
+        seq_length = 8
+        input_dim = 32
+    
+        # Create multi-modal inputs
+        inputs = {
+            'visual': random.normal(random.PRNGKey(0), (batch_size, seq_length, input_dim)),
+            'textual': random.normal(random.PRNGKey(1), (batch_size, seq_length, input_dim)),
+            'numerical': random.normal(random.PRNGKey(2), (batch_size, seq_length, input_dim))
+        }
+    
+        # Initialize parameters
+>       variables = integration_module.init(random.PRNGKey(0), inputs)
+E       NameError: name 'integration_module' is not defined
+
+tests/unit/integration/test_cognitive_integration.py:162: NameError
+______________ TestConsciousnessStateManager.test_rl_optimization ______________
+
+self = <test_state_management.TestConsciousnessStateManager object at 0x776c9d4985e0>
+key = Array([0, 0], dtype=uint32)
+state_manager = ConsciousnessStateManager(
+    # attributes
+    hidden_dim = 64
+    num_states = 4
+    dropout_rate = 0.1
+)
+
+    def test_rl_optimization(self, key, state_manager):
+        batch_size = 2
+        hidden_dim = 64
+    
+        state = random.normal(key, (batch_size, hidden_dim))
+        inputs = random.normal(key, (batch_size, hidden_dim))
+        variables = state_manager.init(key, state, inputs)
+    
+        # Get state values for current and next state
+        new_state, metrics = state_manager.apply(
+            variables,
+            state,
+            inputs,
+            threshold=0.5,
+            deterministic=True
+        )
+    
+        # Test RL loss computation
+        reward = jnp.ones((batch_size, 1))  # Mock reward
+        value_loss, td_error = state_manager.apply(
+            variables,
+            method=state_manager.get_rl_loss,
+            state_value=metrics['state_value'],
+            reward=reward,
+            next_state_value=metrics['state_value']
+        )
+    
+        # Test loss properties
+        assert jnp.isscalar(value_loss)
+        assert value_loss >= 0.0
+>       assert td_error.shape == (batch_size, 1)
+E       assert (2, 2, 1) == (2, 1)
+E         
+E         At index 1 diff: 2 != 1
+E         Left contains one more item: 1
+E         Use -v to get more diff
+
+tests/unit/integration/test_state_management.py:94: AssertionError
 ______________ TestConsciousnessStateManager.test_adaptive_gating ______________
 
-self = <test_state_management.TestConsciousnessStateManager object at 0x7ecc61cd6770>
+self = <test_state_management.TestConsciousnessStateManager object at 0x776c9d4987c0>
 key = Array([0, 0], dtype=uint32)
 state_manager = ConsciousnessStateManager(
     # attributes
@@ -770,6 +989,7 @@ state_manager = ConsciousnessStateManager(
             variables,
             state,
             similar_input,
+            threshold=0.5,
             deterministic=True
         )
     
@@ -779,20 +999,25 @@ state_manager = ConsciousnessStateManager(
             variables,
             state,
             different_input,
+            threshold=0.5,
             deterministic=True
         )
     
         # Memory gate should be more open (lower values) for different inputs
-        assert jnp.mean(metrics1['memory_gate']) > jnp.mean(metrics2['memory_gate'])
-    
-        # Energy cost should be higher for more different inputs
->       assert metrics2['energy_cost'] > metrics1['energy_cost']
-E       assert Array(0.70095605, dtype=float32) > Array(0.712776, dtype=float32)
+>       assert jnp.mean(metrics1['memory_gate']) > jnp.mean(metrics2['memory_gate'])
+E       assert Array(0.50011224, dtype=float32) > Array(0.50012636, dtype=float32)
+E        +  where Array(0.50011224, dtype=float32) = <function mean at 0x776c9e670f70>(Array([[0.5569959 , 0.58251977, 0.4551106 , 0.41000992, 0.5886512 ,\n        0.5248869 , 0.56394213, 0.42929018, 0.5237....39520618, 0.44670913, 0.47268876, 0.4021517 ,\n        0.57144237, 0.53708297, 0.579201  , 0.44888377]], dtype=float32))
+E        +    where <function mean at 0x776c9e670f70> = jnp.mean
+E        +  and   Array(0.50012636, dtype=float32) = <function mean at 0x776c9e670f70>(Array([[0.55393577, 0.57986414, 0.4609477 , 0.4116633 , 0.5870904 ,\n        0.5233553 , 0.5625932 , 0.43273216, 0.5196....39790606, 0.45207238, 0.47798336, 0.4020855 ,\n        0.56832683, 0.5379167 , 0.5762647 , 0.45469669]], dtype=float32))
+E        +    where <function mean at 0x776c9e670f70> = jnp.mean
 
-tests/unit/integration/test_state_management.py:124: AssertionError
+tests/unit/integration/test_state_management.py:125: AssertionError
 ____________ TestInformationIntegration.test_phi_metric_computation ____________
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-self = <test_integration.TestInformationIntegration object at 0x7ecc61cd7340>
+The above exception was the direct cause of the following exception:
+
+self = <test_integration.TestInformationIntegration object at 0x776c9d4996c0>
 key = Array([0, 0], dtype=uint32)
 integration_module = InformationIntegration(
     # attributes
@@ -811,32 +1036,126 @@ integration_module = InformationIntegration(
         inputs = random.normal(key, (batch_size, num_modules, input_dim))
     
         # Initialize parameters
-        variables = integration_module.init(key, inputs)
-    
-        # Process through integration
-        output, phi = integration_module.apply(
-            variables,
-            inputs,
-            deterministic=True
-        )
-    
-        # Test output shapes
-        assert output.shape == inputs.shape
->       assert phi.shape == ()  # Phi should be a scalar
-E       assert (2,) == ()
-E         
-E         Left contains one more item: 2
-E         
-E         Full diff:
-E         - ()
-E         + (
-E         +     2,
-E         + )
+>       variables = integration_module.init(key, inputs)
 
-tests/unit/memory/test_integration.py:46: AssertionError
+tests/unit/memory/test_integration.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/memory.py:154: in __call__
+    output = y + x
+../../.local/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:573: in deferring_binary_op
+    return binary_op(*args)
+../../.local/lib/python3.10/site-packages/jax/_src/numpy/ufunc_api.py:179: in __call__
+    return call(*args)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = Traced<ShapedArray(float32[2,4,64])>with<DynamicJaxprTrace>
+y = Traced<ShapedArray(float32[2,4,32])>with<DynamicJaxprTrace>
+
+    @binary_ufunc(identity=0, reduce=reductions.sum, accumulate=reductions.cumsum, at=_add_at)
+    def add(x: ArrayLike, y: ArrayLike, /) -> Array:
+      """Add two arrays element-wise.
+    
+      JAX implementation of :obj:`numpy.add`. This is a universal function,
+      and supports the additional APIs described at :class:`jax.numpy.ufunc`.
+      This function provides the implementation of the ``+`` operator for
+      JAX arrays.
+    
+      Args:
+        x, y: arrays to add. Must be broadcastable to a common shape.
+    
+      Returns:
+        Array containing the result of the element-wise addition.
+    
+      Examples:
+        Calling ``add`` explicitly:
+    
+        >>> x = jnp.arange(4)
+        >>> jnp.add(x, 10)
+        Array([10, 11, 12, 13], dtype=int32)
+    
+        Calling ``add`` via the ``+`` operator:
+    
+        >>> x + 10
+        Array([10, 11, 12, 13], dtype=int32)
+      """
+      x, y = promote_args("add", x, y)
+>     return lax.add(x, y) if x.dtype != bool else lax.bitwise_or(x, y)
+E     TypeError: add got incompatible shapes for broadcasting: (2, 4, 64), (2, 4, 32).
+
+../../.local/lib/python3.10/site-packages/jax/_src/numpy/ufuncs.py:1215: TypeError
+_______________ TestInformationIntegration.test_information_flow _______________
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+self = <test_integration.TestInformationIntegration object at 0x776c9d4998a0>
+key = Array([0, 0], dtype=uint32)
+integration_module = InformationIntegration(
+    # attributes
+    hidden_dim = 64
+    num_modules = 4
+    dropout_rate = 0.1
+)
+
+    def test_information_flow(self, key, integration_module):
+        batch_size = 2
+        num_modules = 4
+        input_dim = 32
+    
+        inputs = random.normal(key, (batch_size, num_modules, input_dim))
+>       variables = integration_module.init(key, inputs)
+
+tests/unit/memory/test_integration.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/memory.py:154: in __call__
+    output = y + x
+../../.local/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:573: in deferring_binary_op
+    return binary_op(*args)
+../../.local/lib/python3.10/site-packages/jax/_src/numpy/ufunc_api.py:179: in __call__
+    return call(*args)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = Traced<ShapedArray(float32[2,4,64])>with<DynamicJaxprTrace>
+y = Traced<ShapedArray(float32[2,4,32])>with<DynamicJaxprTrace>
+
+    @binary_ufunc(identity=0, reduce=reductions.sum, accumulate=reductions.cumsum, at=_add_at)
+    def add(x: ArrayLike, y: ArrayLike, /) -> Array:
+      """Add two arrays element-wise.
+    
+      JAX implementation of :obj:`numpy.add`. This is a universal function,
+      and supports the additional APIs described at :class:`jax.numpy.ufunc`.
+      This function provides the implementation of the ``+`` operator for
+      JAX arrays.
+    
+      Args:
+        x, y: arrays to add. Must be broadcastable to a common shape.
+    
+      Returns:
+        Array containing the result of the element-wise addition.
+    
+      Examples:
+        Calling ``add`` explicitly:
+    
+        >>> x = jnp.arange(4)
+        >>> jnp.add(x, 10)
+        Array([10, 11, 12, 13], dtype=int32)
+    
+        Calling ``add`` via the ``+`` operator:
+    
+        >>> x + 10
+        Array([10, 11, 12, 13], dtype=int32)
+      """
+      x, y = promote_args("add", x, y)
+>     return lax.add(x, y) if x.dtype != bool else lax.bitwise_or(x, y)
+E     TypeError: add got incompatible shapes for broadcasting: (2, 4, 64), (2, 4, 32).
+
+../../.local/lib/python3.10/site-packages/jax/_src/numpy/ufuncs.py:1215: TypeError
 _____________ TestInformationIntegration.test_entropy_calculations _____________
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-self = <test_integration.TestInformationIntegration object at 0x7ecc61cd7700>
+The above exception was the direct cause of the following exception:
+
+self = <test_integration.TestInformationIntegration object at 0x776c9d499a80>
 key = Array([0, 0], dtype=uint32)
 integration_module = InformationIntegration(
     # attributes
@@ -853,88 +1172,72 @@ integration_module = InformationIntegration(
         # Test with different input distributions
         # Uniform distribution
         uniform_input = jnp.ones((batch_size, num_modules, input_dim))
-        variables = integration_module.init(key, uniform_input)
-    
-        _, phi_uniform = integration_module.apply(
-            variables,
-            uniform_input,
-            deterministic=True
-        )
-    
-        # Concentrated distribution
-        concentrated_input = jnp.zeros((batch_size, num_modules, input_dim))
-        concentrated_input = concentrated_input.at[:, :, 0].set(1.0)
-        _, phi_concentrated = integration_module.apply(
-            variables,
-            concentrated_input,
-            deterministic=True
-        )
-    
-        # Uniform distribution should have higher entropy
->       assert phi_uniform > phi_concentrated
+>       variables = integration_module.init(key, uniform_input)
 
-tests/unit/memory/test_integration.py:142: 
+tests/unit/memory/test_integration.py:124: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-../../.local/lib/python3.10/site-packages/jax/_src/array.py:293: in __bool__
-    core.check_bool_conversion(self)
+models/memory.py:154: in __call__
+    output = y + x
+../../.local/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:573: in deferring_binary_op
+    return binary_op(*args)
+../../.local/lib/python3.10/site-packages/jax/_src/numpy/ufunc_api.py:179: in __call__
+    return call(*args)
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-arr = Array([False,  True], dtype=bool)
+x = Traced<ShapedArray(float32[2,4,64])>with<DynamicJaxprTrace>
+y = Traced<ShapedArray(float32[2,4,32])>with<DynamicJaxprTrace>
 
-    def check_bool_conversion(arr: Array):
-      if arr.size == 0:
-        raise ValueError("The truth value of an empty array is ambiguous. Use"
-                         " `array.size > 0` to check that an array is not empty.")
-      if arr.size > 1:
->       raise ValueError("The truth value of an array with more than one element"
-                         " is ambiguous. Use a.any() or a.all()")
-E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+    @binary_ufunc(identity=0, reduce=reductions.sum, accumulate=reductions.cumsum, at=_add_at)
+    def add(x: ArrayLike, y: ArrayLike, /) -> Array:
+      """Add two arrays element-wise.
+    
+      JAX implementation of :obj:`numpy.add`. This is a universal function,
+      and supports the additional APIs described at :class:`jax.numpy.ufunc`.
+      This function provides the implementation of the ``+`` operator for
+      JAX arrays.
+    
+      Args:
+        x, y: arrays to add. Must be broadcastable to a common shape.
+    
+      Returns:
+        Array containing the result of the element-wise addition.
+    
+      Examples:
+        Calling ``add`` explicitly:
+    
+        >>> x = jnp.arange(4)
+        >>> jnp.add(x, 10)
+        Array([10, 11, 12, 13], dtype=int32)
+    
+        Calling ``add`` via the ``+`` operator:
+    
+        >>> x + 10
+        Array([10, 11, 12, 13], dtype=int32)
+      """
+      x, y = promote_args("add", x, y)
+>     return lax.add(x, y) if x.dtype != bool else lax.bitwise_or(x, y)
+E     TypeError: add got incompatible shapes for broadcasting: (2, 4, 64), (2, 4, 32).
 
-../../.local/lib/python3.10/site-packages/jax/_src/core.py:676: ValueError
-______________________ TestGRUCell.test_gru_state_updates ______________________
+../../.local/lib/python3.10/site-packages/jax/_src/numpy/ufuncs.py:1215: TypeError
+______________ TestInformationIntegration.test_memory_integration ______________
 
-self = <test_memory.TestGRUCell object at 0x7ecc61cd7e20>
-key = Array([0, 0], dtype=uint32)
-gru_cell = GRUCell(
-    # attributes
-    hidden_dim = 64
-)
+self = <test_integration.TestInformationIntegration object at 0x776c9d499c30>
 
-    def test_gru_state_updates(self, key, gru_cell):
-        # Test dimensions
+    def test_memory_integration(self):
         batch_size = 2
-        input_dim = 32
         hidden_dim = 64
-    
-        # Create sample inputs
-        x = random.normal(key, (batch_size, input_dim))
-        h = random.normal(key, (batch_size, hidden_dim))
-    
-        # Initialize parameters
-        variables = gru_cell.init(key, x, h)
-    
-        # Apply GRU cell
-        new_h = gru_cell.apply(variables, x, h)
-    
-        # Test output shape
-        assert new_h.shape == (batch_size, hidden_dim)
-    
-        # Test state update properties
-        # Values should be bounded by tanh activation
->       assert jnp.all(jnp.abs(new_h) <= 1.0)
-E       assert Array(False, dtype=bool)
-E        +  where Array(False, dtype=bool) = <function all at 0x7ecc75b2d3f0>(Array([[0.50694835, 0.30970913, 1.0483147 , 0.2971793 , 0.5183319 ,\n        1.021511  , 0.5006172 , 0.37889504, 0.25739902, 0.31568795,\n        0.15669708, 0.46756837, 0.8578607 , 0.01353674, 0.15282202,\n        0.20107451, 0.02317349, 0.6907812 , 0.5083374 , 0.7127954 ,\n        0.2091153 , 1.2715523 , 0.27340746, 0.5439285 , 0.26729783,\n        1.1938479 , 0.37502122, 0.6294161 , 0.2658452 , 0.15656555,\n        0.1620783 , 0.5467196 , 0.9315285 , 1.230475  , 0.602612  ,\n        0.5880212 , 0.5191237 , 0.38018548, 0.8522512 , 0.26190284,\n        0.8202814 , 0.15962315, 0.5789221 , 1.2993885 , 0.13919754,\n        0.8607982 , 0.6780343 , 0.02110142, 0.364023  , 0.42226005,\n        0.09432815, 0.78590155, 0.16561498, 0.13247566, 0.00382191,\n        0.33534092, 0.53253293, 0.7144125 , 1.3679162 , 0.41429377,\n        0.19982366, 0.16172108, 0.5542995 , 0.7606949 ],\n       [0.22975205, 0.02878729, 0.5449711 , 0.02949583, 0.8692614 ,\n        0.51954466, 0.75022507, 0.85511744, 0.25026062, 0.39560795,\n        0.38004875, 0.76923615, 0.25684965, 0.49881732, 1.300483  ,\n        0.06370783, 0.311657  , 0.1720401 , 0.7398916 , 0.71885866,\n        0.45458293, 0.22340196, 1.2285545 , 1.6554561 , 0.8708465 ,\n        0.43277258, 0.18350828, 0.6020147 , 0.67679894, 0.44123328,\n        0.47411048, 0.47458655, 0.10203615, 0.08886662, 1.3405949 ,\n        0.43682826, 0.36005154, 0.51806426, 0.17735687, 0.7185146 ,\n        0.4663297 , 0.67202103, 0.7300765 , 0.94554484, 1.0347339 ,\n        0.22911246, 0.31353402, 0.9689413 , 0.04275844, 0.15500447,\n        0.09075749, 0.2950866 , 0.74030983, 0.59036887, 0.34294564,\n        0.5528107 , 0.3721168 , 0.1056773 , 0.84371805, 0.5860183 ,\n        0.00968871, 0.959426  , 0.08026018, 0.6619667 ]], dtype=float32) <= 1.0)
-E        +    where <function all at 0x7ecc75b2d3f0> = jnp.all
-E        +    and   Array([[0.50694835, 0.30970913, 1.0483147 , 0.2971793 , 0.5183319 ,\n        1.021511  , 0.5006172 , 0.37889504, 0.25739902, 0.31568795,\n        0.15669708, 0.46756837, 0.8578607 , 0.01353674, 0.15282202,\n        0.20107451, 0.02317349, 0.6907812 , 0.5083374 , 0.7127954 ,\n        0.2091153 , 1.2715523 , 0.27340746, 0.5439285 , 0.26729783,\n        1.1938479 , 0.37502122, 0.6294161 , 0.2658452 , 0.15656555,\n        0.1620783 , 0.5467196 , 0.9315285 , 1.230475  , 0.602612  ,\n        0.5880212 , 0.5191237 , 0.38018548, 0.8522512 , 0.26190284,\n        0.8202814 , 0.15962315, 0.5789221 , 1.2993885 , 0.13919754,\n        0.8607982 , 0.6780343 , 0.02110142, 0.364023  , 0.42226005,\n        0.09432815, 0.78590155, 0.16561498, 0.13247566, 0.00382191,\n        0.33534092, 0.53253293, 0.7144125 , 1.3679162 , 0.41429377,\n        0.19982366, 0.16172108, 0.5542995 , 0.7606949 ],\n       [0.22975205, 0.02878729, 0.5449711 , 0.02949583, 0.8692614 ,\n        0.51954466, 0.75022507, 0.85511744, 0.25026062, 0.39560795,\n        0.38004875, 0.76923615, 0.25684965, 0.49881732, 1.300483  ,\n        0.06370783, 0.311657  , 0.1720401 , 0.7398916 , 0.71885866,\n        0.45458293, 0.22340196, 1.2285545 , 1.6554561 , 0.8708465 ,\n        0.43277258, 0.18350828, 0.6020147 , 0.67679894, 0.44123328,\n        0.47411048, 0.47458655, 0.10203615, 0.08886662, 1.3405949 ,\n        0.43682826, 0.36005154, 0.51806426, 0.17735687, 0.7185146 ,\n        0.4663297 , 0.67202103, 0.7300765 , 0.94554484, 1.0347339 ,\n        0.22911246, 0.31353402, 0.9689413 , 0.04275844, 0.15500447,\n        0.09075749, 0.2950866 , 0.74030983, 0.59036887, 0.34294564,\n        0.5528107 , 0.3721168 , 0.1056773 , 0.84371805, 0.5860183 ,\n        0.00968871, 0.959426  , 0.08026018, 0.6619667 ]], dtype=float32) = <PjitFunction of <function abs at 0x7ecc75bf25f0>>(Array([[-0.50694835,  0.30970913, -1.0483147 , -0.2971793 ,  0.5183319 ,\n        -1.021511  , -0.5006172 ,  0.37889504, -0.25739902, -0.31568795,\n         0.15669708,  0.46756837, -0.8578607 , -0.01353674, -0.15282202,\n        -0.20107451, -0.02317349, -0.6907812 , -0.5083374 , -0.7127954 ,\n         0.2091153 , -1.2715523 , -0.27340746, -0.5439285 , -0.26729783,\n         1.1938479 , -0.37502122, -0.6294161 ,  0.2658452 ,  0.15656555,\n         0.1620783 , -0.5467196 , -0.9315285 ,  1.230475  ,  0.602612  ,\n        -0.5880212 ,  0.5191237 , -0.38018548, -0.8522512 ,  0.26190284,\n        -0.8202814 , -0.15962315, -0.5789221 ,  1.2993885 ,  0.13919754,\n         0.8607982 , -0.6780343 ,  0.02110142, -0.364023  , -0.42226005,\n         0.09432815, -0.78590155, -0.16561498, -0.13247566, -0.00382191,\n         0.33534092,  0.53253293,  0.7144125 ,  1.3679162 , -0.41429377,\n        -0.19982366, -0.16172108,  0.5542995 , -0.7606949 ],\n       [ 0.22975205, -0.02878729,  0.5449711 , -0.02949583,  0.8692614 ,\n        -0.51954466,  0.75022507, -0.85511744,  0.25026062, -0.39560795,\n         0.38004875, -0.76923615,  0.25684965,  0.49881732,  1.300483  ,\n        -0.06370783,  0.311657  , -0.1720401 ,  0.7398916 , -0.71885866,\n        -0.45458293, -0.22340196,  1.2285545 ,  1.6554561 , -0.8708465 ,\n         0.43277258,  0.18350828,  0.6020147 , -0.67679894,  0.44123328,\n         0.47411048, -0.47458655, -0.10203615,  0.08886662, -1.3405949 ,\n        -0.43682826,  0.36005154,  0.51806426,  0.17735687,  0.7185146 ,\n         0.4663297 , -0.67202103,  0.7300765 , -0.94554484, -1.0347339 ,\n        -0.22911246,  0.31353402, -0.9689413 , -0.04275844, -0.15500447,\n         0.09075749, -0.2950866 , -0.74030983, -0.59036887, -0.34294564,\n        -0.5528107 ,  0.3721168 ,  0.1056773 , -0.84371805,  0.5860183 ,\n         0.00968871, -0.959426  ,  0.08026018, -0.6619667 ]],      dtype=float32))
-E        +      where <PjitFunction of <function abs at 0x7ecc75bf25f0>> = jnp.abs
+        inputs = jnp.ones((batch_size, hidden_dim))  # Example input
+        initial_state = jnp.zeros((batch_size, hidden_dim))  # Ensure correct shape
+>       outputs, final_state = memory_module(inputs, initial_state=initial_state)
+E       NameError: name 'memory_module' is not defined
 
-tests/unit/memory/test_memory.py:42: AssertionError
+tests/unit/memory/test_integration.py:149: NameError
 __________________ TestWorkingMemory.test_sequence_processing __________________
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <test_memory.TestWorkingMemory object at 0x7ecc61cfc370>
+self = <test_memory.TestWorkingMemory object at 0x776c9d49a8f0>
 key = Array([0, 0], dtype=uint32)
 memory_module = WorkingMemory(
     # attributes
@@ -956,33 +1259,43 @@ memory_module = WorkingMemory(
 
 tests/unit/memory/test_memory.py:95: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/memory.py:107: in __call__
-    final_state, outputs = jax.lax.scan(
-models/memory.py:99: in scan_fn
-    h_new = gru(x, h)
-models/memory.py:32: in __call__
-    update_dense = nn.Dense(
+models/memory.py:91: in __call__
+    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
 ../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
     dataclass_init(self, *args, **kwargs)
-<string>:14: in __init__
-    ???
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-base_level = 0
+self = LSTMCell(
+    # attributes
+    features = 64
+    gate_fn = sigmoid
+    activation_fn = tanh
+    kernel_init = init
+    recurrent_kernel_init = init
+    bias_init = zeros
+    dtype = None
+    param_dtype = float32
+    carry_init = zeros
+)
+features = 64, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
+activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
+kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
+recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
+bias_init = <function zeros at 0x776c9e065480>, dtype = None
+param_dtype = <class 'jax.numpy.float32'>
+carry_init = <function zeros at 0x776c9e065480>
+parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
 
-    def check_trace_level(base_level):
-      level = trace_level(current_trace())
-      if level != base_level:
->       raise errors.JaxTransformError()
-E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+>   ???
+E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
 
-../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+<string>:14: AssignSubModuleError
 ___________________ TestWorkingMemory.test_memory_retention ____________________
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <test_memory.TestWorkingMemory object at 0x7ecc61cfc550>
+self = <test_memory.TestWorkingMemory object at 0x776c9d49aad0>
 key = Array([0, 0], dtype=uint32)
 memory_module = WorkingMemory(
     # attributes
@@ -1000,33 +1313,43 @@ memory_module = WorkingMemory(
 
 tests/unit/memory/test_memory.py:130: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/memory.py:107: in __call__
-    final_state, outputs = jax.lax.scan(
-models/memory.py:99: in scan_fn
-    h_new = gru(x, h)
-models/memory.py:32: in __call__
-    update_dense = nn.Dense(
+models/memory.py:91: in __call__
+    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
 ../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
     dataclass_init(self, *args, **kwargs)
-<string>:14: in __init__
-    ???
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-base_level = 0
+self = LSTMCell(
+    # attributes
+    features = 64
+    gate_fn = sigmoid
+    activation_fn = tanh
+    kernel_init = init
+    recurrent_kernel_init = init
+    bias_init = zeros
+    dtype = None
+    param_dtype = float32
+    carry_init = zeros
+)
+features = 64, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
+activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
+kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
+recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
+bias_init = <function zeros at 0x776c9e065480>, dtype = None
+param_dtype = <class 'jax.numpy.float32'>
+carry_init = <function zeros at 0x776c9e065480>
+parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
 
-    def check_trace_level(base_level):
-      level = trace_level(current_trace())
-      if level != base_level:
->       raise errors.JaxTransformError()
-E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+>   ???
+E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
 
-../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+<string>:14: AssignSubModuleError
 _________________ TestMemoryComponents.test_gru_state_updates __________________
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <test_memory_components.TestMemoryComponents object at 0x7ecc61cfd240>
+self = <test_memory_components.TestMemoryComponents object at 0x776c9d49b7c0>
 working_memory = WorkingMemory(
     # attributes
     hidden_dim = 64
@@ -1047,33 +1370,43 @@ hidden_dim = 64
 
 tests/unit/memory/test_memory_components.py:36: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/memory.py:107: in __call__
-    final_state, outputs = jax.lax.scan(
-models/memory.py:99: in scan_fn
-    h_new = gru(x, h)
-models/memory.py:32: in __call__
-    update_dense = nn.Dense(
+models/memory.py:91: in __call__
+    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
 ../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
     dataclass_init(self, *args, **kwargs)
-<string>:14: in __init__
-    ???
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-base_level = 0
+self = LSTMCell(
+    # attributes
+    features = 64
+    gate_fn = sigmoid
+    activation_fn = tanh
+    kernel_init = init
+    recurrent_kernel_init = init
+    bias_init = zeros
+    dtype = None
+    param_dtype = float32
+    carry_init = zeros
+)
+features = 64, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
+activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
+kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
+recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
+bias_init = <function zeros at 0x776c9e065480>, dtype = None
+param_dtype = <class 'jax.numpy.float32'>
+carry_init = <function zeros at 0x776c9e065480>
+parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
 
-    def check_trace_level(base_level):
-      level = trace_level(current_trace())
-      if level != base_level:
->       raise errors.JaxTransformError()
-E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+>   ???
+E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
 
-../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+<string>:14: AssignSubModuleError
 _____________ TestMemoryComponents.test_memory_sequence_processing _____________
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <test_memory_components.TestMemoryComponents object at 0x7ecc61cfd450>
+self = <test_memory_components.TestMemoryComponents object at 0x776c9d49b9d0>
 working_memory = WorkingMemory(
     # attributes
     hidden_dim = 64
@@ -1095,33 +1428,43 @@ hidden_dim = 64
 
 tests/unit/memory/test_memory_components.py:57: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/memory.py:107: in __call__
-    final_state, outputs = jax.lax.scan(
-models/memory.py:99: in scan_fn
-    h_new = gru(x, h)
-models/memory.py:32: in __call__
-    update_dense = nn.Dense(
+models/memory.py:91: in __call__
+    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
 ../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
     dataclass_init(self, *args, **kwargs)
-<string>:14: in __init__
-    ???
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-base_level = 0
+self = LSTMCell(
+    # attributes
+    features = 64
+    gate_fn = sigmoid
+    activation_fn = tanh
+    kernel_init = init
+    recurrent_kernel_init = init
+    bias_init = zeros
+    dtype = None
+    param_dtype = float32
+    carry_init = zeros
+)
+features = 64, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
+activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
+kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
+recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
+bias_init = <function zeros at 0x776c9e065480>, dtype = None
+param_dtype = <class 'jax.numpy.float32'>
+carry_init = <function zeros at 0x776c9e065480>
+parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
 
-    def check_trace_level(base_level):
-      level = trace_level(current_trace())
-      if level != base_level:
->       raise errors.JaxTransformError()
-E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+>   ???
+E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
 
-../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+<string>:14: AssignSubModuleError
 ________________ TestMemoryComponents.test_context_aware_gating ________________
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <test_memory_components.TestMemoryComponents object at 0x7ecc61cfd660>
+self = <test_memory_components.TestMemoryComponents object at 0x776c9d49bbe0>
 working_memory = WorkingMemory(
     # attributes
     hidden_dim = 64
@@ -1149,33 +1492,40 @@ hidden_dim = 64
 
 tests/unit/memory/test_memory_components.py:80: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/memory.py:107: in __call__
-    final_state, outputs = jax.lax.scan(
-models/memory.py:99: in scan_fn
-    h_new = gru(x, h)
-models/memory.py:32: in __call__
-    update_dense = nn.Dense(
+models/memory.py:91: in __call__
+    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
 ../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
     dataclass_init(self, *args, **kwargs)
-<string>:14: in __init__
-    ???
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-base_level = 0
+self = LSTMCell(
+    # attributes
+    features = 64
+    gate_fn = sigmoid
+    activation_fn = tanh
+    kernel_init = init
+    recurrent_kernel_init = init
+    bias_init = zeros
+    dtype = None
+    param_dtype = float32
+    carry_init = zeros
+)
+features = 64, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
+activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
+kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
+recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
+bias_init = <function zeros at 0x776c9e065480>, dtype = None
+param_dtype = <class 'jax.numpy.float32'>
+carry_init = <function zeros at 0x776c9e065480>
+parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
 
-    def check_trace_level(base_level):
-      level = trace_level(current_trace())
-      if level != base_level:
->       raise errors.JaxTransformError()
-E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+>   ???
+E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
 
-../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+<string>:14: AssignSubModuleError
 ______________ TestMemoryComponents.test_information_integration _______________
-jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-The above exception was the direct cause of the following exception:
-
-self = <test_memory_components.TestMemoryComponents object at 0x7ecc61cfd870>
+self = <test_memory_components.TestMemoryComponents object at 0x776c9d49bdf0>
 info_integration = InformationIntegration(
     # attributes
     hidden_dim = 64
@@ -1194,58 +1544,27 @@ hidden_dim = 64
         ], axis=1)  # Shape: [batch, num_modules, seq_length, hidden_dim]
     
         # Initialize and run forward pass
->       variables = info_integration.init(key, inputs, deterministic=True)
+        variables = info_integration.init(key, inputs, deterministic=True)
+        output, phi = info_integration.apply(variables, inputs, deterministic=True)
+    
+        # Verify shapes
+        expected_output_shape = (batch_size, info_integration.num_modules, seq_length, hidden_dim)
+        self.assert_output_shape(output, expected_output_shape)
+    
+        # Phi should be a scalar per batch element
+>       assert phi.shape == (batch_size,)
+E       assert (2, 8) == (2,)
+E         
+E         Left contains one more item: 8
+E         Use -v to get more diff
 
-tests/unit/memory/test_memory_components.py:109: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/memory.py:173: in __call__
-    phi = avg_module_entropy - system_entropy  # Shape: [batch_size]
-../../.local/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:573: in deferring_binary_op
-    return binary_op(*args)
-../../.local/lib/python3.10/site-packages/jax/_src/numpy/ufunc_api.py:177: in __call__
-    return call(*args)
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-x = Traced<ShapedArray(float32[2,4])>with<DynamicJaxprTrace(level=1/0)>
-y = Traced<ShapedArray(float32[2,8])>with<DynamicJaxprTrace(level=1/0)>
-
-    @partial(jit, inline=True)
-    def _subtract(x: ArrayLike, y: ArrayLike, /) -> Array:
-      """Subtract two arrays element-wise.
-    
-      JAX implementation of :obj:`numpy.subtract`. This is a universal function,
-      and supports the additional APIs described at :class:`jax.numpy.ufunc`.
-      This function provides the implementation of the ``-`` operator for
-      JAX arrays.
-    
-      Args:
-        x, y: arrays to subtract. Must be broadcastable to a common shape.
-    
-      Returns:
-        Array containing the result of the element-wise subtraction.
-    
-      Examples:
-        Calling ``subtract`` explicitly:
-    
-        >>> x = jnp.arange(4)
-        >>> jnp.subtract(x, 10)
-        Array([-10,  -9,  -8,  -7], dtype=int32)
-    
-        Calling ``subtract`` via the ``-`` operator:
-    
-        >>> x - 10
-        Array([-10,  -9,  -8,  -7], dtype=int32)
-      """
->     return lax.sub(*promote_args("subtract", x, y))
-E     TypeError: sub got incompatible shapes for broadcasting: (2, 4), (2, 8).
-
-../../.local/lib/python3.10/site-packages/jax/_src/numpy/ufuncs.py:1463: TypeError
+tests/unit/memory/test_memory_components.py:117: AssertionError
 __________________ TestMemoryComponents.test_memory_retention __________________
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <test_memory_components.TestMemoryComponents object at 0x7ecc61cfda80>
+self = <test_memory_components.TestMemoryComponents object at 0x776c9d4c0040>
 working_memory = WorkingMemory(
     # attributes
     hidden_dim = 64
@@ -1272,27 +1591,37 @@ hidden_dim = 64
 
 tests/unit/memory/test_memory_components.py:133: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/memory.py:107: in __call__
-    final_state, outputs = jax.lax.scan(
-models/memory.py:99: in scan_fn
-    h_new = gru(x, h)
-models/memory.py:32: in __call__
-    update_dense = nn.Dense(
+models/memory.py:91: in __call__
+    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
 ../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
     dataclass_init(self, *args, **kwargs)
-<string>:14: in __init__
-    ???
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-base_level = 0
+self = LSTMCell(
+    # attributes
+    features = 64
+    gate_fn = sigmoid
+    activation_fn = tanh
+    kernel_init = init
+    recurrent_kernel_init = init
+    bias_init = zeros
+    dtype = None
+    param_dtype = float32
+    carry_init = zeros
+)
+features = 64, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
+activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
+kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
+recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
+bias_init = <function zeros at 0x776c9e065480>, dtype = None
+param_dtype = <class 'jax.numpy.float32'>
+carry_init = <function zeros at 0x776c9e065480>
+parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
 
-    def check_trace_level(base_level):
-      level = trace_level(current_trace())
-      if level != base_level:
->       raise errors.JaxTransformError()
-E       flax.errors.JaxTransformError: Jax transforms and Flax models cannot be mixed. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.JaxTransformError)
+>   ???
+E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
 
-../../.local/lib/python3.10/site-packages/flax/core/tracers.py:37: JaxTransformError
+<string>:14: AssignSubModuleError
 =========================== short test summary info ============================
 FAILED tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_pattern_recognition
 FAILED tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_abstraction_capability
@@ -1301,13 +1630,17 @@ FAILED tests/benchmarks/test_bigbench_reasoning.py::TestBigBenchReasoning::test_
 FAILED tests/benchmarks/test_bigbench_reasoning.py::TestBigBenchReasoning::test_meta_learning
 FAILED tests/benchmarks/test_bigbench_reasoning.py::TestBigBenchReasoning::test_consciousness_emergence
 FAILED tests/test_consciousness.py::TestConsciousnessModel::test_model_forward_pass
+FAILED tests/unit/attention/test_attention.py::TestConsciousnessAttention::test_attention_output_shape
 FAILED tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_cross_modal_attention
 FAILED tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_modality_specific_processing
 FAILED tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_integration_stability
+FAILED tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_cognitive_integration
+FAILED tests/unit/integration/test_state_management.py::TestConsciousnessStateManager::test_rl_optimization
 FAILED tests/unit/integration/test_state_management.py::TestConsciousnessStateManager::test_adaptive_gating
 FAILED tests/unit/memory/test_integration.py::TestInformationIntegration::test_phi_metric_computation
+FAILED tests/unit/memory/test_integration.py::TestInformationIntegration::test_information_flow
 FAILED tests/unit/memory/test_integration.py::TestInformationIntegration::test_entropy_calculations
-FAILED tests/unit/memory/test_memory.py::TestGRUCell::test_gru_state_updates
+FAILED tests/unit/memory/test_integration.py::TestInformationIntegration::test_memory_integration
 FAILED tests/unit/memory/test_memory.py::TestWorkingMemory::test_sequence_processing
 FAILED tests/unit/memory/test_memory.py::TestWorkingMemory::test_memory_retention
 FAILED tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_gru_state_updates
@@ -1315,4 +1648,4 @@ FAILED tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_m
 FAILED tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_context_aware_gating
 FAILED tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_information_integration
 FAILED tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_memory_retention
-======================== 21 failed, 24 passed in 12.96s ========================
+======================== 25 failed, 23 passed in 14.73s ========================

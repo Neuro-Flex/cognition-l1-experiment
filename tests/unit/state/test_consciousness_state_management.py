@@ -11,13 +11,8 @@ class TestStateManagement(ConsciousnessTestBase):
     """Test suite for consciousness state management."""
 
     @pytest.fixture
-    def state_manager(self, hidden_dim):
-        """Create state management module for testing."""
-        return ConsciousnessStateManager(
-            hidden_dim=hidden_dim,
-            num_states=4,
-            dropout_rate=0.1
-        )
+    def state_manager(self):
+        return ConsciousnessStateManager(hidden_dim=64, num_states=4, dropout_rate=0.1)
 
     def test_state_updates(self, state_manager, key, batch_size, hidden_dim):
         """Test consciousness state updates."""

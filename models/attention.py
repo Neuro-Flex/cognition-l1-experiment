@@ -1,6 +1,3 @@
-"""
-Implementation of attention mechanisms for AI consciousness modeling.
-"""
 import jax
 import jax.numpy as jnp
 import flax.linen as nn
@@ -17,7 +14,7 @@ class ConsciousnessAttention(nn.Module):
     attention_dropout_rate: float = 0.1
 
     @nn.compact
-    def __call__(self, inputs_q, inputs_kv, mask=None, deterministic=None):
+    def __call__(self, inputs_q, inputs_kv, mask=None, deterministic=True):
         """
         Apply consciousness-aware attention mechanism.
 
@@ -49,7 +46,8 @@ class ConsciousnessAttention(nn.Module):
         attention_logits = attention_logits / depth_scaling
 
         if mask is not None:
-            attention_mask = mask[..., None, None, :]
+            # Expand mask to match the attention logits shape
+            attention_mask = mask[:, None, None, :]
             attention_logits = jnp.where(attention_mask, attention_logits, -1e10)
 
         attention_weights = nn.softmax(attention_logits, axis=-1)
@@ -58,8 +56,7 @@ class ConsciousnessAttention(nn.Module):
         if not deterministic:
             attention_weights = nn.Dropout(
                 rate=self.attention_dropout_rate,
-                deterministic=False
-            )(attention_weights)
+            )(attention_weights, deterministic=deterministic)
 
         # Compute attention output
         attention_output = jnp.einsum('bhqk,bkhd->bqhd', attention_weights, value)
@@ -72,7 +69,15 @@ class ConsciousnessAttention(nn.Module):
 
         # Apply output dropout if not deterministic
         if not deterministic:
-            output = nn.Dropout(rate=self.dropout_rate, deterministic=False)(output)
+            output = nn.Dropout(rate=self.dropout_rate)(
+                output, deterministic=deterministic
+            )
+
+        # Adjust output shape
+        output = output.reshape(inputs_q.shape)
+
+        # Residual connection
+        output = inputs_q + output
 
         return output, attention_weights
 
@@ -111,7 +116,7 @@ class GlobalWorkspace(nn.Module):
 
         # Apply attention with residual connection
         attended_output, attention_weights = attention(x, x, mask, deterministic)
-        x = x + attended_output
+        x = x + attended_output  # Residual connection
 
         # Feed-forward network for information integration
         y = nn.LayerNorm()(x)
@@ -119,10 +124,11 @@ class GlobalWorkspace(nn.Module):
         y = nn.gelu(y)
         y = nn.Dense(inputs.shape[-1], name='ff2')(y)
 
-        # Use Dropout module for feed-forward dropout
-        ff_dropout = nn.Dropout(rate=self.dropout_rate, deterministic=deterministic)
+        # Apply dropout to feed-forward output if not deterministic
         if not deterministic:
-            y = ff_dropout(y)
+            y = nn.Dropout(rate=self.dropout_rate)(
+                y, deterministic=deterministic
+            )
 
         # Residual connection for maintaining information flow
         output = x + y

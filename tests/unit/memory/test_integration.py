@@ -18,7 +18,6 @@ class TestInformationIntegration:
     def integration_module(self):
         return InformationIntegration(
             hidden_dim=64,
-            num_modules=4,
             dropout_rate=0.1
         )
 
@@ -140,3 +139,10 @@ class TestInformationIntegration:
 
         # Uniform distribution should have higher entropy
         assert phi_uniform > phi_concentrated
+
+    def test_memory_integration(self):
+        batch_size = 2
+        hidden_dim = 64
+        inputs = jnp.ones((batch_size, hidden_dim))  # Example input
+        initial_state = jnp.zeros((batch_size, hidden_dim))  # Ensure correct shape
+        outputs, final_state = memory_module(inputs, initial_state=initial_state)

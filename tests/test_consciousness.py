@@ -30,6 +30,10 @@ class TestConsciousnessModel(ConsciousnessTestBase):
         }
         return inputs
 
+    @pytest.fixture
+    def deterministic(self):
+        return True
+
     def test_model_initialization(self, model):
         """Test that consciousness model initializes correctly."""
         assert isinstance(model, ConsciousnessModel)
@@ -55,8 +59,8 @@ class TestConsciousnessModel(ConsciousnessTestBase):
         assert new_state.shape == (batch_size, model.hidden_dim)
 
         # Verify metrics
-        assert 'attention_weights' in metrics
         assert 'memory_state' in metrics
+        assert 'attention_weights' in metrics
         assert 'phi' in metrics
         assert 'attention_maps' in metrics
 

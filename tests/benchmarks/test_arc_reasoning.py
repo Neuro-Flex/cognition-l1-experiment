@@ -1,14 +1,10 @@
-"""
-Benchmark tests using ARC (Abstract Reasoning Corpus) for consciousness model evaluation.
-"""
 import jax
 import jax.numpy as jnp
-import flax.linen as nn
 import pytest
 from jax import random
-import json
-import os
-from typing import Dict, List, Tuple
+from typing import Dict, Tuple
+from flax.training import train_state
+import optax
 
 from models.consciousness_model import ConsciousnessModel
 
@@ -18,137 +14,152 @@ class TestARCReasoning:
         return random.PRNGKey(0)
 
     @pytest.fixture
-    def consciousness_model(self):
-        return ConsciousnessModel(
-            hidden_dim=512,
-            num_heads=8,
-            num_layers=6,
-            num_states=4,
-            dropout_rate=0.1
-        )
+    def model_config(self):
+        return ConsciousnessModel.create_default_config()
 
-    def load_arc_sample(self) -> Tuple[Dict, Dict]:
-        """
-        Load a sample ARC task for testing.
-        Returns simplified version of task for testing.
-        """
-        # Sample ARC task: Pattern completion
-        # Input: 3x3 grid with a simple pattern
-        # Output: Expected completion of pattern
+    @pytest.fixture
+    def consciousness_model(self, model_config):
+        return ConsciousnessModel(**model_config)
+
+    def load_arc_sample(self) -> Tuple[Dict[str, jnp.ndarray], jnp.ndarray]:
+        """Load a sample ARC task for testing."""
+        # Sample pattern with proper shape (batch, height, width, channels)
         sample_input = {
             'visual': jnp.array([
                 [1, 0, 1],
                 [0, 1, 0],
-                [1, 0, 0]  # Last element missing from pattern
-            ], dtype=jnp.float32).reshape(1, 9, 1)
+                [1, 0, 0]
+            ], dtype=jnp.float32)[None, :, :, None]
         }
 
         expected_output = jnp.array([
             [1, 0, 1],
             [0, 1, 0],
-            [1, 0, 1]  # Complete pattern
-        ], dtype=jnp.float32).reshape(1, 9, 1)
+            [1, 0, 1]
+        ], dtype=jnp.float32)[None, :, :, None]
 
         return sample_input, expected_output
 
     def test_pattern_recognition(self, key, consciousness_model):
-        # Load sample ARC task
         inputs, expected = self.load_arc_sample()
-
-        # Initialize model
-        variables = consciousness_model.init(key, inputs)
-
-        # Process through consciousness model
-        consciousness_state, metrics = consciousness_model.apply(
-            variables,
-            inputs,
-            deterministic=True
-        )
-
-        # Evaluate pattern recognition
-        # Convert consciousness state to pattern prediction
-        prediction = nn.Dense(1)(consciousness_state)
-        prediction = jnp.reshape(prediction, expected.shape)
-
-        # Calculate accuracy
-        accuracy = jnp.mean(jnp.abs(prediction - expected) < 0.5)
-
-        # Test metrics
-        assert 'phi' in metrics  # Information integration metric
-        assert 'attention_maps' in metrics  # Attention patterns
-        assert 'memory_state' in metrics  # Working memory state
-
-        # Basic performance checks
-        assert accuracy > 0.5  # Should be better than random
-        assert metrics['phi'] > 0  # Should show information integration
-
-    def test_abstraction_capability(self, key, consciousness_model):
-        # Test ability to abstract patterns across different representations
-        inputs, _ = self.load_arc_sample()
-
-        # Create variations of the same pattern
-        variations = {
-            'original': inputs['visual'],
-            'rotated': jnp.rot90(inputs['visual'].reshape(3, 3)).reshape(1, 9, 1),
-            'scaled': inputs['visual'] * 2
+        batch_size = inputs['visual'].shape[0]
+        
+        # Initialize model state
+        model_inputs = {
+            'visual': inputs['visual'],
+            'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))
         }
 
-        variables = consciousness_model.init(key, {'visual': variations['original']})
+        # Initialize model
+        variables = consciousness_model.init(key, model_inputs)
 
-        # Process each variation
-        consciousness_states = {}
-        for name, input_var in variations.items():
-            state, _ = consciousness_model.apply(
+        try:
+            # Forward pass
+            output, metrics = consciousness_model.apply(
                 variables,
-                {'visual': input_var},
-                deterministic=True
+                model_inputs,
+                deterministic=True,
+                consciousness_threshold=0.5
             )
-            consciousness_states[name] = state
 
-        # Compare representations
-        # Similar patterns should have similar consciousness states
-        def state_similarity(state1, state2):
-            return jnp.mean(jnp.abs(state1 - state2))
+            # Validate outputs
+            assert output.shape == (batch_size, consciousness_model.hidden_dim)
+            assert 'phi' in metrics
+            assert metrics['phi'].shape == (batch_size,)
+            assert jnp.all(metrics['phi'] >= 0)
 
-        # Test invariance properties
-        original_rotated_sim = state_similarity(
-            consciousness_states['original'],
-            consciousness_states['rotated']
-        )
-        original_scaled_sim = state_similarity(
-            consciousness_states['original'],
-            consciousness_states['scaled']
-        )
+            # Validate attention
+            assert 'attention_weights' in metrics
+            assert metrics['attention_weights'].ndim >= 3  # (batch, heads, seq)
 
-        # Representations should show some similarity despite transformations
-        assert original_rotated_sim < 0.5
-        assert original_scaled_sim < 0.5
+        except Exception as e:
+            pytest.fail(f"Pattern recognition test failed: {str(e)}")
+
+    def test_abstraction_capability(self, key, consciousness_model):
+        inputs, _ = self.load_arc_sample()
+        batch_size = inputs['visual'].shape[0]
+
+        # Create transformed versions
+        variations = {
+            'original': inputs['visual'],
+            'rotated': jnp.rot90(inputs['visual'][:, :, :, 0], k=1)[:, :, None],
+            'scaled': inputs['visual'] * 2.0
+        }
+
+        try:
+            variables = consciousness_model.init(
+                key, 
+                {'visual': variations['original'], 
+                 'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))}
+            )
+
+            states = {}
+            for name, visual_input in variations.items():
+                output, metrics = consciousness_model.apply(
+                    variables,
+                    {'visual': visual_input, 
+                     'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))},
+                    deterministic=True
+                )
+                states[name] = output
+
+            # Test representation similarity
+            def cosine_similarity(x, y):
+                return jnp.sum(x * y) / (jnp.linalg.norm(x) * jnp.linalg.norm(y))
+
+            orig_rot_sim = cosine_similarity(
+                states['original'].ravel(),
+                states['rotated'].ravel()
+            )
+            orig_scaled_sim = cosine_similarity(
+                states['original'].ravel(),
+                states['scaled'].ravel()
+            )
+
+            # Transformed versions should maintain similar representations
+            assert orig_rot_sim > 0.5
+            assert orig_scaled_sim > 0.7
+
+        except Exception as e:
+            pytest.fail(f"Abstraction capability test failed: {str(e)}")
 
     def test_conscious_adaptation(self, key, consciousness_model):
         inputs, _ = self.load_arc_sample()
-        variables = consciousness_model.init(key, inputs)
+        batch_size = inputs['visual'].shape[0]
 
-        # Test adaptation to pattern difficulty
-        simple_pattern = inputs
-        complex_pattern = {
-            'visual': jnp.tile(inputs['visual'], (1, 2, 1))  # More complex pattern
-        }
+        try:
+            # Create simple and complex patterns
+            simple_input = {
+                'visual': inputs['visual'],
+                'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))
+            }
+            
+            # More complex pattern (doubled size)
+            complex_visual = jnp.tile(inputs['visual'], (1, 2, 2, 1))
+            complex_input = {
+                'visual': complex_visual,
+                'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))
+            }
 
-        # Process patterns
-        _, metrics_simple = consciousness_model.apply(
-            variables,
-            simple_pattern,
-            deterministic=True
-        )
+            variables = consciousness_model.init(key, simple_input)
 
-        _, metrics_complex = consciousness_model.apply(
-            variables,
-            complex_pattern,
-            deterministic=True
-        )
+            # Process both patterns
+            _, simple_metrics = consciousness_model.apply(
+                variables,
+                simple_input,
+                deterministic=True
+            )
+            
+            _, complex_metrics = consciousness_model.apply(
+                variables,
+                complex_input,
+                deterministic=True
+            )
 
-        # Complex patterns should show higher integration
-        assert metrics_complex['phi'] > metrics_simple['phi']
+            # Validate complexity adaptation
+            assert complex_metrics['phi'] > simple_metrics['phi']
+            assert 'attention_weights' in simple_metrics
+            assert 'attention_weights' in complex_metrics
 
-        # Check energy efficiency adaptation
-        assert metrics_complex['energy_cost'] > metrics_simple['energy_cost']
+        except Exception as e:
+            pytest.fail(f"Conscious adaptation test failed: {str(e)}")

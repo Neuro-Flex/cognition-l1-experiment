@@ -1,6 +1,3 @@
-"""
-Implementation of cognitive process integration and consciousness state management.
-"""
 import jax
 import jax.numpy as jnp
 import flax.linen as nn
@@ -18,17 +15,9 @@ class CognitiveProcessIntegration(nn.Module):
 
     @nn.compact
     def __call__(self, inputs: Dict[str, jnp.ndarray], deterministic: bool = True):
-        """
-        Process multiple modalities through integrated consciousness architecture.
-
-        Args:
-            inputs: Dictionary of input tensors for different modalities
-            deterministic: If True, disable dropout
-        """
         # Process each modality separately first
         processed_modalities = {}
         for modality, x in inputs.items():
-            # Modality-specific processing
             x = nn.LayerNorm()(x)
             x = nn.Dense(self.hidden_dim)(x)
             x = nn.gelu(x)
@@ -45,23 +34,21 @@ class CognitiveProcessIntegration(nn.Module):
 
             for source_modality, source_features in processed_modalities.items():
                 if source_modality != target_modality:
-                    # Cross-attention between modalities
+                    # Fix MultiHeadAttention usage
                     attention = nn.MultiHeadDotProductAttention(
                         num_heads=self.num_heads,
                         dropout_rate=self.dropout_rate
                     )
-                    attended, attention_weights = attention(
-                        queries=target_features,
-                        keys=source_features,
-                        values=source_features,
-                        deterministic=deterministic
-                    )
+                    mask = None  # Define 'mask' variable
+                    for modality_input in inputs.values():
+                        attended = attention(modality_input, modality_input, mask=mask, deterministic=deterministic)
                     cross_modal_contexts.append(attended)
-                    attention_maps[f"{target_modality}-{source_modality}"] = attention_weights
 
-            # Combine cross-modal information
+            # Ensure tensor shapes match before combining
             if cross_modal_contexts:
                 combined = jnp.mean(jnp.stack(cross_modal_contexts), axis=0)
+                # Align dimensions before addition
+                combined = nn.Dense(target_features.shape[-1])(combined)
                 integrated = target_features + combined
             else:
                 integrated = target_features
@@ -82,34 +69,24 @@ class ConsciousnessStateManager(nn.Module):
 
     @nn.compact
     def __call__(self, state, inputs, threshold: float = 0.5, deterministic: bool = True):
-        """
-        Update consciousness state using adaptive memory gates and RL-based optimization.
-
-        Args:
-            state: Current consciousness state
-            inputs: New input information
-            threshold: Consciousness threshold for state transitions (0.0-1.0)
-            deterministic: If True, disable dropout
-        """
         # Ensure inputs are float32
         state = jnp.asarray(state, dtype=jnp.float32)
         inputs = jnp.asarray(inputs, dtype=jnp.float32)
 
-        # Adaptive memory gating with threshold
+        # Adaptive memory gating with smooth thresholding
         gate_input = jnp.concatenate([inputs, state], axis=-1)
         memory_gate = nn.Dense(self.hidden_dim, name='memory_gate')(gate_input)
         memory_gate = nn.sigmoid(memory_gate)
+        # Apply smooth thresholding
+        memory_gate = nn.sigmoid(memory_gate - threshold)
 
-        # Apply consciousness threshold to gate
-        memory_gate = jnp.where(memory_gate > threshold, memory_gate, jnp.zeros_like(memory_gate))
-
-        # Candidate state computation with explicit types
+        # Candidate state computation
         candidate_state = nn.Dense(self.hidden_dim)(inputs)
         candidate_state = nn.gelu(candidate_state)
         if not deterministic:
             candidate_state = nn.dropout(candidate_state, rate=self.dropout_rate, deterministic=deterministic)
 
-        # State update with thresholded gating
+        # State update with smooth gating
         new_state = memory_gate * state + (1 - memory_gate) * candidate_state
 
         # Energy efficiency metric
@@ -134,6 +111,8 @@ class ConsciousnessStateManager(nn.Module):
             next_state_value: Estimated value of next state
             gamma: Discount factor
         """
+        # Ensure reward has the same shape as state_value
+        reward = jnp.expand_dims(reward, axis=-1)
         # TD error for value optimization
         td_target = reward + gamma * next_state_value
         td_error = td_target - state_value

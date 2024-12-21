@@ -1,12 +1,11 @@
 """
 Main consciousness model integrating all components.
 """
-import jax
 import jax.numpy as jnp
 import flax.linen as nn
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict
 
-from .attention import ConsciousnessAttention, GlobalWorkspace
+from .attention import GlobalWorkspace
 from .memory import WorkingMemory, InformationIntegration
 from .consciousness_state import CognitiveProcessIntegration, ConsciousnessStateManager
 
@@ -58,6 +57,12 @@ class ConsciousnessModel(nn.Module):
             num_states=self.num_states,
             dropout_rate=self.dropout_rate
         )
+
+        # Fix GRUCell initialization with features parameter
+        self.gru_cell = nn.GRUCell(features=self.hidden_dim)
+
+        # Add shape alignment layer
+        self.align_layer = nn.Dense(self.hidden_dim)
 
     def __call__(self, inputs: Dict[str, jnp.ndarray], state=None, deterministic: bool = True, consciousness_threshold: float = 0.5):
         """
