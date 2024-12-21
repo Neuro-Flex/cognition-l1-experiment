@@ -67,23 +67,11 @@ class WorkingMemory(nn.Module):
     Working memory component with context-aware gating for consciousness.
     """
     hidden_dim: int
-    dropout_rate: float = 0.1
-
-    def setup(self):
-        self.dropout = nn.Dropout(rate=self.dropout_rate)
-        self.gru = GRUCell(hidden_dim=self.hidden_dim)
+    dropout_rate: float
 
     @nn.compact
     def __call__(self, inputs, initial_state=None, mask=None, deterministic=True):
-        """
-        Process sequence through working memory.
-
-        Args:
-            inputs: Input sequence [batch, seq_len, input_dim]
-            initial_state: Optional initial hidden state
-            mask: Boolean mask [batch, seq_len]
-            deterministic: If True, disable dropout
-        """
+        """Process sequence through working memory."""
         batch_size = inputs.shape[0]
         if initial_state is None:
             initial_state = jnp.zeros((batch_size, self.hidden_dim))
@@ -91,32 +79,39 @@ class WorkingMemory(nn.Module):
         # Define RNN cell outside scan_fn
         rnn_cell = nn.LSTMCell(features=self.hidden_dim)
 
+        # Initialize both hidden and cell states
+        if initial_state is None:
+            initial_h = jnp.zeros((batch_size, self.hidden_dim))
+            initial_c = jnp.zeros((batch_size, self.hidden_dim))
+        else:
+            initial_h = initial_state
+            initial_c = jnp.zeros_like(initial_state)
+
+        # Generate a PRNG key for LSTM initialization
+        key = self.make_rng('params')
+
         # Process sequence using pure function for JAX compatibility
-        def scan_fn(carry, x):
-            h, y = carry
-            h_new, y_new = rnn_cell(h, x)
-            return (h_new, y_new), y_new
+        def scan_fn(carry: Tuple, x):
+            lstm_state, prev_h = carry
+            new_lstm_state, new_h = rnn_cell(lstm_state, x)
+            return (new_lstm_state, new_h), new_h
 
-        # Ensure inputs and state are float32
-        inputs = jnp.asarray(inputs, dtype=jnp.float32)
-        initial_state = jnp.asarray(initial_state, dtype=jnp.float32)
-
-        # Initialize carry correctly
-        initial_carry = (initial_state, jnp.zeros((batch_size, self.hidden_dim)))
-
-        # Use scan with explicit axis for sequence processing
-        (final_state, _), outputs = jax.lax.scan(
-            scan_fn,
-            init=initial_carry,
-            xs=inputs.swapaxes(0, 1)
+        # Initialize proper LSTM state
+        input_shape = (batch_size, self.hidden_dim)
+        init_lstm_carry = (
+            nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
+            initial_h
         )
-        outputs = outputs.swapaxes(0, 1)
 
-        # Apply dropout using Flax's deterministic dropout
+        # Apply dropout if not in deterministic mode
         if not deterministic:
-            outputs = self.dropout(outputs, deterministic=deterministic)
+            dropout_key = self.make_rng('dropout')
+            inputs = nn.Dropout(rate=self.dropout_rate)(inputs, deterministic=False, rng=dropout_key)
 
-        return outputs, final_state
+        # Scan over the sequence
+        (final_lstm_state, final_h), outputs = jax.lax.scan(scan_fn, init_lstm_carry, inputs)
+
+        return outputs, final_lstm_state
 
 class InformationIntegration(nn.Module):
     """
@@ -126,55 +121,35 @@ class InformationIntegration(nn.Module):
     num_modules: int
     dropout_rate: float = 0.1
 
-    def setup(self):
-        self.layer_norm = nn.LayerNorm()
-        self.dense1 = nn.Dense(self.hidden_dim)
-        self.dense2 = nn.Dense(self.hidden_dim)
-        self.dropout = nn.Dropout(rate=self.dropout_rate)
-
+    @nn.compact
     def __call__(self, inputs, deterministic=True):
-        """
-        Integrate information across modules using IIT principles.
-
-        Args:
-            inputs: Input tensor [batch, num_modules, input_dim]
-            deterministic: If True, disable dropout
-        """
-        # Layer normalization for stability
-        x = self.layer_norm(inputs)
-
-        # Dense network with GELU activation and residual connection
-        y = self.dense1(x)
-        y = nn.gelu(y)
-
-        # Apply dropout
+        # Project all inputs to same dimension if needed
+        if inputs.shape[-1] != self.hidden_dim:
+            inputs = nn.Dense(features=self.hidden_dim)(inputs)
+            
+        # Apply layer normalization
+        x = nn.LayerNorm()(inputs)
+        
+        # Apply self-attention across modules
+        y = nn.MultiHeadAttention(
+            num_heads=4,
+            qkv_features=self.hidden_dim,
+            out_features=self.hidden_dim,
+            dropout_rate=self.dropout_rate,
+            deterministic=deterministic,
+        )(x, x, x)
+        
         if not deterministic:
-            y = self.dropout(y)
-
-        y = self.dense2(y)
-        if not deterministic:
-            y = self.dropout(y)
-
-        # Residual connection
-        output = y + x
-
-        # Compute information integration metric (Φ)
-        def compute_entropy(p):
-            # Ensure proper broadcasting for entropy calculation
-            eps = 1e-12
-            p = jnp.clip(p, eps, 1.0 - eps)
-            return -jnp.sum(p * jnp.log(p), axis=-1, keepdims=True)
-
-        # Reshape tensors to ensure compatible broadcasting
-        module_probs = nn.softmax(output, axis=-1)
-        module_entropies = jax.vmap(compute_entropy)(module_probs)
-        avg_module_entropy = jnp.mean(module_entropies, axis=1)  # [batch_size, 1]
-
-        system_logits = jnp.mean(output, axis=1)
-        system_probs = nn.softmax(system_logits, axis=-1)
-        system_entropy = compute_entropy(system_probs)  # [batch_size, 1]
-
-        # Ensure compatible shapes for subtraction
-        phi = jnp.squeeze(avg_module_entropy - system_entropy, axis=-1)
-
+            y = nn.Dropout(
+                rate=self.dropout_rate,
+                deterministic=deterministic
+            )(y)
+            
+        # Add residual connection
+        output = x + y
+        
+        # Calculate integration metric (phi)
+        # Shape: (batch_size,)
+        phi = jnp.mean(jnp.abs(output), axis=(-2, -1))
+        
         return output, phi

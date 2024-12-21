@@ -10,6 +10,8 @@ from jax import random
 from models.attention import ConsciousnessAttention, GlobalWorkspace
 from models.memory import WorkingMemory
 
+key = random.PRNGKey(0)
+
 class TestConsciousnessAttention:
     @pytest.fixture
     def key(self):

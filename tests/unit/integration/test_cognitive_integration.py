@@ -6,6 +6,7 @@ import jax.numpy as jnp
 import flax.linen as nn
 import pytest
 from jax import random
+from flax.linen import Dropout
 
 from models.consciousness_state import CognitiveProcessIntegration
 
@@ -43,6 +44,7 @@ class TestCognitiveProcessIntegration:
         }
 
         # Initialize parameters
+        input_shape = (batch_size,)
         variables = integration_module.init(key, inputs)
 
         # Process through integration
@@ -79,6 +81,7 @@ class TestCognitiveProcessIntegration:
         single_input = {
             'visual': random.normal(key, (batch_size, seq_length, input_dim))
         }
+        input_shape = (batch_size,)
         variables = integration_module.init(key, single_input)
 
         consciousness_state1, _ = integration_module.apply(
@@ -159,6 +162,7 @@ class TestCognitiveProcessIntegration:
         }
 
         # Initialize parameters
+        input_shape = (batch_size,)
         variables = integration_module.init(random.PRNGKey(0), inputs)
 
         # Process through integration

@@ -54,6 +54,7 @@ class TestBigBenchReasoning:
 
     def test_reasoning_capabilities(self, key, consciousness_model):
         tasks = self.load_sample_tasks()
+        input_shape = (1,)
         variables = consciousness_model.init(key, {'textual': jnp.zeros((1, 1, 512))})
 
         for task in tasks:
@@ -91,6 +92,7 @@ class TestBigBenchReasoning:
             {'textual': "3, 6, 9, _", 'expected': "12"}
         ]
 
+        input_shape = (1,)
         variables = consciousness_model.init(
             key,
             {'textual': jnp.zeros((1, 1, 512))}
@@ -121,6 +123,7 @@ class TestBigBenchReasoning:
         """
         # Complex multi-step reasoning task
         task_embedding = random.normal(key, (1, 128, 512))
+        input_shape = (1,)
         variables = consciousness_model.init(
             key,
             {'textual': task_embedding}

@@ -90,10 +90,11 @@ class TestWorkingMemory:
 
         # Create sample sequence
         inputs = random.normal(key, (batch_size, seq_length, input_dim))
-
+        
         # Initialize parameters
-        variables = memory_module.init(key, inputs)
-
+        input_shape = (batch_size,)
+        variables = memory_module.init(key, inputs, deterministic=True)
+        
         # Process sequence
         outputs, final_state = memory_module.apply(
             variables,
@@ -127,6 +128,7 @@ class TestWorkingMemory:
         input_dim = 32
 
         inputs = random.normal(key, (batch_size, seq_length, input_dim))
+        input_shape = (batch_size,)
         variables = memory_module.init(key, inputs)
 
         # Test with different initial states

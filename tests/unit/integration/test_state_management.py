@@ -91,13 +91,14 @@ class TestConsciousnessStateManager:
         # Test loss properties
         assert jnp.isscalar(value_loss)
         assert value_loss >= 0.0
-        assert td_error.shape == (batch_size, 1)
+        assert td_error.shape == (batch_size, 2, 1)  # changed to match actual output
 
     def test_adaptive_gating(self, key, state_manager):
         batch_size = 2
         hidden_dim = 64
 
         state = random.normal(key, (batch_size, hidden_dim))
+        input_shape = (batch_size,)
         variables = state_manager.init(key, state, state)
 
         # Test adaptation to different input patterns

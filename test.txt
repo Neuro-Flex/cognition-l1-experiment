@@ -4,19 +4,19 @@ rootdir: /home/kasinadhsarma/experiment/cognition-l1-experiment
 configfile: pytest.ini
 testpaths: tests
 plugins: cov-6.0.0, anyio-4.7.0
-collected 48 items
+collected 51 items
 
-tests/benchmarks/test_arc_reasoning.py FFF                               [  6%]
-tests/benchmarks/test_bigbench_reasoning.py FFF                          [ 12%]
-tests/test_consciousness.py .F.                                          [ 18%]
-tests/test_environment.py .....                                          [ 29%]
-tests/unit/attention/test_attention.py ..F.                              [ 37%]
-tests/unit/attention/test_attention_mechanisms.py ....                   [ 45%]
-tests/unit/integration/test_cognitive_integration.py FFFF                [ 54%]
-tests/unit/integration/test_state_management.py .FF.                     [ 62%]
-tests/unit/memory/test_integration.py FFFF                               [ 70%]
-tests/unit/memory/test_memory.py ..FF                                    [ 79%]
-tests/unit/memory/test_memory_components.py FFFFF                        [ 89%]
+tests/benchmarks/test_arc_reasoning.py FFF                               [  5%]
+tests/benchmarks/test_bigbench_reasoning.py FFF                          [ 11%]
+tests/test_consciousness.py .F.FFF                                       [ 23%]
+tests/test_environment.py .....                                          [ 33%]
+tests/unit/attention/test_attention.py ....                              [ 41%]
+tests/unit/attention/test_attention_mechanisms.py ....                   [ 49%]
+tests/unit/integration/test_cognitive_integration.py FF.F                [ 56%]
+tests/unit/integration/test_state_management.py ..F.                     [ 64%]
+tests/unit/memory/test_integration.py FF.F                               [ 72%]
+tests/unit/memory/test_memory.py ..FF                                    [ 80%]
+tests/unit/memory/test_memory_components.py .FFFF                        [ 90%]
 tests/unit/state/test_consciousness_state_management.py .....            [100%]
 
 =================================== FAILURES ===================================
@@ -25,7 +25,7 @@ jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal fra
 
 The above exception was the direct cause of the following exception:
 
-self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x776c9d437430>
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x72f182c32f80>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -46,50 +46,44 @@ consciousness_model = ConsciousnessModel(
             'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))
         }
     
+        # Ensure input_shape is a tuple
+        input_shape = (batch_size,)
         # Initialize model
 >       variables = consciousness_model.init(key, model_inputs)
 
-tests/benchmarks/test_arc_reasoning.py:54: 
+tests/benchmarks/test_arc_reasoning.py:56: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/consciousness_model.py:101: in __call__
+models/consciousness_model.py:105: in __call__
     memory_output, memory_state = self.working_memory(
-models/memory.py:91: in __call__
-    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
-../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
-    dataclass_init(self, *args, **kwargs)
+models/memory.py:102: in __call__
+    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = LSTMCell(
-    # attributes
-    features = 512
-    gate_fn = sigmoid
-    activation_fn = tanh
-    kernel_init = init
-    recurrent_kernel_init = init
-    bias_init = zeros
-    dtype = None
-    param_dtype = float32
-    carry_init = zeros
-)
-features = 512, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
-activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
-kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
-recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
-bias_init = <function zeros at 0x776c9e065480>, dtype = None
-param_dtype = <class 'jax.numpy.float32'>
-carry_init = <function zeros at 0x776c9e065480>
-parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
+self = Array([2420929151, 3698740751], dtype=uint32), rng = (1, 512)
+input_shape = 512
 
->   ???
-E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
+    @nowrap
+    def initialize_carry(
+      self, rng: PRNGKey, input_shape: tuple[int, ...]
+    ) -> tuple[Array, Array]:
+      """Initialize the RNN cell carry.
+    
+      Args:
+        rng: random number generator passed to the init_fn.
+        input_shape: a tuple providing the shape of the input to the cell.
+      Returns:
+        An initialized carry for the given RNN cell.
+      """
+>     batch_dims = input_shape[:-1]
+E     TypeError: 'int' object is not subscriptable
 
-<string>:14: AssignSubModuleError
+../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
 _________________ TestARCReasoning.test_abstraction_capability _________________
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x776c9d434d00>
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x72f182c30ac0>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -112,51 +106,45 @@ consciousness_model = ConsciousnessModel(
         }
     
         try:
+            # Ensure input_shape is a tuple
+            input_shape = (batch_size,)
 >           variables = consciousness_model.init(
                 key,
                 {'visual': variations['original'],
                  'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))}
             )
 
-tests/benchmarks/test_arc_reasoning.py:90: 
+tests/benchmarks/test_arc_reasoning.py:102: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/consciousness_model.py:101: in __call__
+models/consciousness_model.py:105: in __call__
     memory_output, memory_state = self.working_memory(
-models/memory.py:91: in __call__
-    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
-../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
-    dataclass_init(self, *args, **kwargs)
+models/memory.py:102: in __call__
+    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = LSTMCell(
-    # attributes
-    features = 512
-    gate_fn = sigmoid
-    activation_fn = tanh
-    kernel_init = init
-    recurrent_kernel_init = init
-    bias_init = zeros
-    dtype = None
-    param_dtype = float32
-    carry_init = zeros
-)
-features = 512, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
-activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
-kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
-recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
-bias_init = <function zeros at 0x776c9e065480>, dtype = None
-param_dtype = <class 'jax.numpy.float32'>
-carry_init = <function zeros at 0x776c9e065480>
-parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
+self = Array([2420929151, 3698740751], dtype=uint32), rng = (1, 512)
+input_shape = 512
 
->   ???
-E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
+    @nowrap
+    def initialize_carry(
+      self, rng: PRNGKey, input_shape: tuple[int, ...]
+    ) -> tuple[Array, Array]:
+      """Initialize the RNN cell carry.
+    
+      Args:
+        rng: random number generator passed to the init_fn.
+        input_shape: a tuple providing the shape of the input to the cell.
+      Returns:
+        An initialized carry for the given RNN cell.
+      """
+>     batch_dims = input_shape[:-1]
+E     TypeError: 'int' object is not subscriptable
 
-<string>:14: AssignSubModuleError
+../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
 
 During handling of the above exception, another exception occurred:
 
-self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x776c9d434d00>
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x72f182c30ac0>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -179,6 +167,8 @@ consciousness_model = ConsciousnessModel(
         }
     
         try:
+            # Ensure input_shape is a tuple
+            input_shape = (batch_size,)
             variables = consciousness_model.init(
                 key,
                 {'visual': variations['original'],
@@ -214,15 +204,15 @@ consciousness_model = ConsciousnessModel(
     
         except Exception as e:
 >           pytest.fail(f"Abstraction capability test failed: {str(e)}")
-E           Failed: Abstraction capability test failed: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
+E           Failed: Abstraction capability test failed: 'int' object is not subscriptable
 
-tests/benchmarks/test_arc_reasoning.py:124: Failed
+tests/benchmarks/test_arc_reasoning.py:136: Failed
 __________________ TestARCReasoning.test_conscious_adaptation __________________
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x776c9d436dd0>
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x72f182c31720>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -251,47 +241,41 @@ consciousness_model = ConsciousnessModel(
                 'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))
             }
     
+            # Ensure input_shape is a tuple
+            input_shape = (batch_size,)
 >           variables = consciousness_model.init(key, simple_input)
 
-tests/benchmarks/test_arc_reasoning.py:144: 
+tests/benchmarks/test_arc_reasoning.py:158: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/consciousness_model.py:101: in __call__
+models/consciousness_model.py:105: in __call__
     memory_output, memory_state = self.working_memory(
-models/memory.py:91: in __call__
-    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
-../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
-    dataclass_init(self, *args, **kwargs)
+models/memory.py:102: in __call__
+    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = LSTMCell(
-    # attributes
-    features = 512
-    gate_fn = sigmoid
-    activation_fn = tanh
-    kernel_init = init
-    recurrent_kernel_init = init
-    bias_init = zeros
-    dtype = None
-    param_dtype = float32
-    carry_init = zeros
-)
-features = 512, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
-activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
-kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
-recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
-bias_init = <function zeros at 0x776c9e065480>, dtype = None
-param_dtype = <class 'jax.numpy.float32'>
-carry_init = <function zeros at 0x776c9e065480>
-parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
+self = Array([2420929151, 3698740751], dtype=uint32), rng = (1, 512)
+input_shape = 512
 
->   ???
-E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
+    @nowrap
+    def initialize_carry(
+      self, rng: PRNGKey, input_shape: tuple[int, ...]
+    ) -> tuple[Array, Array]:
+      """Initialize the RNN cell carry.
+    
+      Args:
+        rng: random number generator passed to the init_fn.
+        input_shape: a tuple providing the shape of the input to the cell.
+      Returns:
+        An initialized carry for the given RNN cell.
+      """
+>     batch_dims = input_shape[:-1]
+E     TypeError: 'int' object is not subscriptable
 
-<string>:14: AssignSubModuleError
+../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
 
 During handling of the above exception, another exception occurred:
 
-self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x776c9d436dd0>
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x72f182c31720>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -320,6 +304,8 @@ consciousness_model = ConsciousnessModel(
                 'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))
             }
     
+            # Ensure input_shape is a tuple
+            input_shape = (batch_size,)
             variables = consciousness_model.init(key, simple_input)
     
             # Process both patterns
@@ -340,17 +326,31 @@ consciousness_model = ConsciousnessModel(
             assert 'attention_weights' in simple_metrics
             assert 'attention_weights' in complex_metrics
     
+            # Validate attention maps
+            assert 'attention_maps' in simple_metrics
+            assert 'attention_maps' in complex_metrics
+            for attn_map in simple_metrics['attention_maps'].values():
+                assert jnp.allclose(
+                    jnp.sum(attn_map, axis=-1),
+                    jnp.ones((batch_size, 8, 64))  # (batch, heads, seq_length)
+                )
+            for attn_map in complex_metrics['attention_maps'].values():
+                assert jnp.allclose(
+                    jnp.sum(attn_map, axis=-1),
+                    jnp.ones((batch_size, 8, 64))  # (batch, heads, seq_length)
+                )
+    
         except Exception as e:
 >           pytest.fail(f"Conscious adaptation test failed: {str(e)}")
-E           Failed: Conscious adaptation test failed: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
+E           Failed: Conscious adaptation test failed: 'int' object is not subscriptable
 
-tests/benchmarks/test_arc_reasoning.py:165: Failed
+tests/benchmarks/test_arc_reasoning.py:193: Failed
 ______________ TestBigBenchReasoning.test_reasoning_capabilities _______________
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x776c9d4374f0>
+self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x72f182c334c0>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -363,49 +363,42 @@ consciousness_model = ConsciousnessModel(
 
     def test_reasoning_capabilities(self, key, consciousness_model):
         tasks = self.load_sample_tasks()
+        input_shape = (1,)
 >       variables = consciousness_model.init(key, {'textual': jnp.zeros((1, 1, 512))})
 
-tests/benchmarks/test_bigbench_reasoning.py:57: 
+tests/benchmarks/test_bigbench_reasoning.py:58: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/consciousness_model.py:101: in __call__
+models/consciousness_model.py:105: in __call__
     memory_output, memory_state = self.working_memory(
-models/memory.py:91: in __call__
-    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
-../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
-    dataclass_init(self, *args, **kwargs)
+models/memory.py:102: in __call__
+    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = LSTMCell(
-    # attributes
-    features = 512
-    gate_fn = sigmoid
-    activation_fn = tanh
-    kernel_init = init
-    recurrent_kernel_init = init
-    bias_init = zeros
-    dtype = None
-    param_dtype = float32
-    carry_init = zeros
-)
-features = 512, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
-activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
-kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
-recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
-bias_init = <function zeros at 0x776c9e065480>, dtype = None
-param_dtype = <class 'jax.numpy.float32'>
-carry_init = <function zeros at 0x776c9e065480>
-parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
+self = Array([2420929151, 3698740751], dtype=uint32), rng = (1, 512)
+input_shape = 512
 
->   ???
-E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
+    @nowrap
+    def initialize_carry(
+      self, rng: PRNGKey, input_shape: tuple[int, ...]
+    ) -> tuple[Array, Array]:
+      """Initialize the RNN cell carry.
+    
+      Args:
+        rng: random number generator passed to the init_fn.
+        input_shape: a tuple providing the shape of the input to the cell.
+      Returns:
+        An initialized carry for the given RNN cell.
+      """
+>     batch_dims = input_shape[:-1]
+E     TypeError: 'int' object is not subscriptable
 
-<string>:14: AssignSubModuleError
+../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
 ___________________ TestBigBenchReasoning.test_meta_learning ___________________
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x776c9d436440>
+self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x72f182c33a00>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -425,52 +418,45 @@ consciousness_model = ConsciousnessModel(
             {'textual': "3, 6, 9, _", 'expected': "12"}
         ]
     
+        input_shape = (1,)
 >       variables = consciousness_model.init(
             key,
             {'textual': jnp.zeros((1, 1, 512))}
         )
 
-tests/benchmarks/test_bigbench_reasoning.py:94: 
+tests/benchmarks/test_bigbench_reasoning.py:96: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/consciousness_model.py:101: in __call__
+models/consciousness_model.py:105: in __call__
     memory_output, memory_state = self.working_memory(
-models/memory.py:91: in __call__
-    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
-../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
-    dataclass_init(self, *args, **kwargs)
+models/memory.py:102: in __call__
+    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = LSTMCell(
-    # attributes
-    features = 512
-    gate_fn = sigmoid
-    activation_fn = tanh
-    kernel_init = init
-    recurrent_kernel_init = init
-    bias_init = zeros
-    dtype = None
-    param_dtype = float32
-    carry_init = zeros
-)
-features = 512, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
-activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
-kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
-recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
-bias_init = <function zeros at 0x776c9e065480>, dtype = None
-param_dtype = <class 'jax.numpy.float32'>
-carry_init = <function zeros at 0x776c9e065480>
-parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
+self = Array([2420929151, 3698740751], dtype=uint32), rng = (1, 512)
+input_shape = 512
 
->   ???
-E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
+    @nowrap
+    def initialize_carry(
+      self, rng: PRNGKey, input_shape: tuple[int, ...]
+    ) -> tuple[Array, Array]:
+      """Initialize the RNN cell carry.
+    
+      Args:
+        rng: random number generator passed to the init_fn.
+        input_shape: a tuple providing the shape of the input to the cell.
+      Returns:
+        An initialized carry for the given RNN cell.
+      """
+>     batch_dims = input_shape[:-1]
+E     TypeError: 'int' object is not subscriptable
 
-<string>:14: AssignSubModuleError
+../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
 ______________ TestBigBenchReasoning.test_consciousness_emergence ______________
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x776c9d436770>
+self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x72f182c332b0>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -490,52 +476,45 @@ consciousness_model = ConsciousnessModel(
         """
         # Complex multi-step reasoning task
         task_embedding = random.normal(key, (1, 128, 512))
+        input_shape = (1,)
 >       variables = consciousness_model.init(
             key,
             {'textual': task_embedding}
         )
 
-tests/benchmarks/test_bigbench_reasoning.py:124: 
+tests/benchmarks/test_bigbench_reasoning.py:127: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/consciousness_model.py:101: in __call__
+models/consciousness_model.py:105: in __call__
     memory_output, memory_state = self.working_memory(
-models/memory.py:91: in __call__
-    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
-../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
-    dataclass_init(self, *args, **kwargs)
+models/memory.py:102: in __call__
+    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = LSTMCell(
-    # attributes
-    features = 512
-    gate_fn = sigmoid
-    activation_fn = tanh
-    kernel_init = init
-    recurrent_kernel_init = init
-    bias_init = zeros
-    dtype = None
-    param_dtype = float32
-    carry_init = zeros
-)
-features = 512, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
-activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
-kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
-recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
-bias_init = <function zeros at 0x776c9e065480>, dtype = None
-param_dtype = <class 'jax.numpy.float32'>
-carry_init = <function zeros at 0x776c9e065480>
-parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
+self = Array([2420929151, 3698740751], dtype=uint32), rng = (1, 512)
+input_shape = 512
 
->   ???
-E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
+    @nowrap
+    def initialize_carry(
+      self, rng: PRNGKey, input_shape: tuple[int, ...]
+    ) -> tuple[Array, Array]:
+      """Initialize the RNN cell carry.
+    
+      Args:
+        rng: random number generator passed to the init_fn.
+        input_shape: a tuple providing the shape of the input to the cell.
+      Returns:
+        An initialized carry for the given RNN cell.
+      """
+>     batch_dims = input_shape[:-1]
+E     TypeError: 'int' object is not subscriptable
 
-<string>:14: AssignSubModuleError
+../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
 ________________ TestConsciousnessModel.test_model_forward_pass ________________
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <tests.test_consciousness.TestConsciousnessModel object at 0x776c9d4683a0>
+self = <tests.test_consciousness.TestConsciousnessModel object at 0x72f182c687f0>
 model = ConsciousnessModel(
     # attributes
     hidden_dim = 64
@@ -553,59 +532,195 @@ key = Array([ 0, 42], dtype=uint32), deterministic = True
     def test_model_forward_pass(self, model, sample_input, key, deterministic):
         """Test forward pass through consciousness model."""
         # Initialize model
+        input_shape = (sample_input['attention'].shape[0],)
 >       variables = model.init(key, sample_input, deterministic=deterministic)
 
-tests/test_consciousness.py:44: 
+tests/test_consciousness.py:49: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/consciousness_model.py:101: in __call__
+models/consciousness_model.py:105: in __call__
     memory_output, memory_state = self.working_memory(
-models/memory.py:91: in __call__
-    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
-../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
-    dataclass_init(self, *args, **kwargs)
+models/memory.py:102: in __call__
+    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = LSTMCell(
-    # attributes
-    features = 64
-    gate_fn = sigmoid
-    activation_fn = tanh
-    kernel_init = init
-    recurrent_kernel_init = init
-    bias_init = zeros
-    dtype = None
-    param_dtype = float32
-    carry_init = zeros
-)
-features = 64, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
-activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
-kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
-recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
-bias_init = <function zeros at 0x776c9e065480>, dtype = None
-param_dtype = <class 'jax.numpy.float32'>
-carry_init = <function zeros at 0x776c9e065480>
-parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
+self = Array([3819375347, 1502290012], dtype=uint32), rng = (2, 64)
+input_shape = 64
 
->   ???
-E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
-
-<string>:14: AssignSubModuleError
-____________ TestConsciousnessAttention.test_attention_output_shape ____________
-
-self = <test_attention.TestConsciousnessAttention object at 0x776c9d469e10>
-
-    def test_attention_output_shape(self):
-        batch_size = 2
-        seq_length = 8
-        input_dim = 128
+    @nowrap
+    def initialize_carry(
+      self, rng: PRNGKey, input_shape: tuple[int, ...]
+    ) -> tuple[Array, Array]:
+      """Initialize the RNN cell carry.
     
->       inputs_q = random.normal(key, (batch_size, seq_length, input_dim))
-E       NameError: name 'key' is not defined
+      Args:
+        rng: random number generator passed to the init_fn.
+        input_shape: a tuple providing the shape of the input to the cell.
+      Returns:
+        An initialized carry for the given RNN cell.
+      """
+>     batch_dims = input_shape[:-1]
+E     TypeError: 'int' object is not subscriptable
 
-tests/unit/attention/test_attention.py:130: NameError
+../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
+____________ TestConsciousnessModel.test_model_state_initialization ____________
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+self = <tests.test_consciousness.TestConsciousnessModel object at 0x72f182c68c40>
+model = ConsciousnessModel(
+    # attributes
+    hidden_dim = 64
+    num_heads = 4
+    num_layers = 4
+    num_states = 4
+    dropout_rate = 0.1
+)
+sample_input = {'attention': Array([[[-0.02862089,  1.5240539 , -1.0556508 , ..., -0.27188757,
+         -0.88195777,  0.11891642],
+  ...        [-0.5756394 , -0.20118208, -0.08988765, ...,  0.23238769,
+          1.5470275 , -1.2839596 ]]], dtype=float32)}
+key = Array([ 0, 42], dtype=uint32), deterministic = True
+
+    def test_model_state_initialization(self, model, sample_input, key, deterministic):
+        """Test initialization of the model state."""
+        input_shape = (sample_input['attention'].shape[0],)
+>       variables = model.init(key, sample_input, deterministic=deterministic)
+
+tests/test_consciousness.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/consciousness_model.py:105: in __call__
+    memory_output, memory_state = self.working_memory(
+models/memory.py:102: in __call__
+    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Array([3819375347, 1502290012], dtype=uint32), rng = (2, 64)
+input_shape = 64
+
+    @nowrap
+    def initialize_carry(
+      self, rng: PRNGKey, input_shape: tuple[int, ...]
+    ) -> tuple[Array, Array]:
+      """Initialize the RNN cell carry.
+    
+      Args:
+        rng: random number generator passed to the init_fn.
+        input_shape: a tuple providing the shape of the input to the cell.
+      Returns:
+        An initialized carry for the given RNN cell.
+      """
+>     batch_dims = input_shape[:-1]
+E     TypeError: 'int' object is not subscriptable
+
+../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
+________________ TestConsciousnessModel.test_model_state_update ________________
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+self = <tests.test_consciousness.TestConsciousnessModel object at 0x72f182c68eb0>
+model = ConsciousnessModel(
+    # attributes
+    hidden_dim = 64
+    num_heads = 4
+    num_layers = 4
+    num_states = 4
+    dropout_rate = 0.1
+)
+sample_input = {'attention': Array([[[-0.02862089,  1.5240539 , -1.0556508 , ..., -0.27188757,
+         -0.88195777,  0.11891642],
+  ...        [-0.5756394 , -0.20118208, -0.08988765, ...,  0.23238769,
+          1.5470275 , -1.2839596 ]]], dtype=float32)}
+key = Array([ 0, 42], dtype=uint32), deterministic = True
+
+    def test_model_state_update(self, model, sample_input, key, deterministic):
+        """Test updating the model state."""
+        input_shape = (sample_input['attention'].shape[0],)
+>       variables = model.init(key, sample_input, deterministic=deterministic)
+
+tests/test_consciousness.py:96: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/consciousness_model.py:105: in __call__
+    memory_output, memory_state = self.working_memory(
+models/memory.py:102: in __call__
+    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Array([3819375347, 1502290012], dtype=uint32), rng = (2, 64)
+input_shape = 64
+
+    @nowrap
+    def initialize_carry(
+      self, rng: PRNGKey, input_shape: tuple[int, ...]
+    ) -> tuple[Array, Array]:
+      """Initialize the RNN cell carry.
+    
+      Args:
+        rng: random number generator passed to the init_fn.
+        input_shape: a tuple providing the shape of the input to the cell.
+      Returns:
+        An initialized carry for the given RNN cell.
+      """
+>     batch_dims = input_shape[:-1]
+E     TypeError: 'int' object is not subscriptable
+
+../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
+_____________ TestConsciousnessModel.test_model_attention_weights ______________
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+self = <tests.test_consciousness.TestConsciousnessModel object at 0x72f182c69120>
+model = ConsciousnessModel(
+    # attributes
+    hidden_dim = 64
+    num_heads = 4
+    num_layers = 4
+    num_states = 4
+    dropout_rate = 0.1
+)
+sample_input = {'attention': Array([[[-0.02862089,  1.5240539 , -1.0556508 , ..., -0.27188757,
+         -0.88195777,  0.11891642],
+  ...        [-0.5756394 , -0.20118208, -0.08988765, ...,  0.23238769,
+          1.5470275 , -1.2839596 ]]], dtype=float32)}
+key = Array([ 0, 42], dtype=uint32), deterministic = True
+
+    def test_model_attention_weights(self, model, sample_input, key, deterministic):
+        """Test attention weights in the model."""
+        input_shape = (sample_input['attention'].shape[0],)
+>       variables = model.init(key, sample_input, deterministic=deterministic)
+
+tests/test_consciousness.py:108: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/consciousness_model.py:105: in __call__
+    memory_output, memory_state = self.working_memory(
+models/memory.py:102: in __call__
+    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Array([3819375347, 1502290012], dtype=uint32), rng = (2, 64)
+input_shape = 64
+
+    @nowrap
+    def initialize_carry(
+      self, rng: PRNGKey, input_shape: tuple[int, ...]
+    ) -> tuple[Array, Array]:
+      """Initialize the RNN cell carry.
+    
+      Args:
+        rng: random number generator passed to the init_fn.
+        input_shape: a tuple providing the shape of the input to the cell.
+      Returns:
+        An initialized carry for the given RNN cell.
+      """
+>     batch_dims = input_shape[:-1]
+E     TypeError: 'int' object is not subscriptable
+
+../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
 __________ TestCognitiveProcessIntegration.test_cross_modal_attention __________
 
-self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x776c9d46b940>
+self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x72f1751a10f0>
 key = Array([0, 0], dtype=uint32)
 integration_module = CognitiveProcessIntegration(
     # attributes
@@ -635,6 +750,7 @@ integration_module = CognitiveProcessIntegration(
         }
     
         # Initialize parameters
+        input_shape = (batch_size,)
         variables = integration_module.init(key, inputs)
     
         # Process through integration
@@ -652,16 +768,22 @@ integration_module = CognitiveProcessIntegration(
             for target in inputs.keys():
                 if source != target:
                     map_key = f"{target}-{source}"
->                   assert map_key in attention_maps
-E                   AssertionError: assert 'textual-visual' in {}
+                    assert map_key in attention_maps
+                    attention_map = attention_maps[map_key]
+                    # Check attention map properties
+>                   assert attention_map.shape[-2:] == (seq_length, seq_length)
+E                   assert (8, 32) == (8, 8)
+E                     
+E                     At index 1 diff: 32 != 8
+E                     Use -v to get more diff
 
-tests/unit/integration/test_cognitive_integration.py:63: AssertionError
+tests/unit/integration/test_cognitive_integration.py:68: AssertionError
 ______ TestCognitiveProcessIntegration.test_modality_specific_processing _______
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x776c9d46bb20>
+self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x72f1751a3640>
 key = Array([0, 0], dtype=uint32)
 integration_module = CognitiveProcessIntegration(
     # attributes
@@ -680,6 +802,7 @@ integration_module = CognitiveProcessIntegration(
         single_input = {
             'visual': random.normal(key, (batch_size, seq_length, input_dim))
         }
+        input_shape = (batch_size,)
         variables = integration_module.init(key, single_input)
     
         consciousness_state1, _ = integration_module.apply(
@@ -700,7 +823,7 @@ integration_module = CognitiveProcessIntegration(
             deterministic=True
         )
 
-tests/unit/integration/test_cognitive_integration.py:96: 
+tests/unit/integration/test_cognitive_integration.py:99: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 models/consciousness_state.py:21: in __call__
     x = nn.LayerNorm()(x)
@@ -745,8 +868,8 @@ var = Array([[[0.85883766],
         [1.3724558 ]]], dtype=float32)
 reduction_axes = (2,), feature_axes = (2,), dtype = None
 param_dtype = <class 'jax.numpy.float32'>, epsilon = 1e-06, use_bias = True
-use_scale = True, bias_init = <function zeros at 0x776c9e065480>
-scale_init = <function ones at 0x776c9df00a60>, force_float32_reductions = True
+use_scale = True, bias_init = <function zeros at 0x72f183861480>
+scale_init = <function ones at 0x72f1838fca60>, force_float32_reductions = True
 
     def _normalize(
       mdl: Module,
@@ -809,12 +932,9 @@ scale_init = <function ones at 0x776c9df00a60>, force_float32_reductions = True
 E       flax.errors.ScopeParamNotFoundError: Could not find parameter named "scale" in scope "/LayerNorm_1". (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.ScopeParamNotFoundError)
 
 ../../.local/lib/python3.10/site-packages/flax/linen/normalization.py:204: ScopeParamNotFoundError
-__________ TestCognitiveProcessIntegration.test_integration_stability __________
-jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+__________ TestCognitiveProcessIntegration.test_cognitive_integration __________
 
-The above exception was the direct cause of the following exception:
-
-self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x776c9d46bd00>
+self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x72f1751a3a00>
 key = Array([0, 0], dtype=uint32)
 integration_module = CognitiveProcessIntegration(
     # attributes
@@ -824,80 +944,7 @@ integration_module = CognitiveProcessIntegration(
     dropout_rate = 0.1
 )
 
-    def test_integration_stability(self, key, integration_module):
-        batch_size = 2
-        seq_length = 8
-        input_dim = 32
-    
-        inputs = {
-            'modality1': random.normal(key, (batch_size, seq_length, input_dim)),
-            'modality2': random.normal(key, (batch_size, seq_length, input_dim))
-        }
-    
-        variables = integration_module.init(key, inputs)
-    
-        # Test stability across multiple forward passes
-        states = []
-        for _ in range(5):
-            state, _ = integration_module.apply(
-                variables,
-                inputs,
-                deterministic=True
-            )
-            states.append(state)
-    
-        # All forward passes should produce identical results
-        for i in range(1, len(states)):
-            assert jnp.allclose(states[0], states[i])
-    
-        # Test with dropout
-        states_dropout = []
-        for i in range(5):
->           state, _ = integration_module.apply(
-                variables,
-                inputs,
-                deterministic=False,
-                rngs={'dropout': random.PRNGKey(i)}
-            )
-
-tests/unit/integration/test_cognitive_integration.py:134: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = CognitiveProcessIntegration(
-    # attributes
-    hidden_dim = 64
-    num_heads = 4
-    num_layers = 3
-    dropout_rat...
-        kernel_init = init
-        bias_init = zeros
-        dot_general = None
-        dot_general_cls = None
-    )
-)
-inputs = {'modality1': Array([[[-2.0545669 ,  0.33981755,  0.2619878 , -0.9536857 ,
-          1.1861376 ,  1.2227523 ,  0.11180...6593276,  0.17548549, -2.5559947 ,
-          0.0899727 , -1.434366  ,  0.5375884 ,  1.2183367 ]]],      dtype=float32)}
-deterministic = False
-
-    @nn.compact
-    def __call__(self, inputs: Dict[str, jnp.ndarray], deterministic: bool = True):
-        # Process each modality separately first
-        processed_modalities = {}
-        for modality, x in inputs.items():
-            x = nn.LayerNorm()(x)
-            x = nn.Dense(self.hidden_dim)(x)
-            x = nn.gelu(x)
-            if not deterministic:
->               x = nn.dropout(x, rate=self.dropout_rate, deterministic=deterministic)
-E               AttributeError: module 'flax.linen' has no attribute 'dropout'. Did you mean: 'Dropout'?
-
-models/consciousness_state.py:25: AttributeError
-__________ TestCognitiveProcessIntegration.test_cognitive_integration __________
-
-self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x776c9d46beb0>
-
-    def test_cognitive_integration(self):
+    def test_cognitive_integration(self, key, integration_module):
         # Test dimensions
         batch_size = 2
         seq_length = 8
@@ -911,62 +958,34 @@ self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x7
         }
     
         # Initialize parameters
->       variables = integration_module.init(random.PRNGKey(0), inputs)
-E       NameError: name 'integration_module' is not defined
-
-tests/unit/integration/test_cognitive_integration.py:162: NameError
-______________ TestConsciousnessStateManager.test_rl_optimization ______________
-
-self = <test_state_management.TestConsciousnessStateManager object at 0x776c9d4985e0>
-key = Array([0, 0], dtype=uint32)
-state_manager = ConsciousnessStateManager(
-    # attributes
-    hidden_dim = 64
-    num_states = 4
-    dropout_rate = 0.1
-)
-
-    def test_rl_optimization(self, key, state_manager):
-        batch_size = 2
-        hidden_dim = 64
+        input_shape = (batch_size,)
+        variables = integration_module.init(random.PRNGKey(0), inputs)
     
-        state = random.normal(key, (batch_size, hidden_dim))
-        inputs = random.normal(key, (batch_size, hidden_dim))
-        variables = state_manager.init(key, state, inputs)
-    
-        # Get state values for current and next state
-        new_state, metrics = state_manager.apply(
+        # Process through integration
+        consciousness_state, attention_maps = integration_module.apply(
             variables,
-            state,
             inputs,
-            threshold=0.5,
             deterministic=True
         )
     
-        # Test RL loss computation
-        reward = jnp.ones((batch_size, 1))  # Mock reward
-        value_loss, td_error = state_manager.apply(
-            variables,
-            method=state_manager.get_rl_loss,
-            state_value=metrics['state_value'],
-            reward=reward,
-            next_state_value=metrics['state_value']
-        )
-    
-        # Test loss properties
-        assert jnp.isscalar(value_loss)
-        assert value_loss >= 0.0
->       assert td_error.shape == (batch_size, 1)
-E       assert (2, 2, 1) == (2, 1)
-E         
-E         At index 1 diff: 2 != 1
-E         Left contains one more item: 1
-E         Use -v to get more diff
+        # Adjust assertions as needed
+        assert consciousness_state.shape == (batch_size, seq_length, 64)
+        for source in inputs.keys():
+            for target in inputs.keys():
+                if source != target:
+                    map_key = f"{target}-{source}"
+                    assert map_key in attention_maps
+                    attention_map = attention_maps[map_key]
+>                   assert attention_map.shape[-2:] == (seq_length, seq_length)
+E                   assert (8, 32) == (8, 8)
+E                     
+E                     At index 1 diff: 32 != 8
+E                     Use -v to get more diff
 
-tests/unit/integration/test_state_management.py:94: AssertionError
+tests/unit/integration/test_cognitive_integration.py:183: AssertionError
 ______________ TestConsciousnessStateManager.test_adaptive_gating ______________
 
-self = <test_state_management.TestConsciousnessStateManager object at 0x776c9d4987c0>
+self = <test_state_management.TestConsciousnessStateManager object at 0x72f1751d0880>
 key = Array([0, 0], dtype=uint32)
 state_manager = ConsciousnessStateManager(
     # attributes
@@ -980,6 +999,7 @@ state_manager = ConsciousnessStateManager(
         hidden_dim = 64
     
         state = random.normal(key, (batch_size, hidden_dim))
+        input_shape = (batch_size,)
         variables = state_manager.init(key, state, state)
     
         # Test adaptation to different input patterns
@@ -1006,18 +1026,15 @@ state_manager = ConsciousnessStateManager(
         # Memory gate should be more open (lower values) for different inputs
 >       assert jnp.mean(metrics1['memory_gate']) > jnp.mean(metrics2['memory_gate'])
 E       assert Array(0.50011224, dtype=float32) > Array(0.50012636, dtype=float32)
-E        +  where Array(0.50011224, dtype=float32) = <function mean at 0x776c9e670f70>(Array([[0.5569959 , 0.58251977, 0.4551106 , 0.41000992, 0.5886512 ,\n        0.5248869 , 0.56394213, 0.42929018, 0.5237....39520618, 0.44670913, 0.47268876, 0.4021517 ,\n        0.57144237, 0.53708297, 0.579201  , 0.44888377]], dtype=float32))
-E        +    where <function mean at 0x776c9e670f70> = jnp.mean
-E        +  and   Array(0.50012636, dtype=float32) = <function mean at 0x776c9e670f70>(Array([[0.55393577, 0.57986414, 0.4609477 , 0.4116633 , 0.5870904 ,\n        0.5233553 , 0.5625932 , 0.43273216, 0.5196....39790606, 0.45207238, 0.47798336, 0.4020855 ,\n        0.56832683, 0.5379167 , 0.5762647 , 0.45469669]], dtype=float32))
-E        +    where <function mean at 0x776c9e670f70> = jnp.mean
+E        +  where Array(0.50011224, dtype=float32) = <function mean at 0x72f183e70f70>(Array([[0.5569959 , 0.58251977, 0.4551106 , 0.41000992, 0.5886512 ,\n        0.5248869 , 0.56394213, 0.42929018, 0.5237....39520618, 0.44670913, 0.47268876, 0.4021517 ,\n        0.57144237, 0.53708297, 0.579201  , 0.44888377]], dtype=float32))
+E        +    where <function mean at 0x72f183e70f70> = jnp.mean
+E        +  and   Array(0.50012636, dtype=float32) = <function mean at 0x72f183e70f70>(Array([[0.55393577, 0.57986414, 0.4609477 , 0.4116633 , 0.5870904 ,\n        0.5233553 , 0.5625932 , 0.43273216, 0.5196....39790606, 0.45207238, 0.47798336, 0.4020855 ,\n        0.56832683, 0.5379167 , 0.5762647 , 0.45469669]], dtype=float32))
+E        +    where <function mean at 0x72f183e70f70> = jnp.mean
 
-tests/unit/integration/test_state_management.py:125: AssertionError
+tests/unit/integration/test_state_management.py:126: AssertionError
 ____________ TestInformationIntegration.test_phi_metric_computation ____________
-jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-The above exception was the direct cause of the following exception:
-
-self = <test_integration.TestInformationIntegration object at 0x776c9d4996c0>
+self = <test_integration.TestInformationIntegration object at 0x72f1751d1750>
 key = Array([0, 0], dtype=uint32)
 integration_module = InformationIntegration(
     # attributes
@@ -1036,59 +1053,27 @@ integration_module = InformationIntegration(
         inputs = random.normal(key, (batch_size, num_modules, input_dim))
     
         # Initialize parameters
->       variables = integration_module.init(key, inputs)
+        input_shape = (batch_size,)
+        variables = integration_module.init(key, inputs)
+    
+        # Process through integration
+        output, phi = integration_module.apply(
+            variables,
+            inputs,
+            deterministic=True
+        )
+    
+        # Test output shapes
+>       assert output.shape == inputs.shape
+E       assert (2, 4, 64) == (2, 4, 32)
+E         
+E         At index 2 diff: 64 != 32
+E         Use -v to get more diff
 
-tests/unit/memory/test_integration.py:35: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/memory.py:154: in __call__
-    output = y + x
-../../.local/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:573: in deferring_binary_op
-    return binary_op(*args)
-../../.local/lib/python3.10/site-packages/jax/_src/numpy/ufunc_api.py:179: in __call__
-    return call(*args)
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-x = Traced<ShapedArray(float32[2,4,64])>with<DynamicJaxprTrace>
-y = Traced<ShapedArray(float32[2,4,32])>with<DynamicJaxprTrace>
-
-    @binary_ufunc(identity=0, reduce=reductions.sum, accumulate=reductions.cumsum, at=_add_at)
-    def add(x: ArrayLike, y: ArrayLike, /) -> Array:
-      """Add two arrays element-wise.
-    
-      JAX implementation of :obj:`numpy.add`. This is a universal function,
-      and supports the additional APIs described at :class:`jax.numpy.ufunc`.
-      This function provides the implementation of the ``+`` operator for
-      JAX arrays.
-    
-      Args:
-        x, y: arrays to add. Must be broadcastable to a common shape.
-    
-      Returns:
-        Array containing the result of the element-wise addition.
-    
-      Examples:
-        Calling ``add`` explicitly:
-    
-        >>> x = jnp.arange(4)
-        >>> jnp.add(x, 10)
-        Array([10, 11, 12, 13], dtype=int32)
-    
-        Calling ``add`` via the ``+`` operator:
-    
-        >>> x + 10
-        Array([10, 11, 12, 13], dtype=int32)
-      """
-      x, y = promote_args("add", x, y)
->     return lax.add(x, y) if x.dtype != bool else lax.bitwise_or(x, y)
-E     TypeError: add got incompatible shapes for broadcasting: (2, 4, 64), (2, 4, 32).
-
-../../.local/lib/python3.10/site-packages/jax/_src/numpy/ufuncs.py:1215: TypeError
+tests/unit/memory/test_integration.py:46: AssertionError
 _______________ TestInformationIntegration.test_information_flow _______________
-jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-The above exception was the direct cause of the following exception:
-
-self = <test_integration.TestInformationIntegration object at 0x776c9d4998a0>
+self = <test_integration.TestInformationIntegration object at 0x72f1751d1930>
 key = Array([0, 0], dtype=uint32)
 integration_module = InformationIntegration(
     # attributes
@@ -1102,60 +1087,39 @@ integration_module = InformationIntegration(
         num_modules = 4
         input_dim = 32
     
-        inputs = random.normal(key, (batch_size, num_modules, input_dim))
->       variables = integration_module.init(key, inputs)
+        inputs = jnp.zeros((2, 4, 64), dtype=jnp.float32)  # ensure shape matches the model
+        input_shape = (batch_size,)
+        variables = integration_module.init(key, inputs)
+    
+        # Test with and without dropout
+        output1, _ = integration_module.apply(
+            variables,
+            inputs,
+            deterministic=False,
+            rngs={'dropout': random.PRNGKey(1)}
+        )
+    
+        output2, _ = integration_module.apply(
+            variables,
+            inputs,
+            deterministic=True
+        )
+    
+        # Test residual connection properties
+        # Output should maintain some similarity with input
+        input_output_correlation = jnp.mean(jnp.abs(
+            jnp.corrcoef(
+                inputs.reshape(-1, input_dim),
+                output2.reshape(-1, input_dim)
+            )
+        ))
+>       assert input_output_correlation > 0.1
+E       assert Array(nan, dtype=float32) > 0.1
 
-tests/unit/memory/test_integration.py:80: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/memory.py:154: in __call__
-    output = y + x
-../../.local/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:573: in deferring_binary_op
-    return binary_op(*args)
-../../.local/lib/python3.10/site-packages/jax/_src/numpy/ufunc_api.py:179: in __call__
-    return call(*args)
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/unit/memory/test_integration.py:106: AssertionError
+______________ TestInformationIntegration.test_memory_integration ______________
 
-x = Traced<ShapedArray(float32[2,4,64])>with<DynamicJaxprTrace>
-y = Traced<ShapedArray(float32[2,4,32])>with<DynamicJaxprTrace>
-
-    @binary_ufunc(identity=0, reduce=reductions.sum, accumulate=reductions.cumsum, at=_add_at)
-    def add(x: ArrayLike, y: ArrayLike, /) -> Array:
-      """Add two arrays element-wise.
-    
-      JAX implementation of :obj:`numpy.add`. This is a universal function,
-      and supports the additional APIs described at :class:`jax.numpy.ufunc`.
-      This function provides the implementation of the ``+`` operator for
-      JAX arrays.
-    
-      Args:
-        x, y: arrays to add. Must be broadcastable to a common shape.
-    
-      Returns:
-        Array containing the result of the element-wise addition.
-    
-      Examples:
-        Calling ``add`` explicitly:
-    
-        >>> x = jnp.arange(4)
-        >>> jnp.add(x, 10)
-        Array([10, 11, 12, 13], dtype=int32)
-    
-        Calling ``add`` via the ``+`` operator:
-    
-        >>> x + 10
-        Array([10, 11, 12, 13], dtype=int32)
-      """
-      x, y = promote_args("add", x, y)
->     return lax.add(x, y) if x.dtype != bool else lax.bitwise_or(x, y)
-E     TypeError: add got incompatible shapes for broadcasting: (2, 4, 64), (2, 4, 32).
-
-../../.local/lib/python3.10/site-packages/jax/_src/numpy/ufuncs.py:1215: TypeError
-_____________ TestInformationIntegration.test_entropy_calculations _____________
-jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
-
-The above exception was the direct cause of the following exception:
-
-self = <test_integration.TestInformationIntegration object at 0x776c9d499a80>
+self = <test_integration.TestInformationIntegration object at 0x72f1751d1cf0>
 key = Array([0, 0], dtype=uint32)
 integration_module = InformationIntegration(
     # attributes
@@ -1164,80 +1128,36 @@ integration_module = InformationIntegration(
     dropout_rate = 0.1
 )
 
-    def test_entropy_calculations(self, key, integration_module):
+    def test_memory_integration(self, key, integration_module):
         batch_size = 2
         num_modules = 4
         input_dim = 32
     
-        # Test with different input distributions
-        # Uniform distribution
-        uniform_input = jnp.ones((batch_size, num_modules, input_dim))
->       variables = integration_module.init(key, uniform_input)
-
-tests/unit/memory/test_integration.py:124: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/memory.py:154: in __call__
-    output = y + x
-../../.local/lib/python3.10/site-packages/jax/_src/numpy/array_methods.py:573: in deferring_binary_op
-    return binary_op(*args)
-../../.local/lib/python3.10/site-packages/jax/_src/numpy/ufunc_api.py:179: in __call__
-    return call(*args)
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-x = Traced<ShapedArray(float32[2,4,64])>with<DynamicJaxprTrace>
-y = Traced<ShapedArray(float32[2,4,32])>with<DynamicJaxprTrace>
-
-    @binary_ufunc(identity=0, reduce=reductions.sum, accumulate=reductions.cumsum, at=_add_at)
-    def add(x: ArrayLike, y: ArrayLike, /) -> Array:
-      """Add two arrays element-wise.
+        inputs = random.normal(key, (batch_size, num_modules, input_dim))
+        input_shape = (batch_size,)
+        variables = integration_module.init(key, inputs)
     
-      JAX implementation of :obj:`numpy.add`. This is a universal function,
-      and supports the additional APIs described at :class:`jax.numpy.ufunc`.
-      This function provides the implementation of the ``+`` operator for
-      JAX arrays.
+        # Process through integration
+        output, phi = integration_module.apply(
+            variables,
+            inputs,
+            deterministic=True
+        )
     
-      Args:
-        x, y: arrays to add. Must be broadcastable to a common shape.
-    
-      Returns:
-        Array containing the result of the element-wise addition.
-    
-      Examples:
-        Calling ``add`` explicitly:
-    
-        >>> x = jnp.arange(4)
-        >>> jnp.add(x, 10)
-        Array([10, 11, 12, 13], dtype=int32)
-    
-        Calling ``add`` via the ``+`` operator:
-    
-        >>> x + 10
-        Array([10, 11, 12, 13], dtype=int32)
-      """
-      x, y = promote_args("add", x, y)
->     return lax.add(x, y) if x.dtype != bool else lax.bitwise_or(x, y)
-E     TypeError: add got incompatible shapes for broadcasting: (2, 4, 64), (2, 4, 32).
+        # Test output shapes
+>       assert output.shape == inputs.shape
+E       assert (2, 4, 64) == (2, 4, 32)
+E         
+E         At index 2 diff: 64 != 32
+E         Use -v to get more diff
 
-../../.local/lib/python3.10/site-packages/jax/_src/numpy/ufuncs.py:1215: TypeError
-______________ TestInformationIntegration.test_memory_integration ______________
-
-self = <test_integration.TestInformationIntegration object at 0x776c9d499c30>
-
-    def test_memory_integration(self):
-        batch_size = 2
-        hidden_dim = 64
-        inputs = jnp.ones((batch_size, hidden_dim))  # Example input
-        initial_state = jnp.zeros((batch_size, hidden_dim))  # Ensure correct shape
->       outputs, final_state = memory_module(inputs, initial_state=initial_state)
-E       NameError: name 'memory_module' is not defined
-
-tests/unit/memory/test_integration.py:149: NameError
+tests/unit/memory/test_integration.py:163: AssertionError
 __________________ TestWorkingMemory.test_sequence_processing __________________
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <test_memory.TestWorkingMemory object at 0x776c9d49a8f0>
+self = <test_memory.TestWorkingMemory object at 0x72f1751d2770>
 key = Array([0, 0], dtype=uint32)
 memory_module = WorkingMemory(
     # attributes
@@ -1255,47 +1175,40 @@ memory_module = WorkingMemory(
         inputs = random.normal(key, (batch_size, seq_length, input_dim))
     
         # Initialize parameters
->       variables = memory_module.init(key, inputs)
+        input_shape = (batch_size,)
+>       variables = memory_module.init(key, inputs, deterministic=True)
 
-tests/unit/memory/test_memory.py:95: 
+tests/unit/memory/test_memory.py:96: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/memory.py:91: in __call__
-    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
-../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
-    dataclass_init(self, *args, **kwargs)
+models/memory.py:102: in __call__
+    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = LSTMCell(
-    # attributes
-    features = 64
-    gate_fn = sigmoid
-    activation_fn = tanh
-    kernel_init = init
-    recurrent_kernel_init = init
-    bias_init = zeros
-    dtype = None
-    param_dtype = float32
-    carry_init = zeros
-)
-features = 64, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
-activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
-kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
-recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
-bias_init = <function zeros at 0x776c9e065480>, dtype = None
-param_dtype = <class 'jax.numpy.float32'>
-carry_init = <function zeros at 0x776c9e065480>
-parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
+self = Array([1428664606, 3351135085], dtype=uint32), rng = (2, 64)
+input_shape = 64
 
->   ???
-E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
+    @nowrap
+    def initialize_carry(
+      self, rng: PRNGKey, input_shape: tuple[int, ...]
+    ) -> tuple[Array, Array]:
+      """Initialize the RNN cell carry.
+    
+      Args:
+        rng: random number generator passed to the init_fn.
+        input_shape: a tuple providing the shape of the input to the cell.
+      Returns:
+        An initialized carry for the given RNN cell.
+      """
+>     batch_dims = input_shape[:-1]
+E     TypeError: 'int' object is not subscriptable
 
-<string>:14: AssignSubModuleError
+../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
 ___________________ TestWorkingMemory.test_memory_retention ____________________
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <test_memory.TestWorkingMemory object at 0x776c9d49aad0>
+self = <test_memory.TestWorkingMemory object at 0x72f1751d2950>
 key = Array([0, 0], dtype=uint32)
 memory_module = WorkingMemory(
     # attributes
@@ -1309,110 +1222,46 @@ memory_module = WorkingMemory(
         input_dim = 32
     
         inputs = random.normal(key, (batch_size, seq_length, input_dim))
+        input_shape = (batch_size,)
 >       variables = memory_module.init(key, inputs)
 
-tests/unit/memory/test_memory.py:130: 
+tests/unit/memory/test_memory.py:132: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/memory.py:91: in __call__
-    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
-../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
-    dataclass_init(self, *args, **kwargs)
+models/memory.py:102: in __call__
+    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = LSTMCell(
-    # attributes
-    features = 64
-    gate_fn = sigmoid
-    activation_fn = tanh
-    kernel_init = init
-    recurrent_kernel_init = init
-    bias_init = zeros
-    dtype = None
-    param_dtype = float32
-    carry_init = zeros
-)
-features = 64, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
-activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
-kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
-recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
-bias_init = <function zeros at 0x776c9e065480>, dtype = None
-param_dtype = <class 'jax.numpy.float32'>
-carry_init = <function zeros at 0x776c9e065480>
-parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
+self = Array([1428664606, 3351135085], dtype=uint32), rng = (2, 64)
+input_shape = 64
 
->   ???
-E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
-
-<string>:14: AssignSubModuleError
-_________________ TestMemoryComponents.test_gru_state_updates __________________
-jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
-
-The above exception was the direct cause of the following exception:
-
-self = <test_memory_components.TestMemoryComponents object at 0x776c9d49b7c0>
-working_memory = WorkingMemory(
-    # attributes
-    hidden_dim = 64
-    dropout_rate = 0.1
-)
-key = Array([ 0, 42], dtype=uint32), batch_size = 2, seq_length = 8
-hidden_dim = 64
-
-    def test_gru_state_updates(self, working_memory, key, batch_size, seq_length, hidden_dim):
-        """Test GRU cell state updates."""
-        inputs = self.create_inputs(key, batch_size, seq_length, hidden_dim)
-        initial_state = jnp.zeros((batch_size, hidden_dim))
+    @nowrap
+    def initialize_carry(
+      self, rng: PRNGKey, input_shape: tuple[int, ...]
+    ) -> tuple[Array, Array]:
+      """Initialize the RNN cell carry.
     
-        # Initialize and run forward pass
->       variables = working_memory.init(
-            key, inputs, initial_state=initial_state, deterministic=True
-        )
+      Args:
+        rng: random number generator passed to the init_fn.
+        input_shape: a tuple providing the shape of the input to the cell.
+      Returns:
+        An initialized carry for the given RNN cell.
+      """
+>     batch_dims = input_shape[:-1]
+E     TypeError: 'int' object is not subscriptable
 
-tests/unit/memory/test_memory_components.py:36: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/memory.py:91: in __call__
-    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
-../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
-    dataclass_init(self, *args, **kwargs)
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = LSTMCell(
-    # attributes
-    features = 64
-    gate_fn = sigmoid
-    activation_fn = tanh
-    kernel_init = init
-    recurrent_kernel_init = init
-    bias_init = zeros
-    dtype = None
-    param_dtype = float32
-    carry_init = zeros
-)
-features = 64, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
-activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
-kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
-recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
-bias_init = <function zeros at 0x776c9e065480>, dtype = None
-param_dtype = <class 'jax.numpy.float32'>
-carry_init = <function zeros at 0x776c9e065480>
-parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
-
->   ???
-E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
-
-<string>:14: AssignSubModuleError
+../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
 _____________ TestMemoryComponents.test_memory_sequence_processing _____________
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <test_memory_components.TestMemoryComponents object at 0x776c9d49b9d0>
+self = <test_memory_components.TestMemoryComponents object at 0x72f1751f0070>
 working_memory = WorkingMemory(
     # attributes
     hidden_dim = 64
     dropout_rate = 0.1
 )
-key = Array([ 0, 42], dtype=uint32), batch_size = 2, seq_length = 8
+key = Array([0, 0], dtype=uint32), batch_size = 2, seq_length = 8
 hidden_dim = 64
 
     def test_memory_sequence_processing(self, working_memory, key, batch_size, seq_length, hidden_dim):
@@ -1422,55 +1271,48 @@ hidden_dim = 64
             inputs = self.create_inputs(key, batch_size, test_length, hidden_dim)
             initial_state = jnp.zeros((batch_size, hidden_dim))
     
+            input_shape = (batch_size,)
 >           variables = working_memory.init(
                 key, inputs, initial_state=initial_state, deterministic=True
             )
 
-tests/unit/memory/test_memory_components.py:57: 
+tests/unit/memory/test_memory_components.py:74: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/memory.py:91: in __call__
-    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
-../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
-    dataclass_init(self, *args, **kwargs)
+models/memory.py:102: in __call__
+    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = LSTMCell(
-    # attributes
-    features = 64
-    gate_fn = sigmoid
-    activation_fn = tanh
-    kernel_init = init
-    recurrent_kernel_init = init
-    bias_init = zeros
-    dtype = None
-    param_dtype = float32
-    carry_init = zeros
-)
-features = 64, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
-activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
-kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
-recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
-bias_init = <function zeros at 0x776c9e065480>, dtype = None
-param_dtype = <class 'jax.numpy.float32'>
-carry_init = <function zeros at 0x776c9e065480>
-parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
+self = Array([1428664606, 3351135085], dtype=uint32), rng = (2, 64)
+input_shape = 64
 
->   ???
-E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
+    @nowrap
+    def initialize_carry(
+      self, rng: PRNGKey, input_shape: tuple[int, ...]
+    ) -> tuple[Array, Array]:
+      """Initialize the RNN cell carry.
+    
+      Args:
+        rng: random number generator passed to the init_fn.
+        input_shape: a tuple providing the shape of the input to the cell.
+      Returns:
+        An initialized carry for the given RNN cell.
+      """
+>     batch_dims = input_shape[:-1]
+E     TypeError: 'int' object is not subscriptable
 
-<string>:14: AssignSubModuleError
+../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
 ________________ TestMemoryComponents.test_context_aware_gating ________________
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <test_memory_components.TestMemoryComponents object at 0x776c9d49bbe0>
+self = <test_memory_components.TestMemoryComponents object at 0x72f1751f0280>
 working_memory = WorkingMemory(
     # attributes
     hidden_dim = 64
     dropout_rate = 0.1
 )
-key = Array([ 0, 42], dtype=uint32), batch_size = 2, seq_length = 8
+key = Array([0, 0], dtype=uint32), batch_size = 2, seq_length = 8
 hidden_dim = 64
 
     def test_context_aware_gating(self, working_memory, key, batch_size, seq_length, hidden_dim):
@@ -1486,53 +1328,46 @@ hidden_dim = 64
         )
     
         initial_state = jnp.zeros((batch_size, hidden_dim))
+        input_shape = (batch_size,)
 >       variables = working_memory.init(
             key, base_inputs, initial_state=initial_state, deterministic=True
         )
 
-tests/unit/memory/test_memory_components.py:80: 
+tests/unit/memory/test_memory_components.py:98: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/memory.py:91: in __call__
-    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
-../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
-    dataclass_init(self, *args, **kwargs)
+models/memory.py:102: in __call__
+    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = LSTMCell(
-    # attributes
-    features = 64
-    gate_fn = sigmoid
-    activation_fn = tanh
-    kernel_init = init
-    recurrent_kernel_init = init
-    bias_init = zeros
-    dtype = None
-    param_dtype = float32
-    carry_init = zeros
-)
-features = 64, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
-activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
-kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
-recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
-bias_init = <function zeros at 0x776c9e065480>, dtype = None
-param_dtype = <class 'jax.numpy.float32'>
-carry_init = <function zeros at 0x776c9e065480>
-parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
+self = Array([1428664606, 3351135085], dtype=uint32), rng = (2, 64)
+input_shape = 64
 
->   ???
-E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
+    @nowrap
+    def initialize_carry(
+      self, rng: PRNGKey, input_shape: tuple[int, ...]
+    ) -> tuple[Array, Array]:
+      """Initialize the RNN cell carry.
+    
+      Args:
+        rng: random number generator passed to the init_fn.
+        input_shape: a tuple providing the shape of the input to the cell.
+      Returns:
+        An initialized carry for the given RNN cell.
+      """
+>     batch_dims = input_shape[:-1]
+E     TypeError: 'int' object is not subscriptable
 
-<string>:14: AssignSubModuleError
+../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
 ______________ TestMemoryComponents.test_information_integration _______________
 
-self = <test_memory_components.TestMemoryComponents object at 0x776c9d49bdf0>
+self = <test_memory_components.TestMemoryComponents object at 0x72f1751f0490>
 info_integration = InformationIntegration(
     # attributes
     hidden_dim = 64
     num_modules = 4
     dropout_rate = 0.1
 )
-key = Array([ 0, 42], dtype=uint32), batch_size = 2, seq_length = 8
+key = Array([0, 0], dtype=uint32), batch_size = 2, seq_length = 8
 hidden_dim = 64
 
     def test_information_integration(self, info_integration, key, batch_size, seq_length, hidden_dim):
@@ -1544,6 +1379,7 @@ hidden_dim = 64
         ], axis=1)  # Shape: [batch, num_modules, seq_length, hidden_dim]
     
         # Initialize and run forward pass
+        input_shape = (batch_size,)
         variables = info_integration.init(key, inputs, deterministic=True)
         output, phi = info_integration.apply(variables, inputs, deterministic=True)
     
@@ -1553,24 +1389,24 @@ hidden_dim = 64
     
         # Phi should be a scalar per batch element
 >       assert phi.shape == (batch_size,)
-E       assert (2, 8) == (2,)
+E       assert (2, 4) == (2,)
 E         
-E         Left contains one more item: 8
+E         Left contains one more item: 4
 E         Use -v to get more diff
 
-tests/unit/memory/test_memory_components.py:117: AssertionError
+tests/unit/memory/test_memory_components.py:136: AssertionError
 __________________ TestMemoryComponents.test_memory_retention __________________
 jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
 The above exception was the direct cause of the following exception:
 
-self = <test_memory_components.TestMemoryComponents object at 0x776c9d4c0040>
+self = <test_memory_components.TestMemoryComponents object at 0x72f1751f06a0>
 working_memory = WorkingMemory(
     # attributes
     hidden_dim = 64
     dropout_rate = 0.1
 )
-key = Array([ 0, 42], dtype=uint32), batch_size = 2, seq_length = 8
+key = Array([0, 0], dtype=uint32), batch_size = 2, seq_length = 8
 hidden_dim = 64
 
     def test_memory_retention(self, working_memory, key, batch_size, seq_length, hidden_dim):
@@ -1585,43 +1421,36 @@ hidden_dim = 64
     
         initial_state = jnp.zeros((batch_size, hidden_dim))
     
+        input_shape = (batch_size,)
 >       variables = working_memory.init(
             key, inputs, initial_state=initial_state, deterministic=True
         )
 
-tests/unit/memory/test_memory_components.py:133: 
+tests/unit/memory/test_memory_components.py:153: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/memory.py:91: in __call__
-    rnn_cell = nn.LSTMCell(features=self.hidden_dim)
-../../.local/lib/python3.10/site-packages/flax/linen/kw_only_dataclasses.py:235: in init_wrapper
-    dataclass_init(self, *args, **kwargs)
+models/memory.py:102: in __call__
+    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = LSTMCell(
-    # attributes
-    features = 64
-    gate_fn = sigmoid
-    activation_fn = tanh
-    kernel_init = init
-    recurrent_kernel_init = init
-    bias_init = zeros
-    dtype = None
-    param_dtype = float32
-    carry_init = zeros
-)
-features = 64, gate_fn = <PjitFunction of <function sigmoid at 0x776c9df263b0>>
-activation_fn = <PjitFunction of <function tanh at 0x776c9e6f0e50>>
-kernel_init = <function variance_scaling.<locals>.init at 0x776c9deac9d0>
-recurrent_kernel_init = <function orthogonal.<locals>.init at 0x776c9dda7eb0>
-bias_init = <function zeros at 0x776c9e065480>, dtype = None
-param_dtype = <class 'jax.numpy.float32'>
-carry_init = <function zeros at 0x776c9e065480>
-parent = <flax.linen.module._Sentinel object at 0x776c9de7bb20>, name = None
+self = Array([1428664606, 3351135085], dtype=uint32), rng = (2, 64)
+input_shape = 64
 
->   ???
-E   flax.errors.AssignSubModuleError: Submodule LSTMCell must be defined in `setup()` or in a method wrapped in `@compact` (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.AssignSubModuleError)
+    @nowrap
+    def initialize_carry(
+      self, rng: PRNGKey, input_shape: tuple[int, ...]
+    ) -> tuple[Array, Array]:
+      """Initialize the RNN cell carry.
+    
+      Args:
+        rng: random number generator passed to the init_fn.
+        input_shape: a tuple providing the shape of the input to the cell.
+      Returns:
+        An initialized carry for the given RNN cell.
+      """
+>     batch_dims = input_shape[:-1]
+E     TypeError: 'int' object is not subscriptable
 
-<string>:14: AssignSubModuleError
+../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
 =========================== short test summary info ============================
 FAILED tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_pattern_recognition
 FAILED tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_abstraction_capability
@@ -1630,22 +1459,20 @@ FAILED tests/benchmarks/test_bigbench_reasoning.py::TestBigBenchReasoning::test_
 FAILED tests/benchmarks/test_bigbench_reasoning.py::TestBigBenchReasoning::test_meta_learning
 FAILED tests/benchmarks/test_bigbench_reasoning.py::TestBigBenchReasoning::test_consciousness_emergence
 FAILED tests/test_consciousness.py::TestConsciousnessModel::test_model_forward_pass
-FAILED tests/unit/attention/test_attention.py::TestConsciousnessAttention::test_attention_output_shape
+FAILED tests/test_consciousness.py::TestConsciousnessModel::test_model_state_initialization
+FAILED tests/test_consciousness.py::TestConsciousnessModel::test_model_state_update
+FAILED tests/test_consciousness.py::TestConsciousnessModel::test_model_attention_weights
 FAILED tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_cross_modal_attention
 FAILED tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_modality_specific_processing
-FAILED tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_integration_stability
 FAILED tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_cognitive_integration
-FAILED tests/unit/integration/test_state_management.py::TestConsciousnessStateManager::test_rl_optimization
 FAILED tests/unit/integration/test_state_management.py::TestConsciousnessStateManager::test_adaptive_gating
 FAILED tests/unit/memory/test_integration.py::TestInformationIntegration::test_phi_metric_computation
 FAILED tests/unit/memory/test_integration.py::TestInformationIntegration::test_information_flow
-FAILED tests/unit/memory/test_integration.py::TestInformationIntegration::test_entropy_calculations
 FAILED tests/unit/memory/test_integration.py::TestInformationIntegration::test_memory_integration
 FAILED tests/unit/memory/test_memory.py::TestWorkingMemory::test_sequence_processing
 FAILED tests/unit/memory/test_memory.py::TestWorkingMemory::test_memory_retention
-FAILED tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_gru_state_updates
 FAILED tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_memory_sequence_processing
 FAILED tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_context_aware_gating
 FAILED tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_information_integration
 FAILED tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_memory_retention
-======================== 25 failed, 23 passed in 14.73s ========================
+======================== 23 failed, 28 passed in 14.86s ========================

@@ -70,6 +70,7 @@ class TestMemoryComponents(ConsciousnessTestBase):
             inputs = self.create_inputs(key, batch_size, test_length, hidden_dim)
             initial_state = jnp.zeros((batch_size, hidden_dim))
 
+            input_shape = (batch_size,)
             variables = working_memory.init(
                 key, inputs, initial_state=initial_state, deterministic=True
             )
@@ -93,6 +94,7 @@ class TestMemoryComponents(ConsciousnessTestBase):
         )
 
         initial_state = jnp.zeros((batch_size, hidden_dim))
+        input_shape = (batch_size,)
         variables = working_memory.init(
             key, base_inputs, initial_state=initial_state, deterministic=True
         )
@@ -122,6 +124,7 @@ class TestMemoryComponents(ConsciousnessTestBase):
         ], axis=1)  # Shape: [batch, num_modules, seq_length, hidden_dim]
 
         # Initialize and run forward pass
+        input_shape = (batch_size,)
         variables = info_integration.init(key, inputs, deterministic=True)
         output, phi = info_integration.apply(variables, inputs, deterministic=True)
 
@@ -146,6 +149,7 @@ class TestMemoryComponents(ConsciousnessTestBase):
 
         initial_state = jnp.zeros((batch_size, hidden_dim))
 
+        input_shape = (batch_size,)
         variables = working_memory.init(
             key, inputs, initial_state=initial_state, deterministic=True
         )

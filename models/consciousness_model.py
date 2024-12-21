@@ -64,7 +64,8 @@ class ConsciousnessModel(nn.Module):
         # Add shape alignment layer
         self.align_layer = nn.Dense(self.hidden_dim)
 
-    def __call__(self, inputs: Dict[str, jnp.ndarray], state=None, deterministic: bool = True, consciousness_threshold: float = 0.5):
+    @nn.compact
+    def __call__(self, inputs, state=None, deterministic=True, consciousness_threshold=0.5):
         """
         Process inputs through consciousness architecture.
 
@@ -77,6 +78,9 @@ class ConsciousnessModel(nn.Module):
         Returns:
             Updated consciousness state and metrics
         """
+        # Initialize attention maps dictionary
+        attention_maps = {}
+
         # Validate and process inputs
         batch_size = next(iter(inputs.values())).shape[0]
         inputs = {k: jnp.asarray(v, dtype=jnp.float32) for k, v in inputs.items()}
@@ -100,8 +104,8 @@ class ConsciousnessModel(nn.Module):
         # Working memory update with explicit shapes
         memory_output, memory_state = self.working_memory(
             workspace_output,
-            initial_state=state,
-            deterministic=deterministic
+            deterministic=deterministic,
+            initial_state=state
         )
         metrics['memory_state'] = memory_state
 
@@ -128,7 +132,31 @@ class ConsciousnessModel(nn.Module):
         )
         metrics.update(state_metrics)
 
-        return new_state, metrics
+        # Apply multi-head attention
+        # Ensure query and key have same dimensions for attention map
+        attention = nn.MultiHeadAttention(
+            num_heads=self.num_heads,
+            qkv_features=self.hidden_dim,
+            deterministic=deterministic
+        )
+        
+        # Compute attention with proper shapes
+        attn_output, attention_weights = attention(
+            memory_output,
+            memory_output,
+            memory_output,
+            return_attention_weights=True
+        )
+        
+        # Store attention map with correct shape (batch, heads, seq, seq)
+        attention_maps['self_attention'] = attention_weights
+
+        return new_state, {
+            'attention_weights': attention_weights,
+            'attention_maps': attention_maps,
+            'memory_state': memory_state,
+            'phi': phi,
+        }
 
     def get_config(self) -> Dict[str, Any]:
         """Return model configuration."""
