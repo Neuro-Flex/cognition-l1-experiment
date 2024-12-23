@@ -191,3 +191,130 @@ class TestARCReasoning:
 
         except Exception as e:
             pytest.fail(f"Conscious adaptation test failed: {str(e)}")
+
+    def test_working_memory(self, key, consciousness_model):
+        inputs, _ = self.load_arc_sample()
+        batch_size = inputs['visual'].shape[0]
+
+        # Initialize model state
+        model_inputs = {
+            'visual': inputs['visual'],
+            'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))
+        }
+
+        # Ensure input_shape is a tuple
+        input_shape = (consciousness_model.hidden_dim,)
+        variables = consciousness_model.init(key, model_inputs)
+
+        try:
+            # Forward pass
+            output, metrics = consciousness_model.apply(
+                variables,
+                model_inputs,
+                deterministic=True,
+                consciousness_threshold=0.5
+            )
+
+            # Validate working memory outputs
+            assert 'memory_state' in metrics
+            assert metrics['memory_state'].shape == (batch_size, consciousness_model.hidden_dim)
+
+        except Exception as e:
+            pytest.fail(f"Working memory test failed: {str(e)}")
+
+    def test_cognitive_process_integration(self, key, consciousness_model):
+        inputs, _ = self.load_arc_sample()
+        batch_size = inputs['visual'].shape[0]
+
+        # Initialize model state
+        model_inputs = {
+            'visual': inputs['visual'],
+            'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))
+        }
+
+        # Ensure input_shape is a tuple
+        input_shape = (consciousness_model.hidden_dim,)
+        variables = consciousness_model.init(key, model_inputs)
+
+        try:
+            # Forward pass
+            output, metrics = consciousness_model.apply(
+                variables,
+                model_inputs,
+                deterministic=True,
+                consciousness_threshold=0.5
+            )
+
+            # Validate cognitive process integration outputs
+            assert 'attention_maps' in metrics
+            for attn_map in metrics['attention_maps'].values():
+                assert jnp.allclose(
+                    jnp.sum(attn_map, axis=-1),
+                    jnp.ones((batch_size, 8, 64))  # (batch, heads, seq_length)
+                )
+
+        except Exception as e:
+            pytest.fail(f"Cognitive process integration test failed: {str(e)}")
+
+    def test_consciousness_state_manager(self, key, consciousness_model):
+        inputs, _ = self.load_arc_sample()
+        batch_size = inputs['visual'].shape[0]
+
+        # Initialize model state
+        model_inputs = {
+            'visual': inputs['visual'],
+            'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))
+        }
+
+        # Ensure input_shape is a tuple
+        input_shape = (consciousness_model.hidden_dim,)
+        variables = consciousness_model.init(key, model_inputs)
+
+        try:
+            # Forward pass
+            output, metrics = consciousness_model.apply(
+                variables,
+                model_inputs,
+                deterministic=True,
+                consciousness_threshold=0.5
+            )
+
+            # Validate consciousness state manager outputs
+            assert 'memory_gate' in metrics
+            assert metrics['memory_gate'].shape == (batch_size, consciousness_model.hidden_dim)
+            assert jnp.all(metrics['memory_gate'] >= 0.0)
+            assert jnp.all(metrics['memory_gate'] <= 1.0)
+
+        except Exception as e:
+            pytest.fail(f"Consciousness state manager test failed: {str(e)}")
+
+    def test_information_integration(self, key, consciousness_model):
+        inputs, _ = self.load_arc_sample()
+        batch_size = inputs['visual'].shape[0]
+
+        # Initialize model state
+        model_inputs = {
+            'visual': inputs['visual'],
+            'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))
+        }
+
+        # Ensure input_shape is a tuple
+        input_shape = (consciousness_model.hidden_dim,)
+        variables = consciousness_model.init(key, model_inputs)
+
+        try:
+            # Forward pass
+            output, metrics = consciousness_model.apply(
+                variables,
+                model_inputs,
+                deterministic=True,
+                consciousness_threshold=0.5
+            )
+
+            # Validate information integration outputs
+            assert 'phi' in metrics
+            assert metrics['phi'].shape == (batch_size,)
+            assert jnp.all(metrics['phi'] >= 0)
+
+        except Exception as e:
+            pytest.fail(f"Information integration test failed: {str(e)}")

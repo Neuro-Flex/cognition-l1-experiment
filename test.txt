@@ -1,31 +1,234 @@
 ============================= test session starts ==============================
-platform linux -- Python 3.10.12, pytest-8.3.4, pluggy-1.5.0
-rootdir: /home/kasinadhsarma/experiment/cognition-l1-experiment
+platform linux -- Python 3.12.1, pytest-7.4.3, pluggy-1.5.0
+benchmark: 4.0.0 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /workspaces/cognition-l1-experiment
 configfile: pytest.ini
 testpaths: tests
-plugins: cov-6.0.0, anyio-4.7.0
-collected 51 items
+plugins: cov-4.1.0, timeout-2.1.0, benchmark-4.0.0, xdist-3.3.1, anyio-4.7.0
+collected 55 items
 
-tests/benchmarks/test_arc_reasoning.py FFF                               [  5%]
-tests/benchmarks/test_bigbench_reasoning.py FFF                          [ 11%]
-tests/test_consciousness.py .F.FFF                                       [ 23%]
-tests/test_environment.py .....                                          [ 33%]
-tests/unit/attention/test_attention.py ....                              [ 41%]
-tests/unit/attention/test_attention_mechanisms.py ....                   [ 49%]
-tests/unit/integration/test_cognitive_integration.py FF.F                [ 56%]
-tests/unit/integration/test_state_management.py ..F.                     [ 64%]
-tests/unit/memory/test_integration.py FF.F                               [ 72%]
-tests/unit/memory/test_memory.py ..FF                                    [ 80%]
+tests/test_consciousness.py .F.FFF                                       [ 10%]
+tests/test_environment.py .....                                          [ 20%]
+tests/benchmarks/test_arc_reasoning.py FFFFFFF                           [ 32%]
+tests/benchmarks/test_bigbench_reasoning.py FFF                          [ 38%]
+tests/unit/attention/test_attention.py ....                              [ 45%]
+tests/unit/attention/test_attention_mechanisms.py ....                   [ 52%]
+tests/unit/integration/test_cognitive_integration.py FF.F                [ 60%]
+tests/unit/integration/test_state_management.py ..F.                     [ 67%]
+tests/unit/memory/test_integration.py FF.F                               [ 74%]
+tests/unit/memory/test_memory.py ..FF                                    [ 81%]
 tests/unit/memory/test_memory_components.py .FFFF                        [ 90%]
 tests/unit/state/test_consciousness_state_management.py .....            [100%]
 
 =================================== FAILURES ===================================
+________________ TestConsciousnessModel.test_model_forward_pass ________________
+
+self = <tests.test_consciousness.TestConsciousnessModel object at 0x79bfcd5220f0>
+model = ConsciousnessModel(
+    # attributes
+    hidden_dim = 64
+    num_heads = 4
+    num_layers = 4
+    num_states = 4
+    dropout_rate = 0.1
+)
+sample_input = {'attention': Array([[[-0.02862089,  1.5240539 , -1.0556508 , ..., -0.27188757,
+         -0.88195777,  0.11891642],
+  ...        [-0.5756394 , -0.20118208, -0.08988765, ...,  0.23238769,
+          1.5470275 , -1.2839596 ]]], dtype=float32)}
+key = Array([ 0, 42], dtype=uint32), deterministic = True
+
+    def test_model_forward_pass(self, model, sample_input, key, deterministic):
+        """Test forward pass through consciousness model."""
+        # Initialize model
+        input_shape = (model.hidden_dim,)
+>       variables = model.init(key, sample_input, deterministic=deterministic)
+
+tests/test_consciousness.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/consciousness_model.py:105: in __call__
+    memory_output, memory_state = self.working_memory(
+models/memory.py:102: in __call__
+    nn.LSTMCell.initialize_carry(key, (self.hidden_dim,), self.hidden_dim),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Array([3819375347, 1502290012], dtype=uint32), rng = (64,)
+input_shape = 64
+
+    @nowrap
+    def initialize_carry(
+      self, rng: PRNGKey, input_shape: tuple[int, ...]
+    ) -> tuple[Array, Array]:
+      """Initialize the RNN cell carry.
+    
+      Args:
+        rng: random number generator passed to the init_fn.
+        input_shape: a tuple providing the shape of the input to the cell.
+      Returns:
+        An initialized carry for the given RNN cell.
+      """
+>     batch_dims = input_shape[:-1]
+E     TypeError: 'int' object is not subscriptable
+E     --------------------
+E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+____________ TestConsciousnessModel.test_model_state_initialization ____________
+
+self = <tests.test_consciousness.TestConsciousnessModel object at 0x79bfcc8f1460>
+model = ConsciousnessModel(
+    # attributes
+    hidden_dim = 64
+    num_heads = 4
+    num_layers = 4
+    num_states = 4
+    dropout_rate = 0.1
+)
+sample_input = {'attention': Array([[[-0.02862089,  1.5240539 , -1.0556508 , ..., -0.27188757,
+         -0.88195777,  0.11891642],
+  ...        [-0.5756394 , -0.20118208, -0.08988765, ...,  0.23238769,
+          1.5470275 , -1.2839596 ]]], dtype=float32)}
+key = Array([ 0, 42], dtype=uint32), deterministic = True
+
+    def test_model_state_initialization(self, model, sample_input, key, deterministic):
+        """Test initialization of the model state."""
+        input_shape = (model.hidden_dim,)
+>       variables = model.init(key, sample_input, deterministic=deterministic)
+
+tests/test_consciousness.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/consciousness_model.py:105: in __call__
+    memory_output, memory_state = self.working_memory(
+models/memory.py:102: in __call__
+    nn.LSTMCell.initialize_carry(key, (self.hidden_dim,), self.hidden_dim),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Array([3819375347, 1502290012], dtype=uint32), rng = (64,)
+input_shape = 64
+
+    @nowrap
+    def initialize_carry(
+      self, rng: PRNGKey, input_shape: tuple[int, ...]
+    ) -> tuple[Array, Array]:
+      """Initialize the RNN cell carry.
+    
+      Args:
+        rng: random number generator passed to the init_fn.
+        input_shape: a tuple providing the shape of the input to the cell.
+      Returns:
+        An initialized carry for the given RNN cell.
+      """
+>     batch_dims = input_shape[:-1]
+E     TypeError: 'int' object is not subscriptable
+E     --------------------
+E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+________________ TestConsciousnessModel.test_model_state_update ________________
+
+self = <tests.test_consciousness.TestConsciousnessModel object at 0x79bfcc8f1670>
+model = ConsciousnessModel(
+    # attributes
+    hidden_dim = 64
+    num_heads = 4
+    num_layers = 4
+    num_states = 4
+    dropout_rate = 0.1
+)
+sample_input = {'attention': Array([[[-0.02862089,  1.5240539 , -1.0556508 , ..., -0.27188757,
+         -0.88195777,  0.11891642],
+  ...        [-0.5756394 , -0.20118208, -0.08988765, ...,  0.23238769,
+          1.5470275 , -1.2839596 ]]], dtype=float32)}
+key = Array([ 0, 42], dtype=uint32), deterministic = True
+
+    def test_model_state_update(self, model, sample_input, key, deterministic):
+        """Test updating the model state."""
+        input_shape = (model.hidden_dim,)
+>       variables = model.init(key, sample_input, deterministic=deterministic)
+
+tests/test_consciousness.py:96: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/consciousness_model.py:105: in __call__
+    memory_output, memory_state = self.working_memory(
+models/memory.py:102: in __call__
+    nn.LSTMCell.initialize_carry(key, (self.hidden_dim,), self.hidden_dim),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Array([3819375347, 1502290012], dtype=uint32), rng = (64,)
+input_shape = 64
+
+    @nowrap
+    def initialize_carry(
+      self, rng: PRNGKey, input_shape: tuple[int, ...]
+    ) -> tuple[Array, Array]:
+      """Initialize the RNN cell carry.
+    
+      Args:
+        rng: random number generator passed to the init_fn.
+        input_shape: a tuple providing the shape of the input to the cell.
+      Returns:
+        An initialized carry for the given RNN cell.
+      """
+>     batch_dims = input_shape[:-1]
+E     TypeError: 'int' object is not subscriptable
+E     --------------------
+E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+_____________ TestConsciousnessModel.test_model_attention_weights ______________
+
+self = <tests.test_consciousness.TestConsciousnessModel object at 0x79bfcc8f1880>
+model = ConsciousnessModel(
+    # attributes
+    hidden_dim = 64
+    num_heads = 4
+    num_layers = 4
+    num_states = 4
+    dropout_rate = 0.1
+)
+sample_input = {'attention': Array([[[-0.02862089,  1.5240539 , -1.0556508 , ..., -0.27188757,
+         -0.88195777,  0.11891642],
+  ...        [-0.5756394 , -0.20118208, -0.08988765, ...,  0.23238769,
+          1.5470275 , -1.2839596 ]]], dtype=float32)}
+key = Array([ 0, 42], dtype=uint32), deterministic = True
+
+    def test_model_attention_weights(self, model, sample_input, key, deterministic):
+        """Test attention weights in the model."""
+        input_shape = (model.hidden_dim,)
+>       variables = model.init(key, sample_input, deterministic=deterministic)
+
+tests/test_consciousness.py:108: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/consciousness_model.py:105: in __call__
+    memory_output, memory_state = self.working_memory(
+models/memory.py:102: in __call__
+    nn.LSTMCell.initialize_carry(key, (self.hidden_dim,), self.hidden_dim),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Array([3819375347, 1502290012], dtype=uint32), rng = (64,)
+input_shape = 64
+
+    @nowrap
+    def initialize_carry(
+      self, rng: PRNGKey, input_shape: tuple[int, ...]
+    ) -> tuple[Array, Array]:
+      """Initialize the RNN cell carry.
+    
+      Args:
+        rng: random number generator passed to the init_fn.
+        input_shape: a tuple providing the shape of the input to the cell.
+      Returns:
+        An initialized carry for the given RNN cell.
+      """
+>     batch_dims = input_shape[:-1]
+E     TypeError: 'int' object is not subscriptable
+E     --------------------
+E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 __________________ TestARCReasoning.test_pattern_recognition ___________________
-jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-The above exception was the direct cause of the following exception:
-
-self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x72f182c32f80>
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x79bfcc8f3110>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -47,7 +250,7 @@ consciousness_model = ConsciousnessModel(
         }
     
         # Ensure input_shape is a tuple
-        input_shape = (batch_size,)
+        input_shape = (consciousness_model.hidden_dim,)
         # Initialize model
 >       variables = consciousness_model.init(key, model_inputs)
 
@@ -56,10 +259,10 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 models/consciousness_model.py:105: in __call__
     memory_output, memory_state = self.working_memory(
 models/memory.py:102: in __call__
-    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
+    nn.LSTMCell.initialize_carry(key, (self.hidden_dim,), self.hidden_dim),
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = Array([2420929151, 3698740751], dtype=uint32), rng = (1, 512)
+self = Array([2420929151, 3698740751], dtype=uint32), rng = (512,)
 input_shape = 512
 
     @nowrap
@@ -76,14 +279,13 @@ input_shape = 512
       """
 >     batch_dims = input_shape[:-1]
 E     TypeError: 'int' object is not subscriptable
+E     --------------------
+E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
+/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 _________________ TestARCReasoning.test_abstraction_capability _________________
-jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-The above exception was the direct cause of the following exception:
-
-self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x72f182c30ac0>
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x79bfcc8f35c0>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -107,7 +309,7 @@ consciousness_model = ConsciousnessModel(
     
         try:
             # Ensure input_shape is a tuple
-            input_shape = (batch_size,)
+            input_shape = (consciousness_model.hidden_dim,)
 >           variables = consciousness_model.init(
                 key,
                 {'visual': variations['original'],
@@ -119,10 +321,10 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 models/consciousness_model.py:105: in __call__
     memory_output, memory_state = self.working_memory(
 models/memory.py:102: in __call__
-    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
+    nn.LSTMCell.initialize_carry(key, (self.hidden_dim,), self.hidden_dim),
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = Array([2420929151, 3698740751], dtype=uint32), rng = (1, 512)
+self = Array([2420929151, 3698740751], dtype=uint32), rng = (512,)
 input_shape = 512
 
     @nowrap
@@ -139,12 +341,14 @@ input_shape = 512
       """
 >     batch_dims = input_shape[:-1]
 E     TypeError: 'int' object is not subscriptable
+E     --------------------
+E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
+/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 
 During handling of the above exception, another exception occurred:
 
-self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x72f182c30ac0>
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x79bfcc8f35c0>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -168,7 +372,7 @@ consciousness_model = ConsciousnessModel(
     
         try:
             # Ensure input_shape is a tuple
-            input_shape = (batch_size,)
+            input_shape = (consciousness_model.hidden_dim,)
             variables = consciousness_model.init(
                 key,
                 {'visual': variations['original'],
@@ -208,11 +412,8 @@ E           Failed: Abstraction capability test failed: 'int' object is not subs
 
 tests/benchmarks/test_arc_reasoning.py:136: Failed
 __________________ TestARCReasoning.test_conscious_adaptation __________________
-jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-The above exception was the direct cause of the following exception:
-
-self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x72f182c31720>
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x79bfcc8f29f0>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -242,7 +443,7 @@ consciousness_model = ConsciousnessModel(
             }
     
             # Ensure input_shape is a tuple
-            input_shape = (batch_size,)
+            input_shape = (consciousness_model.hidden_dim,)
 >           variables = consciousness_model.init(key, simple_input)
 
 tests/benchmarks/test_arc_reasoning.py:158: 
@@ -250,10 +451,10 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 models/consciousness_model.py:105: in __call__
     memory_output, memory_state = self.working_memory(
 models/memory.py:102: in __call__
-    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
+    nn.LSTMCell.initialize_carry(key, (self.hidden_dim,), self.hidden_dim),
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = Array([2420929151, 3698740751], dtype=uint32), rng = (1, 512)
+self = Array([2420929151, 3698740751], dtype=uint32), rng = (512,)
 input_shape = 512
 
     @nowrap
@@ -270,12 +471,14 @@ input_shape = 512
       """
 >     batch_dims = input_shape[:-1]
 E     TypeError: 'int' object is not subscriptable
+E     --------------------
+E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
+/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 
 During handling of the above exception, another exception occurred:
 
-self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x72f182c31720>
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x79bfcc8f29f0>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -305,7 +508,7 @@ consciousness_model = ConsciousnessModel(
             }
     
             # Ensure input_shape is a tuple
-            input_shape = (batch_size,)
+            input_shape = (consciousness_model.hidden_dim,)
             variables = consciousness_model.init(key, simple_input)
     
             # Process both patterns
@@ -345,12 +548,9 @@ consciousness_model = ConsciousnessModel(
 E           Failed: Conscious adaptation test failed: 'int' object is not subscriptable
 
 tests/benchmarks/test_arc_reasoning.py:193: Failed
-______________ TestBigBenchReasoning.test_reasoning_capabilities _______________
-jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+_____________________ TestARCReasoning.test_working_memory _____________________
 
-The above exception was the direct cause of the following exception:
-
-self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x72f182c334c0>
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x79bfcc8f2e10>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -361,20 +561,29 @@ consciousness_model = ConsciousnessModel(
     dropout_rate = 0.1
 )
 
-    def test_reasoning_capabilities(self, key, consciousness_model):
-        tasks = self.load_sample_tasks()
-        input_shape = (1,)
->       variables = consciousness_model.init(key, {'textual': jnp.zeros((1, 1, 512))})
+    def test_working_memory(self, key, consciousness_model):
+        inputs, _ = self.load_arc_sample()
+        batch_size = inputs['visual'].shape[0]
+    
+        # Initialize model state
+        model_inputs = {
+            'visual': inputs['visual'],
+            'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))
+        }
+    
+        # Ensure input_shape is a tuple
+        input_shape = (consciousness_model.hidden_dim,)
+>       variables = consciousness_model.init(key, model_inputs)
 
-tests/benchmarks/test_bigbench_reasoning.py:58: 
+tests/benchmarks/test_arc_reasoning.py:207: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 models/consciousness_model.py:105: in __call__
     memory_output, memory_state = self.working_memory(
 models/memory.py:102: in __call__
-    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
+    nn.LSTMCell.initialize_carry(key, (self.hidden_dim,), self.hidden_dim),
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = Array([2420929151, 3698740751], dtype=uint32), rng = (1, 512)
+self = Array([2420929151, 3698740751], dtype=uint32), rng = (512,)
 input_shape = 512
 
     @nowrap
@@ -391,14 +600,228 @@ input_shape = 512
       """
 >     batch_dims = input_shape[:-1]
 E     TypeError: 'int' object is not subscriptable
+E     --------------------
+E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
+/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+_____________ TestARCReasoning.test_cognitive_process_integration ______________
+
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x79bfcc8f2720>
+key = Array([0, 0], dtype=uint32)
+consciousness_model = ConsciousnessModel(
+    # attributes
+    hidden_dim = 512
+    num_heads = 8
+    num_layers = 6
+    num_states = 4
+    dropout_rate = 0.1
+)
+
+    def test_cognitive_process_integration(self, key, consciousness_model):
+        inputs, _ = self.load_arc_sample()
+        batch_size = inputs['visual'].shape[0]
+    
+        # Initialize model state
+        model_inputs = {
+            'visual': inputs['visual'],
+            'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))
+        }
+    
+        # Ensure input_shape is a tuple
+        input_shape = (consciousness_model.hidden_dim,)
+>       variables = consciousness_model.init(key, model_inputs)
+
+tests/benchmarks/test_arc_reasoning.py:237: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/consciousness_model.py:105: in __call__
+    memory_output, memory_state = self.working_memory(
+models/memory.py:102: in __call__
+    nn.LSTMCell.initialize_carry(key, (self.hidden_dim,), self.hidden_dim),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Array([2420929151, 3698740751], dtype=uint32), rng = (512,)
+input_shape = 512
+
+    @nowrap
+    def initialize_carry(
+      self, rng: PRNGKey, input_shape: tuple[int, ...]
+    ) -> tuple[Array, Array]:
+      """Initialize the RNN cell carry.
+    
+      Args:
+        rng: random number generator passed to the init_fn.
+        input_shape: a tuple providing the shape of the input to the cell.
+      Returns:
+        An initialized carry for the given RNN cell.
+      """
+>     batch_dims = input_shape[:-1]
+E     TypeError: 'int' object is not subscriptable
+E     --------------------
+E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+______________ TestARCReasoning.test_consciousness_state_manager _______________
+
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x79bfcc8f23f0>
+key = Array([0, 0], dtype=uint32)
+consciousness_model = ConsciousnessModel(
+    # attributes
+    hidden_dim = 512
+    num_heads = 8
+    num_layers = 6
+    num_states = 4
+    dropout_rate = 0.1
+)
+
+    def test_consciousness_state_manager(self, key, consciousness_model):
+        inputs, _ = self.load_arc_sample()
+        batch_size = inputs['visual'].shape[0]
+    
+        # Initialize model state
+        model_inputs = {
+            'visual': inputs['visual'],
+            'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))
+        }
+    
+        # Ensure input_shape is a tuple
+        input_shape = (consciousness_model.hidden_dim,)
+>       variables = consciousness_model.init(key, model_inputs)
+
+tests/benchmarks/test_arc_reasoning.py:271: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/consciousness_model.py:105: in __call__
+    memory_output, memory_state = self.working_memory(
+models/memory.py:102: in __call__
+    nn.LSTMCell.initialize_carry(key, (self.hidden_dim,), self.hidden_dim),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Array([2420929151, 3698740751], dtype=uint32), rng = (512,)
+input_shape = 512
+
+    @nowrap
+    def initialize_carry(
+      self, rng: PRNGKey, input_shape: tuple[int, ...]
+    ) -> tuple[Array, Array]:
+      """Initialize the RNN cell carry.
+    
+      Args:
+        rng: random number generator passed to the init_fn.
+        input_shape: a tuple providing the shape of the input to the cell.
+      Returns:
+        An initialized carry for the given RNN cell.
+      """
+>     batch_dims = input_shape[:-1]
+E     TypeError: 'int' object is not subscriptable
+E     --------------------
+E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+________________ TestARCReasoning.test_information_integration _________________
+
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x79bfcc8f23c0>
+key = Array([0, 0], dtype=uint32)
+consciousness_model = ConsciousnessModel(
+    # attributes
+    hidden_dim = 512
+    num_heads = 8
+    num_layers = 6
+    num_states = 4
+    dropout_rate = 0.1
+)
+
+    def test_information_integration(self, key, consciousness_model):
+        inputs, _ = self.load_arc_sample()
+        batch_size = inputs['visual'].shape[0]
+    
+        # Initialize model state
+        model_inputs = {
+            'visual': inputs['visual'],
+            'state': jnp.zeros((batch_size, consciousness_model.hidden_dim))
+        }
+    
+        # Ensure input_shape is a tuple
+        input_shape = (consciousness_model.hidden_dim,)
+>       variables = consciousness_model.init(key, model_inputs)
+
+tests/benchmarks/test_arc_reasoning.py:303: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/consciousness_model.py:105: in __call__
+    memory_output, memory_state = self.working_memory(
+models/memory.py:102: in __call__
+    nn.LSTMCell.initialize_carry(key, (self.hidden_dim,), self.hidden_dim),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Array([2420929151, 3698740751], dtype=uint32), rng = (512,)
+input_shape = 512
+
+    @nowrap
+    def initialize_carry(
+      self, rng: PRNGKey, input_shape: tuple[int, ...]
+    ) -> tuple[Array, Array]:
+      """Initialize the RNN cell carry.
+    
+      Args:
+        rng: random number generator passed to the init_fn.
+        input_shape: a tuple providing the shape of the input to the cell.
+      Returns:
+        An initialized carry for the given RNN cell.
+      """
+>     batch_dims = input_shape[:-1]
+E     TypeError: 'int' object is not subscriptable
+E     --------------------
+E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+______________ TestBigBenchReasoning.test_reasoning_capabilities _______________
+
+self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x79bfcc8f2150>
+key = Array([0, 0], dtype=uint32)
+consciousness_model = ConsciousnessModel(
+    # attributes
+    hidden_dim = 512
+    num_heads = 8
+    num_layers = 6
+    num_states = 4
+    dropout_rate = 0.1
+)
+
+    def test_reasoning_capabilities(self, key, consciousness_model):
+        tasks = self.load_sample_tasks()
+        input_shape = (consciousness_model.hidden_dim,)
+>       variables = consciousness_model.init(key, {'textual': jnp.zeros((1, 1, 512))})
+
+tests/benchmarks/test_bigbench_reasoning.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+models/consciousness_model.py:105: in __call__
+    memory_output, memory_state = self.working_memory(
+models/memory.py:102: in __call__
+    nn.LSTMCell.initialize_carry(key, (self.hidden_dim,), self.hidden_dim),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Array([2420929151, 3698740751], dtype=uint32), rng = (512,)
+input_shape = 512
+
+    @nowrap
+    def initialize_carry(
+      self, rng: PRNGKey, input_shape: tuple[int, ...]
+    ) -> tuple[Array, Array]:
+      """Initialize the RNN cell carry.
+    
+      Args:
+        rng: random number generator passed to the init_fn.
+        input_shape: a tuple providing the shape of the input to the cell.
+      Returns:
+        An initialized carry for the given RNN cell.
+      """
+>     batch_dims = input_shape[:-1]
+E     TypeError: 'int' object is not subscriptable
+E     --------------------
+E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 ___________________ TestBigBenchReasoning.test_meta_learning ___________________
-jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-The above exception was the direct cause of the following exception:
-
-self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x72f182c33a00>
+self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x79bfcc8f38f0>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -418,7 +841,7 @@ consciousness_model = ConsciousnessModel(
             {'textual': "3, 6, 9, _", 'expected': "12"}
         ]
     
-        input_shape = (1,)
+        input_shape = (consciousness_model.hidden_dim,)
 >       variables = consciousness_model.init(
             key,
             {'textual': jnp.zeros((1, 1, 512))}
@@ -429,10 +852,10 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 models/consciousness_model.py:105: in __call__
     memory_output, memory_state = self.working_memory(
 models/memory.py:102: in __call__
-    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
+    nn.LSTMCell.initialize_carry(key, (self.hidden_dim,), self.hidden_dim),
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = Array([2420929151, 3698740751], dtype=uint32), rng = (1, 512)
+self = Array([2420929151, 3698740751], dtype=uint32), rng = (512,)
 input_shape = 512
 
     @nowrap
@@ -449,14 +872,13 @@ input_shape = 512
       """
 >     batch_dims = input_shape[:-1]
 E     TypeError: 'int' object is not subscriptable
+E     --------------------
+E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
+/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 ______________ TestBigBenchReasoning.test_consciousness_emergence ______________
-jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-The above exception was the direct cause of the following exception:
-
-self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x72f182c332b0>
+self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x79bfcc8f3aa0>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -476,7 +898,7 @@ consciousness_model = ConsciousnessModel(
         """
         # Complex multi-step reasoning task
         task_embedding = random.normal(key, (1, 128, 512))
-        input_shape = (1,)
+        input_shape = (consciousness_model.hidden_dim,)
 >       variables = consciousness_model.init(
             key,
             {'textual': task_embedding}
@@ -487,10 +909,10 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 models/consciousness_model.py:105: in __call__
     memory_output, memory_state = self.working_memory(
 models/memory.py:102: in __call__
-    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
+    nn.LSTMCell.initialize_carry(key, (self.hidden_dim,), self.hidden_dim),
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = Array([2420929151, 3698740751], dtype=uint32), rng = (1, 512)
+self = Array([2420929151, 3698740751], dtype=uint32), rng = (512,)
 input_shape = 512
 
     @nowrap
@@ -507,220 +929,13 @@ input_shape = 512
       """
 >     batch_dims = input_shape[:-1]
 E     TypeError: 'int' object is not subscriptable
+E     --------------------
+E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
-________________ TestConsciousnessModel.test_model_forward_pass ________________
-jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
-
-The above exception was the direct cause of the following exception:
-
-self = <tests.test_consciousness.TestConsciousnessModel object at 0x72f182c687f0>
-model = ConsciousnessModel(
-    # attributes
-    hidden_dim = 64
-    num_heads = 4
-    num_layers = 4
-    num_states = 4
-    dropout_rate = 0.1
-)
-sample_input = {'attention': Array([[[-0.02862089,  1.5240539 , -1.0556508 , ..., -0.27188757,
-         -0.88195777,  0.11891642],
-  ...        [-0.5756394 , -0.20118208, -0.08988765, ...,  0.23238769,
-          1.5470275 , -1.2839596 ]]], dtype=float32)}
-key = Array([ 0, 42], dtype=uint32), deterministic = True
-
-    def test_model_forward_pass(self, model, sample_input, key, deterministic):
-        """Test forward pass through consciousness model."""
-        # Initialize model
-        input_shape = (sample_input['attention'].shape[0],)
->       variables = model.init(key, sample_input, deterministic=deterministic)
-
-tests/test_consciousness.py:49: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/consciousness_model.py:105: in __call__
-    memory_output, memory_state = self.working_memory(
-models/memory.py:102: in __call__
-    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = Array([3819375347, 1502290012], dtype=uint32), rng = (2, 64)
-input_shape = 64
-
-    @nowrap
-    def initialize_carry(
-      self, rng: PRNGKey, input_shape: tuple[int, ...]
-    ) -> tuple[Array, Array]:
-      """Initialize the RNN cell carry.
-    
-      Args:
-        rng: random number generator passed to the init_fn.
-        input_shape: a tuple providing the shape of the input to the cell.
-      Returns:
-        An initialized carry for the given RNN cell.
-      """
->     batch_dims = input_shape[:-1]
-E     TypeError: 'int' object is not subscriptable
-
-../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
-____________ TestConsciousnessModel.test_model_state_initialization ____________
-jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
-
-The above exception was the direct cause of the following exception:
-
-self = <tests.test_consciousness.TestConsciousnessModel object at 0x72f182c68c40>
-model = ConsciousnessModel(
-    # attributes
-    hidden_dim = 64
-    num_heads = 4
-    num_layers = 4
-    num_states = 4
-    dropout_rate = 0.1
-)
-sample_input = {'attention': Array([[[-0.02862089,  1.5240539 , -1.0556508 , ..., -0.27188757,
-         -0.88195777,  0.11891642],
-  ...        [-0.5756394 , -0.20118208, -0.08988765, ...,  0.23238769,
-          1.5470275 , -1.2839596 ]]], dtype=float32)}
-key = Array([ 0, 42], dtype=uint32), deterministic = True
-
-    def test_model_state_initialization(self, model, sample_input, key, deterministic):
-        """Test initialization of the model state."""
-        input_shape = (sample_input['attention'].shape[0],)
->       variables = model.init(key, sample_input, deterministic=deterministic)
-
-tests/test_consciousness.py:89: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/consciousness_model.py:105: in __call__
-    memory_output, memory_state = self.working_memory(
-models/memory.py:102: in __call__
-    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = Array([3819375347, 1502290012], dtype=uint32), rng = (2, 64)
-input_shape = 64
-
-    @nowrap
-    def initialize_carry(
-      self, rng: PRNGKey, input_shape: tuple[int, ...]
-    ) -> tuple[Array, Array]:
-      """Initialize the RNN cell carry.
-    
-      Args:
-        rng: random number generator passed to the init_fn.
-        input_shape: a tuple providing the shape of the input to the cell.
-      Returns:
-        An initialized carry for the given RNN cell.
-      """
->     batch_dims = input_shape[:-1]
-E     TypeError: 'int' object is not subscriptable
-
-../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
-________________ TestConsciousnessModel.test_model_state_update ________________
-jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
-
-The above exception was the direct cause of the following exception:
-
-self = <tests.test_consciousness.TestConsciousnessModel object at 0x72f182c68eb0>
-model = ConsciousnessModel(
-    # attributes
-    hidden_dim = 64
-    num_heads = 4
-    num_layers = 4
-    num_states = 4
-    dropout_rate = 0.1
-)
-sample_input = {'attention': Array([[[-0.02862089,  1.5240539 , -1.0556508 , ..., -0.27188757,
-         -0.88195777,  0.11891642],
-  ...        [-0.5756394 , -0.20118208, -0.08988765, ...,  0.23238769,
-          1.5470275 , -1.2839596 ]]], dtype=float32)}
-key = Array([ 0, 42], dtype=uint32), deterministic = True
-
-    def test_model_state_update(self, model, sample_input, key, deterministic):
-        """Test updating the model state."""
-        input_shape = (sample_input['attention'].shape[0],)
->       variables = model.init(key, sample_input, deterministic=deterministic)
-
-tests/test_consciousness.py:96: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/consciousness_model.py:105: in __call__
-    memory_output, memory_state = self.working_memory(
-models/memory.py:102: in __call__
-    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = Array([3819375347, 1502290012], dtype=uint32), rng = (2, 64)
-input_shape = 64
-
-    @nowrap
-    def initialize_carry(
-      self, rng: PRNGKey, input_shape: tuple[int, ...]
-    ) -> tuple[Array, Array]:
-      """Initialize the RNN cell carry.
-    
-      Args:
-        rng: random number generator passed to the init_fn.
-        input_shape: a tuple providing the shape of the input to the cell.
-      Returns:
-        An initialized carry for the given RNN cell.
-      """
->     batch_dims = input_shape[:-1]
-E     TypeError: 'int' object is not subscriptable
-
-../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
-_____________ TestConsciousnessModel.test_model_attention_weights ______________
-jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
-
-The above exception was the direct cause of the following exception:
-
-self = <tests.test_consciousness.TestConsciousnessModel object at 0x72f182c69120>
-model = ConsciousnessModel(
-    # attributes
-    hidden_dim = 64
-    num_heads = 4
-    num_layers = 4
-    num_states = 4
-    dropout_rate = 0.1
-)
-sample_input = {'attention': Array([[[-0.02862089,  1.5240539 , -1.0556508 , ..., -0.27188757,
-         -0.88195777,  0.11891642],
-  ...        [-0.5756394 , -0.20118208, -0.08988765, ...,  0.23238769,
-          1.5470275 , -1.2839596 ]]], dtype=float32)}
-key = Array([ 0, 42], dtype=uint32), deterministic = True
-
-    def test_model_attention_weights(self, model, sample_input, key, deterministic):
-        """Test attention weights in the model."""
-        input_shape = (sample_input['attention'].shape[0],)
->       variables = model.init(key, sample_input, deterministic=deterministic)
-
-tests/test_consciousness.py:108: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-models/consciousness_model.py:105: in __call__
-    memory_output, memory_state = self.working_memory(
-models/memory.py:102: in __call__
-    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = Array([3819375347, 1502290012], dtype=uint32), rng = (2, 64)
-input_shape = 64
-
-    @nowrap
-    def initialize_carry(
-      self, rng: PRNGKey, input_shape: tuple[int, ...]
-    ) -> tuple[Array, Array]:
-      """Initialize the RNN cell carry.
-    
-      Args:
-        rng: random number generator passed to the init_fn.
-        input_shape: a tuple providing the shape of the input to the cell.
-      Returns:
-        An initialized carry for the given RNN cell.
-      """
->     batch_dims = input_shape[:-1]
-E     TypeError: 'int' object is not subscriptable
-
-../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
+/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 __________ TestCognitiveProcessIntegration.test_cross_modal_attention __________
 
-self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x72f1751a10f0>
+self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x79bfcc6a6750>
 key = Array([0, 0], dtype=uint32)
 integration_module = CognitiveProcessIntegration(
     # attributes
@@ -750,7 +965,7 @@ integration_module = CognitiveProcessIntegration(
         }
     
         # Initialize parameters
-        input_shape = (batch_size,)
+        input_shape = (64,)
         variables = integration_module.init(key, inputs)
     
         # Process through integration
@@ -773,17 +988,13 @@ integration_module = CognitiveProcessIntegration(
                     # Check attention map properties
 >                   assert attention_map.shape[-2:] == (seq_length, seq_length)
 E                   assert (8, 32) == (8, 8)
-E                     
 E                     At index 1 diff: 32 != 8
 E                     Use -v to get more diff
 
 tests/unit/integration/test_cognitive_integration.py:68: AssertionError
 ______ TestCognitiveProcessIntegration.test_modality_specific_processing _______
-jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-The above exception was the direct cause of the following exception:
-
-self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x72f1751a3640>
+self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x79bfcc6a68d0>
 key = Array([0, 0], dtype=uint32)
 integration_module = CognitiveProcessIntegration(
     # attributes
@@ -802,7 +1013,7 @@ integration_module = CognitiveProcessIntegration(
         single_input = {
             'visual': random.normal(key, (batch_size, seq_length, input_dim))
         }
-        input_shape = (batch_size,)
+        input_shape = (64,)
         variables = integration_module.init(key, single_input)
     
         consciousness_state1, _ = integration_module.apply(
@@ -827,7 +1038,7 @@ tests/unit/integration/test_cognitive_integration.py:99:
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 models/consciousness_state.py:21: in __call__
     x = nn.LayerNorm()(x)
-../../.local/lib/python3.10/site-packages/flax/linen/normalization.py:518: in __call__
+/home/codespace/.local/lib/python3.12/site-packages/flax/linen/normalization.py:518: in __call__
     return _normalize(
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
@@ -868,8 +1079,8 @@ var = Array([[[0.85883766],
         [1.3724558 ]]], dtype=float32)
 reduction_axes = (2,), feature_axes = (2,), dtype = None
 param_dtype = <class 'jax.numpy.float32'>, epsilon = 1e-06, use_bias = True
-use_scale = True, bias_init = <function zeros at 0x72f183861480>
-scale_init = <function ones at 0x72f1838fca60>, force_float32_reductions = True
+use_scale = True, bias_init = <function zeros at 0x79bfcd5d27a0>
+scale_init = <function ones at 0x79bfcd46e200>, force_float32_reductions = True
 
     def _normalize(
       mdl: Module,
@@ -930,11 +1141,13 @@ scale_init = <function ones at 0x72f1838fca60>, force_float32_reductions = True
           'scale', scale_init, reduced_feature_shape, param_dtype
         ).reshape(feature_shape)
 E       flax.errors.ScopeParamNotFoundError: Could not find parameter named "scale" in scope "/LayerNorm_1". (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.ScopeParamNotFoundError)
+E       --------------------
+E       For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-../../.local/lib/python3.10/site-packages/flax/linen/normalization.py:204: ScopeParamNotFoundError
+/home/codespace/.local/lib/python3.12/site-packages/flax/linen/normalization.py:204: ScopeParamNotFoundError
 __________ TestCognitiveProcessIntegration.test_cognitive_integration __________
 
-self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x72f1751a3a00>
+self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x79bfcc6a6bd0>
 key = Array([0, 0], dtype=uint32)
 integration_module = CognitiveProcessIntegration(
     # attributes
@@ -958,7 +1171,7 @@ integration_module = CognitiveProcessIntegration(
         }
     
         # Initialize parameters
-        input_shape = (batch_size,)
+        input_shape = (64,)
         variables = integration_module.init(random.PRNGKey(0), inputs)
     
         # Process through integration
@@ -978,14 +1191,13 @@ integration_module = CognitiveProcessIntegration(
                     attention_map = attention_maps[map_key]
 >                   assert attention_map.shape[-2:] == (seq_length, seq_length)
 E                   assert (8, 32) == (8, 8)
-E                     
 E                     At index 1 diff: 32 != 8
 E                     Use -v to get more diff
 
 tests/unit/integration/test_cognitive_integration.py:183: AssertionError
 ______________ TestConsciousnessStateManager.test_adaptive_gating ______________
 
-self = <test_state_management.TestConsciousnessStateManager object at 0x72f1751d0880>
+self = <test_state_management.TestConsciousnessStateManager object at 0x79bfcc6a77a0>
 key = Array([0, 0], dtype=uint32)
 state_manager = ConsciousnessStateManager(
     # attributes
@@ -999,7 +1211,7 @@ state_manager = ConsciousnessStateManager(
         hidden_dim = 64
     
         state = random.normal(key, (batch_size, hidden_dim))
-        input_shape = (batch_size,)
+        input_shape = (hidden_dim,)
         variables = state_manager.init(key, state, state)
     
         # Test adaptation to different input patterns
@@ -1026,15 +1238,346 @@ state_manager = ConsciousnessStateManager(
         # Memory gate should be more open (lower values) for different inputs
 >       assert jnp.mean(metrics1['memory_gate']) > jnp.mean(metrics2['memory_gate'])
 E       assert Array(0.50011224, dtype=float32) > Array(0.50012636, dtype=float32)
-E        +  where Array(0.50011224, dtype=float32) = <function mean at 0x72f183e70f70>(Array([[0.5569959 , 0.58251977, 0.4551106 , 0.41000992, 0.5886512 ,\n        0.5248869 , 0.56394213, 0.42929018, 0.5237....39520618, 0.44670913, 0.47268876, 0.4021517 ,\n        0.57144237, 0.53708297, 0.579201  , 0.44888377]], dtype=float32))
-E        +    where <function mean at 0x72f183e70f70> = jnp.mean
-E        +  and   Array(0.50012636, dtype=float32) = <function mean at 0x72f183e70f70>(Array([[0.55393577, 0.57986414, 0.4609477 , 0.4116633 , 0.5870904 ,\n        0.5233553 , 0.5625932 , 0.43273216, 0.5196....39790606, 0.45207238, 0.47798336, 0.4020855 ,\n        0.56832683, 0.5379167 , 0.5762647 , 0.45469669]], dtype=float32))
-E        +    where <function mean at 0x72f183e70f70> = jnp.mean
+E        +  where Array(0.50011224, dtype=float32) = <function mean at 0x79bfcd8e67a0>(Array([[0.5569959 , 0.58251977, 0.4551106 , 0.41000992, 0.5886512 ,\n        0.5248869 , 0.56394213, 0.42929018, 0.5237....39520618, 0.44670913, 0.47268876, 0.4021517 ,\n        0.57144237, 0.53708297, 0.579201  , 0.44888377]], dtype=float32))
+E        +    where <function mean at 0x79bfcd8e67a0> = jnp.mean
+E        +  and   Array(0.50012636, dtype=float32) = <function mean at 0x79bfcd8e67a0>(Array([[0.55393577, 0.57986414, 0.4609477 , 0.4116633 , 0.5870904 ,\n        0.5233553 , 0.5625932 , 0.43273216, 0.5196....39790606, 0.45207238, 0.47798336, 0.4020855 ,\n        0.56832683, 0.5379167 , 0.5762647 , 0.45469669]], dtype=float32))
+E        +    where <function mean at 0x79bfcd8e67a0> = jnp.mean
 
-tests/unit/integration/test_state_management.py:126: AssertionError
+tests/unit/integration/test_state_management.py:127: AssertionError
+----------------------------- Captured stdout call -----------------------------
+memory_gate: [[0.55393577 0.57986414 0.4609477  0.4116633  0.5870904  0.5233553
+  0.5625932  0.43273216 0.519662   0.43434072 0.5519249  0.5332739
+  0.56812286 0.54836863 0.46952665 0.5519448  0.49521926 0.43715358
+  0.4649006  0.49499494 0.5368282  0.42316458 0.4686326  0.43779483
+  0.5327941  0.455311   0.3962937  0.4297973  0.50303286 0.47992012
+  0.45112354 0.46840954 0.5006357  0.51366365 0.4594331  0.5581316
+  0.5463879  0.504885   0.49451125 0.44428033 0.5656645  0.42878458
+  0.53857195 0.59396756 0.5157558  0.4415278  0.4113021  0.48302144
+  0.41511068 0.5636861  0.41428253 0.564493   0.44844654 0.5762937
+  0.41993946 0.47554606 0.5436165  0.57131255 0.49761721 0.58471435
+  0.40252283 0.49731925 0.57737094 0.5248695 ]
+ [0.46304396 0.44600025 0.57161534 0.5776995  0.4797131  0.42903933
+  0.522686   0.55571973 0.44669724 0.40787914 0.4921955  0.56942445
+  0.49310967 0.51150864 0.47662893 0.48553166 0.56111187 0.53364414
+  0.589056   0.5238696  0.4650085  0.535258   0.5442894  0.56864464
+  0.4247595  0.5183726  0.5541273  0.54069966 0.46637693 0.5881314
+  0.49670732 0.53207326 0.5879672  0.4211707  0.4811377  0.47747976
+  0.5128542  0.51321757 0.43545303 0.4410682  0.50041115 0.46221933
+  0.4847349  0.41921678 0.43617672 0.43633124 0.53917694 0.47211322
+  0.59034956 0.40541074 0.4747601  0.57346654 0.57791615 0.56577915
+  0.57428247 0.5532286  0.39790606 0.45207238 0.47798336 0.4020855
+  0.56832683 0.5379167  0.5762647  0.45469669]]
+state: [[-1.3040181  -0.33041644 -1.6039833   0.5978571   0.9159883  -1.5862236
+   0.00336711  0.5141878  -0.35997167 -1.539713   -0.38031507  1.5653222
+  -1.2433103  -0.08123494  0.6160338  -0.73653513  0.17686242 -0.85366637
+  -0.31781355 -0.8358165   0.7195503  -1.6039475  -0.8108693  -0.6535237
+   0.14105996  1.3286992   0.49153855 -1.9704803   1.1188195   0.24837267
+   0.57693535 -1.0992616  -1.1888746   1.7324136   0.66268396 -0.7910855
+   0.7361932  -1.33678    -2.242481    1.1780932  -0.86368364  0.03500843
+  -0.3650493   2.4009972   0.25273788  0.97014016 -0.382718    0.768804
+  -0.39607555  0.38931087  0.7114831  -0.70834005  0.305861   -0.89106965
+  -0.8956748   0.65044457 -0.41884395  0.59613913  1.8058568  -1.0005915
+  -1.2009498  -0.17767942  0.8995249  -0.8751817 ]
+ [ 0.15347093  0.53636414  0.04819222  0.23581387  0.6849893   0.00553711
+   0.67084163 -1.257801    0.46819752  0.7735273   0.6938307  -1.1521788
+   0.62426734  0.73203135  1.7546473   0.53216213  0.55168384 -0.26640132
+   1.0564339  -1.5297548  -1.0299271  -1.2872447   2.4736886   1.9024003
+  -0.93319356  0.5642727   1.1727237  -0.2284819  -2.2604127   0.34698313
+   0.9911705  -0.32446256  0.12108494  1.3801656  -1.7696246  -0.7909118
+   0.5637773   0.9814658   1.5007088   0.85600865  0.567662   -0.79426914
+   1.307991   -1.7681675  -1.4762186   0.7277945   0.2752547  -1.1631393
+  -1.295236    0.6798459  -2.12161    -0.5214773  -1.506165   -0.62128484
+  -0.44453174 -0.23533106  0.42865452  0.03438981 -0.8493017   0.03081111
+   0.76825327 -1.3972845  -0.13514544 -0.6552027 ]]
+inputs: [[-1.3040181  -0.33041644 -1.6039833   0.5978571   0.9159883  -1.5862236
+   0.00336711  0.5141878  -0.35997167 -1.539713   -0.38031507  1.5653222
+  -1.2433103  -0.08123494  0.6160338  -0.73653513  0.17686242 -0.85366637
+  -0.31781355 -0.8358165   0.7195503  -1.6039475  -0.8108693  -0.6535237
+   0.14105996  1.3286992   0.49153855 -1.9704803   1.1188195   0.24837267
+   0.57693535 -1.0992616  -1.1888746   1.7324136   0.66268396 -0.7910855
+   0.7361932  -1.33678    -2.242481    1.1780932  -0.86368364  0.03500843
+  -0.3650493   2.4009972   0.25273788  0.97014016 -0.382718    0.768804
+  -0.39607555  0.38931087  0.7114831  -0.70834005  0.305861   -0.89106965
+  -0.8956748   0.65044457 -0.41884395  0.59613913  1.8058568  -1.0005915
+  -1.2009498  -0.17767942  0.8995249  -0.8751817 ]
+ [ 0.15347093  0.53636414  0.04819222  0.23581387  0.6849893   0.00553711
+   0.67084163 -1.257801    0.46819752  0.7735273   0.6938307  -1.1521788
+   0.62426734  0.73203135  1.7546473   0.53216213  0.55168384 -0.26640132
+   1.0564339  -1.5297548  -1.0299271  -1.2872447   2.4736886   1.9024003
+  -0.93319356  0.5642727   1.1727237  -0.2284819  -2.2604127   0.34698313
+   0.9911705  -0.32446256  0.12108494  1.3801656  -1.7696246  -0.7909118
+   0.5637773   0.9814658   1.5007088   0.85600865  0.567662   -0.79426914
+   1.307991   -1.7681675  -1.4762186   0.7277945   0.2752547  -1.1631393
+  -1.295236    0.6798459  -2.12161    -0.5214773  -1.506165   -0.62128484
+  -0.44453174 -0.23533106  0.42865452  0.03438981 -0.8493017   0.03081111
+   0.76825327 -1.3972845  -0.13514544 -0.6552027 ]]
+candidate_state: [[ 0.03520808 -0.16804701 -0.12048286 -0.15660118 -0.14570785  0.32681817
+  -0.14633708  0.22902022 -0.08336364  0.12710527 -0.07724402  0.45472702
+  -0.1553094   1.9306344   1.5117072   0.44160932 -0.08718909  0.16534993
+  -0.16828299  1.2994305   0.96368194 -0.06804451  0.9616962   0.78735405
+   0.05749668  0.6524502   0.5696648  -0.0854808  -0.03343283 -0.13709149
+   2.6097894  -0.03438967 -0.15166791 -0.16963555  0.8378976   0.10580496
+  -0.1675496  -0.15354668  0.44633505 -0.16125695  0.7672144  -0.13892075
+  -0.14008489  0.01275142 -0.08514601  0.60271955  1.7323226   1.2695124
+   0.9877841   1.5391272  -0.0767103  -0.16943617  0.8496483  -0.1564667
+   0.7930232   1.2371918   0.17735717 -0.15586914 -0.02686824 -0.03806422
+   0.12449402  0.19085035  0.12097523  0.5244766 ]
+ [ 0.8794482  -0.12018019  1.9537061  -0.11329241 -0.166428    0.13287267
+  -0.1136719  -0.04507503  1.0034304   1.1000379   0.6640855   0.6000449
+   0.27821878  0.19196078 -0.09161915 -0.16916466 -0.14912431 -0.14331277
+   1.4459877   0.0090279   0.28519318 -0.10472922 -0.10745418  0.00959564
+   1.2277598  -0.08686952 -0.06528836 -0.08065719 -0.16474015  0.29556575
+   0.5878255   0.65338635  0.6856103   0.60269415 -0.14541659 -0.11100442
+   0.40711927  2.1521683  -0.12899002 -0.09142803 -0.0319262   2.149604
+  -0.12931898  1.5445609   0.40533382 -0.16895607  0.9432538   0.28837496
+  -0.05733818 -0.1651481  -0.06125403 -0.16426624 -0.17003998  1.7139827
+   0.55504537 -0.10399907 -0.16629557 -0.04295021 -0.1223386   0.57484525
+  -0.09239749 -0.11318749  0.09010037  1.5746921 ]]
+new_state: [[-0.70663726 -0.26219922 -0.804299    0.15398161  0.47760376 -0.6743824
+  -0.06211452  0.3524214  -0.22710633 -0.5968618  -0.24451646  1.0469784
+  -0.7734276   0.8273884   1.0911646  -0.20866139  0.0435743  -0.28011668
+  -0.23779984  0.24249402  0.83262515 -0.71798426  0.13101426  0.15654525
+   0.10201871  0.9603538   0.53870386 -0.8956485   0.54618794  0.04790053
+   1.6927211  -0.53318584 -0.67093056  0.807378    0.75739866 -0.3947779
+   0.32624453 -0.7509434  -0.88331467  0.43378997 -0.15532675 -0.0643426
+  -0.26124442  1.4312919   0.08911955  0.764946    0.862402    1.0276595
+   0.41332918  0.89099175  0.24982448 -0.47364363  0.60578877 -0.5798138
+   0.08387226  0.9581665  -0.14674759  0.27376264  0.8851273  -0.60086775
+  -0.40902737  0.0075734   0.5704872  -0.21016134]
+ [ 0.5432888   0.17263874  0.86448514  0.0883861   0.24200803  0.07824071
+   0.29638234 -0.71901083  0.7643434   0.9668611   0.67872596 -0.39771408
+   0.44885868  0.46821156  0.7883648   0.17135172  0.24410748 -0.20899825
+   1.2165186  -0.7970935  -0.32634896 -0.7376801   1.2974346   1.0859289
+   0.30987433  0.25066477  0.62072784 -0.16058597 -1.1421134   0.32580593
+   0.7881699   0.13309911  0.35368788  0.9301423  -0.9268843  -0.4356464
+   0.487462    1.5513432   0.5806673   0.32645616  0.26811442  0.78888893
+   0.5673953   0.15580958 -0.4153555   0.22232422  0.5830841  -0.39690417
+  -0.78813064  0.17742154 -1.0394287  -0.36911482 -0.94220823  0.392737
+  -0.01899424 -0.17665568  0.07043868 -0.00798692 -0.46981484  0.35609698
+   0.39673343 -0.80392474 -0.03970083  0.5607664 ]]
+memory_gate: [[0.5569959  0.58251977 0.4551106  0.41000992 0.5886512  0.5248869
+  0.56394213 0.42929018 0.52373725 0.43073928 0.5560609  0.5365713
+  0.57343745 0.5510005  0.46364447 0.55716056 0.49676794 0.43726805
+  0.46605015 0.4916361  0.5365895  0.42146388 0.46984726 0.43375024
+  0.52835745 0.45338744 0.39385158 0.42974815 0.5041834  0.47624955
+  0.4498324  0.46109813 0.5002207  0.5144065  0.45792368 0.5597307
+  0.5530455  0.5081003  0.50030327 0.44230324 0.56657314 0.42469397
+  0.5380949  0.5980489  0.5179267  0.444867   0.40991288 0.48311535
+  0.413042   0.56675696 0.4086064  0.56567556 0.44358099 0.5780904
+  0.41708514 0.47650623 0.5461101  0.57643324 0.4961652  0.5864874
+  0.40106806 0.49770194 0.5822421  0.53138745]
+ [0.4649354  0.44044584 0.5759249  0.5783886  0.4830024  0.42769018
+  0.5260912  0.5564756  0.4420735  0.40587786 0.48896214 0.5732889
+  0.49164522 0.5123783  0.480117   0.4802663  0.55790687 0.53788453
+  0.5913491  0.52619004 0.46648335 0.541619   0.5459627  0.5717533
+  0.4232392  0.5175632  0.5598467  0.5399829  0.4648205  0.5912877
+  0.4924797  0.5312876  0.5929902  0.41570896 0.47676528 0.47305754
+  0.51279414 0.5134713  0.4279621  0.4386084  0.50162774 0.4594272
+  0.47931737 0.416697   0.4323587  0.43040848 0.54078853 0.47023147
+  0.5910801  0.40390602 0.47587082 0.5794478  0.5804481  0.5677156
+  0.5771174  0.55593556 0.39520618 0.44670913 0.47268876 0.4021517
+  0.57144237 0.53708297 0.579201   0.44888377]]
+state: [[-1.3040181  -0.33041644 -1.6039833   0.5978571   0.9159883  -1.5862236
+   0.00336711  0.5141878  -0.35997167 -1.539713   -0.38031507  1.5653222
+  -1.2433103  -0.08123494  0.6160338  -0.73653513  0.17686242 -0.85366637
+  -0.31781355 -0.8358165   0.7195503  -1.6039475  -0.8108693  -0.6535237
+   0.14105996  1.3286992   0.49153855 -1.9704803   1.1188195   0.24837267
+   0.57693535 -1.0992616  -1.1888746   1.7324136   0.66268396 -0.7910855
+   0.7361932  -1.33678    -2.242481    1.1780932  -0.86368364  0.03500843
+  -0.3650493   2.4009972   0.25273788  0.97014016 -0.382718    0.768804
+  -0.39607555  0.38931087  0.7114831  -0.70834005  0.305861   -0.89106965
+  -0.8956748   0.65044457 -0.41884395  0.59613913  1.8058568  -1.0005915
+  -1.2009498  -0.17767942  0.8995249  -0.8751817 ]
+ [ 0.15347093  0.53636414  0.04819222  0.23581387  0.6849893   0.00553711
+   0.67084163 -1.257801    0.46819752  0.7735273   0.6938307  -1.1521788
+   0.62426734  0.73203135  1.7546473   0.53216213  0.55168384 -0.26640132
+   1.0564339  -1.5297548  -1.0299271  -1.2872447   2.4736886   1.9024003
+  -0.93319356  0.5642727   1.1727237  -0.2284819  -2.2604127   0.34698313
+   0.9911705  -0.32446256  0.12108494  1.3801656  -1.7696246  -0.7909118
+   0.5637773   0.9814658   1.5007088   0.85600865  0.567662   -0.79426914
+   1.307991   -1.7681675  -1.4762186   0.7277945   0.2752547  -1.1631393
+  -1.295236    0.6798459  -2.12161    -0.5214773  -1.506165   -0.62128484
+  -0.44453174 -0.23533106  0.42865452  0.03438981 -0.8493017   0.03081111
+   0.76825327 -1.3972845  -0.13514544 -0.6552027 ]]
+inputs: [[-1.43442    -0.3634581  -1.7643816   0.65764284  1.0075872  -1.744846
+   0.00370382  0.5656066  -0.39596885 -1.6936843  -0.41834658  1.7218543
+  -1.3676413  -0.08935843  0.67763716 -0.81018865  0.19454867 -0.93903303
+  -0.3495949  -0.9193981   0.79150534 -1.7643423  -0.8919562  -0.71887606
+   0.15516596  1.4615692   0.5406924  -2.1675284   1.2307014   0.27320993
+   0.6346289  -1.2091877  -1.307762    1.905655    0.72895235 -0.870194
+   0.8098125  -1.4704579  -2.4667292   1.2959025  -0.950052    0.03850927
+  -0.40155423  2.6410968   0.27801168  1.0671542  -0.4209898   0.8456844
+  -0.4356831   0.42824197  0.78263146 -0.77917403  0.3364471  -0.9801766
+  -0.9852423   0.71548903 -0.46072835  0.655753    1.9864426  -1.1006507
+  -1.3210448  -0.19544736  0.9894774  -0.96269983]
+ [ 0.16881803  0.59000057  0.05301144  0.25939527  0.7534882   0.00609083
+   0.73792577 -1.3835812   0.5150173   0.85088     0.7632138  -1.2673967
+   0.6866941   0.8052345   1.930112    0.58537835  0.60685223 -0.29304147
+   1.1620773  -1.6827302  -1.1329198  -1.4159691   2.7210574   2.0926404
+  -1.0265129   0.6207      1.289996   -0.2513301  -2.486454    0.38168144
+   1.0902876  -0.35690883  0.13319343  1.5181822  -1.9465871  -0.870003
+   0.62015504  1.0796124   1.6507797   0.9416095   0.6244282  -0.8736961
+   1.4387901  -1.9449842  -1.6238405   0.800574    0.30278015 -1.2794533
+  -1.4247596   0.7478305  -2.333771   -0.573625   -1.6567816  -0.6834133
+  -0.4889849  -0.25886416  0.47151998  0.03782879 -0.9342319   0.03389222
+   0.8450786  -1.5370129  -0.14865999 -0.720723  ]]
+candidate_state: [[ 0.03892456 -0.16987182 -0.1031893  -0.16210464 -0.13249171  0.3683362
+  -0.15312842  0.25715995 -0.09002139  0.14182816 -0.05878211  0.5138617
+  -0.14470795  2.143831    1.6904397   0.49894533 -0.06842735  0.18500721
+  -0.16993856  1.4586097   1.0874897  -0.07380542  1.0852765   0.89015114
+   0.06373669  0.7380906   0.6443721  -0.09224592 -0.03655631 -0.1444847
+   2.877666   -0.0214785  -0.1578997  -0.16987349  0.9468878   0.1178527
+  -0.16262224 -0.14239718  0.50431937 -0.16577989  0.8675068  -0.12428348
+  -0.14732452  0.01405401 -0.09189434  0.68182546  1.9296774   1.4257752
+   1.1143318   1.7202553  -0.0582741  -0.16646147  0.9600593  -0.16199353
+   0.8965215   1.3902545   0.19859228 -0.16149712 -0.02941636 -0.04158099
+   0.1388858   0.21387185  0.1349223   0.59310794]
+ [ 0.9934279  -0.10285535  2.1687171  -0.09534848 -0.16917585  0.14832972
+  -0.12136605 -0.04916527  1.1317402   1.2389308   0.7512395   0.6787962
+   0.31305632  0.21513003 -0.09866983 -0.17003211 -0.15564734 -0.12956162
+   1.618865    0.0099446   0.32098654 -0.08625735 -0.08912221  0.01057088
+   1.3798786  -0.06811217 -0.07086785 -0.06205431 -0.15799946  0.33278263
+   0.6649542   0.7391483   0.775548    0.68179643 -0.13213322 -0.09289387
+   0.4597125   2.3827388  -0.11273073 -0.09847046 -0.03491946  2.3799732
+  -0.13696715  1.7261603   0.45768118 -0.1700404   1.0647135   0.32460472
+  -0.06236347 -0.16844982 -0.06655781 -0.16789436 -0.16881406  1.9098393
+   0.6277945  -0.08549441 -0.16047814 -0.04686942 -0.13007297  0.65024483
+  -0.07361293 -0.12087516  0.10021651  1.7588896 ]]
+new_state: [[-0.70908904 -0.26339224 -0.78621656  0.14948723  0.4846973  -0.6575867
+  -0.06487399  0.36749947 -0.23140442 -0.5824777  -0.23757401  1.0780452
+  -0.7746877   0.91781867  1.1922973  -0.18941565  0.05342474 -0.26917157
+  -0.23885572  0.33058694  0.8900573  -0.71870506  0.1943776   0.22058183
+   0.10459101  1.0058651   0.5841783  -0.8994137   0.54596496  0.04261345
+   1.8427227  -0.5184423  -0.6736147   0.8086754   0.81674415 -0.3909079
+   0.3344636  -0.74926335 -0.8699138   0.4286195  -0.11333922 -0.05663317
+  -0.26448113  1.4415628   0.08659989  0.81008714  0.9817967   1.1083823
+   0.4904701   0.96593326  0.25625363 -0.47298893  0.66986936 -0.58346546
+   0.14902306  1.0377305  -0.13859588  0.27522963  0.8811823  -0.6040286
+  -0.39847946  0.01899602  0.5801061  -0.18712273]
+ [ 0.6029022   0.17868622  0.9474541   0.09619203  0.24338797  0.08725873
+   0.29540747 -0.72174156  0.8384056   1.0500339   0.72316873 -0.3708815
+   0.4660617   0.47997904  0.7911392   0.16720812  0.23897758 -0.20316559
+   1.2862718  -0.80022985 -0.3091922  -0.7367349   1.310077    1.0922307
+   0.40089577  0.25918698  0.62535274 -0.15192237 -1.1352441   0.3411792
+   0.82560915  0.17406504  0.3874578   0.9721148  -0.91283226 -0.4230965
+   0.51307636  1.6632253   0.5777602   0.3201721   0.26735213  0.9216398
+   0.5556264   0.27008438 -0.37845725  0.21639536  0.6377832  -0.37497938
+  -0.79108995  0.17418194 -1.0444971  -0.37277722 -0.9450768   0.4728807
+   0.00893638 -0.16879393  0.07235073 -0.01057018 -0.4700443   0.40113848
+   0.4074651  -0.8064129  -0.03610536  0.6752428 ]]
+memory_gate: [[0.55393577 0.57986414 0.4609477  0.4116633  0.5870904  0.5233553
+  0.5625932  0.43273216 0.519662   0.43434072 0.5519249  0.5332739
+  0.56812286 0.54836863 0.46952665 0.5519448  0.49521926 0.43715358
+  0.4649006  0.49499494 0.5368282  0.42316458 0.4686326  0.43779483
+  0.5327941  0.455311   0.3962937  0.4297973  0.50303286 0.47992012
+  0.45112354 0.46840954 0.5006357  0.51366365 0.4594331  0.5581316
+  0.5463879  0.504885   0.49451125 0.44428033 0.5656645  0.42878458
+  0.53857195 0.59396756 0.5157558  0.4415278  0.4113021  0.48302144
+  0.41511068 0.5636861  0.41428253 0.564493   0.44844654 0.5762937
+  0.41993946 0.47554606 0.5436165  0.57131255 0.49761721 0.58471435
+  0.40252283 0.49731925 0.57737094 0.5248695 ]
+ [0.46304396 0.44600025 0.57161534 0.5776995  0.4797131  0.42903933
+  0.522686   0.55571973 0.44669724 0.40787914 0.4921955  0.56942445
+  0.49310967 0.51150864 0.47662893 0.48553166 0.56111187 0.53364414
+  0.589056   0.5238696  0.4650085  0.535258   0.5442894  0.56864464
+  0.4247595  0.5183726  0.5541273  0.54069966 0.46637693 0.5881314
+  0.49670732 0.53207326 0.5879672  0.4211707  0.4811377  0.47747976
+  0.5128542  0.51321757 0.43545303 0.4410682  0.50041115 0.46221933
+  0.4847349  0.41921678 0.43617672 0.43633124 0.53917694 0.47211322
+  0.59034956 0.40541074 0.4747601  0.57346654 0.57791615 0.56577915
+  0.57428247 0.5532286  0.39790606 0.45207238 0.47798336 0.4020855
+  0.56832683 0.5379167  0.5762647  0.45469669]]
+state: [[-1.3040181  -0.33041644 -1.6039833   0.5978571   0.9159883  -1.5862236
+   0.00336711  0.5141878  -0.35997167 -1.539713   -0.38031507  1.5653222
+  -1.2433103  -0.08123494  0.6160338  -0.73653513  0.17686242 -0.85366637
+  -0.31781355 -0.8358165   0.7195503  -1.6039475  -0.8108693  -0.6535237
+   0.14105996  1.3286992   0.49153855 -1.9704803   1.1188195   0.24837267
+   0.57693535 -1.0992616  -1.1888746   1.7324136   0.66268396 -0.7910855
+   0.7361932  -1.33678    -2.242481    1.1780932  -0.86368364  0.03500843
+  -0.3650493   2.4009972   0.25273788  0.97014016 -0.382718    0.768804
+  -0.39607555  0.38931087  0.7114831  -0.70834005  0.305861   -0.89106965
+  -0.8956748   0.65044457 -0.41884395  0.59613913  1.8058568  -1.0005915
+  -1.2009498  -0.17767942  0.8995249  -0.8751817 ]
+ [ 0.15347093  0.53636414  0.04819222  0.23581387  0.6849893   0.00553711
+   0.67084163 -1.257801    0.46819752  0.7735273   0.6938307  -1.1521788
+   0.62426734  0.73203135  1.7546473   0.53216213  0.55168384 -0.26640132
+   1.0564339  -1.5297548  -1.0299271  -1.2872447   2.4736886   1.9024003
+  -0.93319356  0.5642727   1.1727237  -0.2284819  -2.2604127   0.34698313
+   0.9911705  -0.32446256  0.12108494  1.3801656  -1.7696246  -0.7909118
+   0.5637773   0.9814658   1.5007088   0.85600865  0.567662   -0.79426914
+   1.307991   -1.7681675  -1.4762186   0.7277945   0.2752547  -1.1631393
+  -1.295236    0.6798459  -2.12161    -0.5214773  -1.506165   -0.62128484
+  -0.44453174 -0.23533106  0.42865452  0.03438981 -0.8493017   0.03081111
+   0.76825327 -1.3972845  -0.13514544 -0.6552027 ]]
+inputs: [[-1.3040181  -0.33041644 -1.6039833   0.5978571   0.9159883  -1.5862236
+   0.00336711  0.5141878  -0.35997167 -1.539713   -0.38031507  1.5653222
+  -1.2433103  -0.08123494  0.6160338  -0.73653513  0.17686242 -0.85366637
+  -0.31781355 -0.8358165   0.7195503  -1.6039475  -0.8108693  -0.6535237
+   0.14105996  1.3286992   0.49153855 -1.9704803   1.1188195   0.24837267
+   0.57693535 -1.0992616  -1.1888746   1.7324136   0.66268396 -0.7910855
+   0.7361932  -1.33678    -2.242481    1.1780932  -0.86368364  0.03500843
+  -0.3650493   2.4009972   0.25273788  0.97014016 -0.382718    0.768804
+  -0.39607555  0.38931087  0.7114831  -0.70834005  0.305861   -0.89106965
+  -0.8956748   0.65044457 -0.41884395  0.59613913  1.8058568  -1.0005915
+  -1.2009498  -0.17767942  0.8995249  -0.8751817 ]
+ [ 0.15347093  0.53636414  0.04819222  0.23581387  0.6849893   0.00553711
+   0.67084163 -1.257801    0.46819752  0.7735273   0.6938307  -1.1521788
+   0.62426734  0.73203135  1.7546473   0.53216213  0.55168384 -0.26640132
+   1.0564339  -1.5297548  -1.0299271  -1.2872447   2.4736886   1.9024003
+  -0.93319356  0.5642727   1.1727237  -0.2284819  -2.2604127   0.34698313
+   0.9911705  -0.32446256  0.12108494  1.3801656  -1.7696246  -0.7909118
+   0.5637773   0.9814658   1.5007088   0.85600865  0.567662   -0.79426914
+   1.307991   -1.7681675  -1.4762186   0.7277945   0.2752547  -1.1631393
+  -1.295236    0.6798459  -2.12161    -0.5214773  -1.506165   -0.62128484
+  -0.44453174 -0.23533106  0.42865452  0.03438981 -0.8493017   0.03081111
+   0.76825327 -1.3972845  -0.13514544 -0.6552027 ]]
+candidate_state: [[ 0.03520808 -0.16804701 -0.12048286 -0.15660118 -0.14570785  0.32681817
+  -0.14633708  0.22902022 -0.08336364  0.12710527 -0.07724402  0.45472702
+  -0.1553094   1.9306344   1.5117072   0.44160932 -0.08718909  0.16534993
+  -0.16828299  1.2994305   0.96368194 -0.06804451  0.9616962   0.78735405
+   0.05749668  0.6524502   0.5696648  -0.0854808  -0.03343283 -0.13709149
+   2.6097894  -0.03438967 -0.15166791 -0.16963555  0.8378976   0.10580496
+  -0.1675496  -0.15354668  0.44633505 -0.16125695  0.7672144  -0.13892075
+  -0.14008489  0.01275142 -0.08514601  0.60271955  1.7323226   1.2695124
+   0.9877841   1.5391272  -0.0767103  -0.16943617  0.8496483  -0.1564667
+   0.7930232   1.2371918   0.17735717 -0.15586914 -0.02686824 -0.03806422
+   0.12449402  0.19085035  0.12097523  0.5244766 ]
+ [ 0.8794482  -0.12018019  1.9537061  -0.11329241 -0.166428    0.13287267
+  -0.1136719  -0.04507503  1.0034304   1.1000379   0.6640855   0.6000449
+   0.27821878  0.19196078 -0.09161915 -0.16916466 -0.14912431 -0.14331277
+   1.4459877   0.0090279   0.28519318 -0.10472922 -0.10745418  0.00959564
+   1.2277598  -0.08686952 -0.06528836 -0.08065719 -0.16474015  0.29556575
+   0.5878255   0.65338635  0.6856103   0.60269415 -0.14541659 -0.11100442
+   0.40711927  2.1521683  -0.12899002 -0.09142803 -0.0319262   2.149604
+  -0.12931898  1.5445609   0.40533382 -0.16895607  0.9432538   0.28837496
+  -0.05733818 -0.1651481  -0.06125403 -0.16426624 -0.17003998  1.7139827
+   0.55504537 -0.10399907 -0.16629557 -0.04295021 -0.1223386   0.57484525
+  -0.09239749 -0.11318749  0.09010037  1.5746921 ]]
+new_state: [[-0.70663726 -0.26219922 -0.804299    0.15398161  0.47760376 -0.6743824
+  -0.06211452  0.3524214  -0.22710633 -0.5968618  -0.24451646  1.0469784
+  -0.7734276   0.8273884   1.0911646  -0.20866139  0.0435743  -0.28011668
+  -0.23779984  0.24249402  0.83262515 -0.71798426  0.13101426  0.15654525
+   0.10201871  0.9603538   0.53870386 -0.8956485   0.54618794  0.04790053
+   1.6927211  -0.53318584 -0.67093056  0.807378    0.75739866 -0.3947779
+   0.32624453 -0.7509434  -0.88331467  0.43378997 -0.15532675 -0.0643426
+  -0.26124442  1.4312919   0.08911955  0.764946    0.862402    1.0276595
+   0.41332918  0.89099175  0.24982448 -0.47364363  0.60578877 -0.5798138
+   0.08387226  0.9581665  -0.14674759  0.27376264  0.8851273  -0.60086775
+  -0.40902737  0.0075734   0.5704872  -0.21016134]
+ [ 0.5432888   0.17263874  0.86448514  0.0883861   0.24200803  0.07824071
+   0.29638234 -0.71901083  0.7643434   0.9668611   0.67872596 -0.39771408
+   0.44885868  0.46821156  0.7883648   0.17135172  0.24410748 -0.20899825
+   1.2165186  -0.7970935  -0.32634896 -0.7376801   1.2974346   1.0859289
+   0.30987433  0.25066477  0.62072784 -0.16058597 -1.1421134   0.32580593
+   0.7881699   0.13309911  0.35368788  0.9301423  -0.9268843  -0.4356464
+   0.487462    1.5513432   0.5806673   0.32645616  0.26811442  0.78888893
+   0.5673953   0.15580958 -0.4153555   0.22232422  0.5830841  -0.39690417
+  -0.78813064  0.17742154 -1.0394287  -0.36911482 -0.94220823  0.392737
+  -0.01899424 -0.17665568  0.07043868 -0.00798692 -0.46981484  0.35609698
+   0.39673343 -0.80392474 -0.03970083  0.5607664 ]]
 ____________ TestInformationIntegration.test_phi_metric_computation ____________
 
-self = <test_integration.TestInformationIntegration object at 0x72f1751d1750>
+self = <test_integration.TestInformationIntegration object at 0x79bfcc6a78c0>
 key = Array([0, 0], dtype=uint32)
 integration_module = InformationIntegration(
     # attributes
@@ -1053,7 +1596,7 @@ integration_module = InformationIntegration(
         inputs = random.normal(key, (batch_size, num_modules, input_dim))
     
         # Initialize parameters
-        input_shape = (batch_size,)
+        input_shape = (integration_module.hidden_dim,)
         variables = integration_module.init(key, inputs)
     
         # Process through integration
@@ -1066,14 +1609,13 @@ integration_module = InformationIntegration(
         # Test output shapes
 >       assert output.shape == inputs.shape
 E       assert (2, 4, 64) == (2, 4, 32)
-E         
 E         At index 2 diff: 64 != 32
 E         Use -v to get more diff
 
 tests/unit/memory/test_integration.py:46: AssertionError
 _______________ TestInformationIntegration.test_information_flow _______________
 
-self = <test_integration.TestInformationIntegration object at 0x72f1751d1930>
+self = <test_integration.TestInformationIntegration object at 0x79bfcc6a69f0>
 key = Array([0, 0], dtype=uint32)
 integration_module = InformationIntegration(
     # attributes
@@ -1088,7 +1630,7 @@ integration_module = InformationIntegration(
         input_dim = 32
     
         inputs = jnp.zeros((2, 4, 64), dtype=jnp.float32)  # ensure shape matches the model
-        input_shape = (batch_size,)
+        input_shape = (integration_module.hidden_dim,)
         variables = integration_module.init(key, inputs)
     
         # Test with and without dropout
@@ -1119,7 +1661,7 @@ E       assert Array(nan, dtype=float32) > 0.1
 tests/unit/memory/test_integration.py:106: AssertionError
 ______________ TestInformationIntegration.test_memory_integration ______________
 
-self = <test_integration.TestInformationIntegration object at 0x72f1751d1cf0>
+self = <test_integration.TestInformationIntegration object at 0x79bfcc6bc110>
 key = Array([0, 0], dtype=uint32)
 integration_module = InformationIntegration(
     # attributes
@@ -1134,7 +1676,7 @@ integration_module = InformationIntegration(
         input_dim = 32
     
         inputs = random.normal(key, (batch_size, num_modules, input_dim))
-        input_shape = (batch_size,)
+        input_shape = (integration_module.hidden_dim,)
         variables = integration_module.init(key, inputs)
     
         # Process through integration
@@ -1147,17 +1689,13 @@ integration_module = InformationIntegration(
         # Test output shapes
 >       assert output.shape == inputs.shape
 E       assert (2, 4, 64) == (2, 4, 32)
-E         
 E         At index 2 diff: 64 != 32
 E         Use -v to get more diff
 
 tests/unit/memory/test_integration.py:163: AssertionError
 __________________ TestWorkingMemory.test_sequence_processing __________________
-jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-The above exception was the direct cause of the following exception:
-
-self = <test_memory.TestWorkingMemory object at 0x72f1751d2770>
+self = <test_memory.TestWorkingMemory object at 0x79bfcc6bcef0>
 key = Array([0, 0], dtype=uint32)
 memory_module = WorkingMemory(
     # attributes
@@ -1175,16 +1713,16 @@ memory_module = WorkingMemory(
         inputs = random.normal(key, (batch_size, seq_length, input_dim))
     
         # Initialize parameters
-        input_shape = (batch_size,)
+        input_shape = (hidden_dim,)
 >       variables = memory_module.init(key, inputs, deterministic=True)
 
 tests/unit/memory/test_memory.py:96: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 models/memory.py:102: in __call__
-    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
+    nn.LSTMCell.initialize_carry(key, (self.hidden_dim,), self.hidden_dim),
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = Array([1428664606, 3351135085], dtype=uint32), rng = (2, 64)
+self = Array([1428664606, 3351135085], dtype=uint32), rng = (64,)
 input_shape = 64
 
     @nowrap
@@ -1201,14 +1739,13 @@ input_shape = 64
       """
 >     batch_dims = input_shape[:-1]
 E     TypeError: 'int' object is not subscriptable
+E     --------------------
+E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
+/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 ___________________ TestWorkingMemory.test_memory_retention ____________________
-jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-The above exception was the direct cause of the following exception:
-
-self = <test_memory.TestWorkingMemory object at 0x72f1751d2950>
+self = <test_memory.TestWorkingMemory object at 0x79bfcc6bd070>
 key = Array([0, 0], dtype=uint32)
 memory_module = WorkingMemory(
     # attributes
@@ -1228,10 +1765,10 @@ memory_module = WorkingMemory(
 tests/unit/memory/test_memory.py:132: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 models/memory.py:102: in __call__
-    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
+    nn.LSTMCell.initialize_carry(key, (self.hidden_dim,), self.hidden_dim),
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = Array([1428664606, 3351135085], dtype=uint32), rng = (2, 64)
+self = Array([1428664606, 3351135085], dtype=uint32), rng = (64,)
 input_shape = 64
 
     @nowrap
@@ -1248,14 +1785,13 @@ input_shape = 64
       """
 >     batch_dims = input_shape[:-1]
 E     TypeError: 'int' object is not subscriptable
+E     --------------------
+E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
+/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 _____________ TestMemoryComponents.test_memory_sequence_processing _____________
-jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-The above exception was the direct cause of the following exception:
-
-self = <test_memory_components.TestMemoryComponents object at 0x72f1751f0070>
+self = <test_memory_components.TestMemoryComponents object at 0x79bfcc6be300>
 working_memory = WorkingMemory(
     # attributes
     hidden_dim = 64
@@ -1271,18 +1807,18 @@ hidden_dim = 64
             inputs = self.create_inputs(key, batch_size, test_length, hidden_dim)
             initial_state = jnp.zeros((batch_size, hidden_dim))
     
-            input_shape = (batch_size,)
+            input_shape = (hidden_dim,)
 >           variables = working_memory.init(
                 key, inputs, initial_state=initial_state, deterministic=True
             )
 
-tests/unit/memory/test_memory_components.py:74: 
+tests/unit/memory/test_memory_components.py:75: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 models/memory.py:102: in __call__
-    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
+    nn.LSTMCell.initialize_carry(key, (self.hidden_dim,), self.hidden_dim),
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = Array([1428664606, 3351135085], dtype=uint32), rng = (2, 64)
+self = Array([1428664606, 3351135085], dtype=uint32), rng = (64,)
 input_shape = 64
 
     @nowrap
@@ -1299,14 +1835,13 @@ input_shape = 64
       """
 >     batch_dims = input_shape[:-1]
 E     TypeError: 'int' object is not subscriptable
+E     --------------------
+E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
+/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 ________________ TestMemoryComponents.test_context_aware_gating ________________
-jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-The above exception was the direct cause of the following exception:
-
-self = <test_memory_components.TestMemoryComponents object at 0x72f1751f0280>
+self = <test_memory_components.TestMemoryComponents object at 0x79bfcc6be480>
 working_memory = WorkingMemory(
     # attributes
     hidden_dim = 64
@@ -1328,18 +1863,18 @@ hidden_dim = 64
         )
     
         initial_state = jnp.zeros((batch_size, hidden_dim))
-        input_shape = (batch_size,)
+        input_shape = (hidden_dim,)
 >       variables = working_memory.init(
             key, base_inputs, initial_state=initial_state, deterministic=True
         )
 
-tests/unit/memory/test_memory_components.py:98: 
+tests/unit/memory/test_memory_components.py:99: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 models/memory.py:102: in __call__
-    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
+    nn.LSTMCell.initialize_carry(key, (self.hidden_dim,), self.hidden_dim),
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = Array([1428664606, 3351135085], dtype=uint32), rng = (2, 64)
+self = Array([1428664606, 3351135085], dtype=uint32), rng = (64,)
 input_shape = 64
 
     @nowrap
@@ -1356,11 +1891,13 @@ input_shape = 64
       """
 >     batch_dims = input_shape[:-1]
 E     TypeError: 'int' object is not subscriptable
+E     --------------------
+E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
+/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 ______________ TestMemoryComponents.test_information_integration _______________
 
-self = <test_memory_components.TestMemoryComponents object at 0x72f1751f0490>
+self = <test_memory_components.TestMemoryComponents object at 0x79bfcc6be600>
 info_integration = InformationIntegration(
     # attributes
     hidden_dim = 64
@@ -1379,7 +1916,7 @@ hidden_dim = 64
         ], axis=1)  # Shape: [batch, num_modules, seq_length, hidden_dim]
     
         # Initialize and run forward pass
-        input_shape = (batch_size,)
+        input_shape = (hidden_dim,)
         variables = info_integration.init(key, inputs, deterministic=True)
         output, phi = info_integration.apply(variables, inputs, deterministic=True)
     
@@ -1390,17 +1927,13 @@ hidden_dim = 64
         # Phi should be a scalar per batch element
 >       assert phi.shape == (batch_size,)
 E       assert (2, 4) == (2,)
-E         
 E         Left contains one more item: 4
 E         Use -v to get more diff
 
-tests/unit/memory/test_memory_components.py:136: AssertionError
+tests/unit/memory/test_memory_components.py:137: AssertionError
 __________________ TestMemoryComponents.test_memory_retention __________________
-jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-The above exception was the direct cause of the following exception:
-
-self = <test_memory_components.TestMemoryComponents object at 0x72f1751f06a0>
+self = <test_memory_components.TestMemoryComponents object at 0x79bfcc6be780>
 working_memory = WorkingMemory(
     # attributes
     hidden_dim = 64
@@ -1421,18 +1954,18 @@ hidden_dim = 64
     
         initial_state = jnp.zeros((batch_size, hidden_dim))
     
-        input_shape = (batch_size,)
+        input_shape = (hidden_dim,)
 >       variables = working_memory.init(
             key, inputs, initial_state=initial_state, deterministic=True
         )
 
-tests/unit/memory/test_memory_components.py:153: 
+tests/unit/memory/test_memory_components.py:154: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 models/memory.py:102: in __call__
-    nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
+    nn.LSTMCell.initialize_carry(key, (self.hidden_dim,), self.hidden_dim),
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = Array([1428664606, 3351135085], dtype=uint32), rng = (2, 64)
+self = Array([1428664606, 3351135085], dtype=uint32), rng = (64,)
 input_shape = 64
 
     @nowrap
@@ -1449,19 +1982,25 @@ input_shape = 64
       """
 >     batch_dims = input_shape[:-1]
 E     TypeError: 'int' object is not subscriptable
+E     --------------------
+E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-../../.local/lib/python3.10/site-packages/flax/linen/recurrent.py:187: TypeError
+/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 =========================== short test summary info ============================
-FAILED tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_pattern_recognition
-FAILED tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_abstraction_capability
-FAILED tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_conscious_adaptation
-FAILED tests/benchmarks/test_bigbench_reasoning.py::TestBigBenchReasoning::test_reasoning_capabilities
-FAILED tests/benchmarks/test_bigbench_reasoning.py::TestBigBenchReasoning::test_meta_learning
-FAILED tests/benchmarks/test_bigbench_reasoning.py::TestBigBenchReasoning::test_consciousness_emergence
 FAILED tests/test_consciousness.py::TestConsciousnessModel::test_model_forward_pass
 FAILED tests/test_consciousness.py::TestConsciousnessModel::test_model_state_initialization
 FAILED tests/test_consciousness.py::TestConsciousnessModel::test_model_state_update
 FAILED tests/test_consciousness.py::TestConsciousnessModel::test_model_attention_weights
+FAILED tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_pattern_recognition
+FAILED tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_abstraction_capability
+FAILED tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_conscious_adaptation
+FAILED tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_working_memory
+FAILED tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_cognitive_process_integration
+FAILED tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_consciousness_state_manager
+FAILED tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_information_integration
+FAILED tests/benchmarks/test_bigbench_reasoning.py::TestBigBenchReasoning::test_reasoning_capabilities
+FAILED tests/benchmarks/test_bigbench_reasoning.py::TestBigBenchReasoning::test_meta_learning
+FAILED tests/benchmarks/test_bigbench_reasoning.py::TestBigBenchReasoning::test_consciousness_emergence
 FAILED tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_cross_modal_attention
 FAILED tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_modality_specific_processing
 FAILED tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_cognitive_integration
@@ -1475,4 +2014,4 @@ FAILED tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_m
 FAILED tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_context_aware_gating
 FAILED tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_information_integration
 FAILED tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_memory_retention
-======================== 23 failed, 28 passed in 14.86s ========================
+======================== 27 failed, 28 passed in 13.47s ========================

@@ -99,7 +99,7 @@ class WorkingMemory(nn.Module):
         # Initialize proper LSTM state
         input_shape = (batch_size, self.hidden_dim)
         init_lstm_carry = (
-            nn.LSTMCell.initialize_carry(key, input_shape, self.hidden_dim),
+            nn.LSTMCell.initialize_carry(key, (self.hidden_dim,), self.hidden_dim),
             initial_h
         )
 
