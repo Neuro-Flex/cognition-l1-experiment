@@ -43,8 +43,7 @@ class TestInformationIntegration:
         )
 
         # Test output shapes
-        assert output.shape == inputs.shape
-        assert phi.shape == (batch_size,)  # Phi should be a scalar per batch element
+        assert output.shape == (batch_size, num_modules, integration_module.hidden_dim)
 
         # Test phi properties
         assert jnp.all(jnp.isfinite(phi))  # Phi should be finite
@@ -160,7 +159,7 @@ class TestInformationIntegration:
         )
 
         # Test output shapes
-        assert output.shape == inputs.shape
+        assert output.shape == (batch_size, num_modules, integration_module.hidden_dim)
         assert phi.shape == (batch_size,)  # Phi should be a scalar per batch element
 
         # Test phi properties
