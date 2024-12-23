@@ -1,29 +1,73 @@
 ============================= test session starts ==============================
-platform linux -- Python 3.12.1, pytest-7.4.3, pluggy-1.5.0
+platform linux -- Python 3.12.1, pytest-7.4.3, pluggy-1.5.0 -- /usr/local/python/3.12.1/bin/python3
+cachedir: .pytest_cache
 benchmark: 4.0.0 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
 rootdir: /workspaces/cognition-l1-experiment
 configfile: pytest.ini
 testpaths: tests
-plugins: cov-4.1.0, timeout-2.1.0, benchmark-4.0.0, xdist-3.3.1, anyio-4.7.0
-collected 55 items
+plugins: anyio-4.7.0, cov-4.1.0, timeout-2.1.0, benchmark-4.0.0, xdist-3.3.1
+collecting ... collected 55 items
 
-tests/test_consciousness.py .F.FFF                                       [ 10%]
-tests/test_environment.py .....                                          [ 20%]
-tests/benchmarks/test_arc_reasoning.py FFFFFFF                           [ 32%]
-tests/benchmarks/test_bigbench_reasoning.py FFF                          [ 38%]
-tests/unit/attention/test_attention.py ....                              [ 45%]
-tests/unit/attention/test_attention_mechanisms.py ....                   [ 52%]
-tests/unit/integration/test_cognitive_integration.py FF.F                [ 60%]
-tests/unit/integration/test_state_management.py ..F.                     [ 67%]
-tests/unit/memory/test_integration.py FF.F                               [ 74%]
-tests/unit/memory/test_memory.py ..FF                                    [ 81%]
-tests/unit/memory/test_memory_components.py .FFFF                        [ 90%]
-tests/unit/state/test_consciousness_state_management.py .....            [100%]
+tests/test_consciousness.py::TestConsciousnessModel::test_model_initialization PASSED [  1%]
+tests/test_consciousness.py::TestConsciousnessModel::test_model_forward_pass FAILED [  3%]
+tests/test_consciousness.py::TestConsciousnessModel::test_model_config PASSED [  5%]
+tests/test_consciousness.py::TestConsciousnessModel::test_model_state_initialization FAILED [  7%]
+tests/test_consciousness.py::TestConsciousnessModel::test_model_state_update FAILED [  9%]
+tests/test_consciousness.py::TestConsciousnessModel::test_model_attention_weights FAILED [ 10%]
+tests/test_environment.py::EnvironmentTests::test_core_imports PASSED    [ 12%]
+tests/test_environment.py::EnvironmentTests::test_framework_versions PASSED [ 14%]
+tests/test_environment.py::EnvironmentTests::test_hardware_detection PASSED [ 16%]
+tests/test_environment.py::EnvironmentTests::test_memory_allocation PASSED [ 18%]
+tests/test_environment.py::EnvironmentTests::test_python_version PASSED  [ 20%]
+tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_pattern_recognition FAILED [ 21%]
+tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_abstraction_capability FAILED [ 23%]
+tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_conscious_adaptation FAILED [ 25%]
+tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_working_memory FAILED [ 27%]
+tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_cognitive_process_integration FAILED [ 29%]
+tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_consciousness_state_manager FAILED [ 30%]
+tests/benchmarks/test_arc_reasoning.py::TestARCReasoning::test_information_integration FAILED [ 32%]
+tests/benchmarks/test_bigbench_reasoning.py::TestBigBenchReasoning::test_reasoning_capabilities FAILED [ 34%]
+tests/benchmarks/test_bigbench_reasoning.py::TestBigBenchReasoning::test_meta_learning FAILED [ 36%]
+tests/benchmarks/test_bigbench_reasoning.py::TestBigBenchReasoning::test_consciousness_emergence FAILED [ 38%]
+tests/unit/attention/test_attention.py::TestConsciousnessAttention::test_scaled_dot_product_attention PASSED [ 40%]
+tests/unit/attention/test_attention.py::TestConsciousnessAttention::test_attention_dropout PASSED [ 41%]
+tests/unit/attention/test_attention.py::TestConsciousnessAttention::test_attention_output_shape PASSED [ 43%]
+tests/unit/attention/test_attention.py::TestGlobalWorkspace::test_global_workspace_broadcasting PASSED [ 45%]
+tests/unit/attention/test_attention_mechanisms.py::TestAttentionMechanisms::test_scaled_dot_product PASSED [ 47%]
+tests/unit/attention/test_attention_mechanisms.py::TestAttentionMechanisms::test_attention_mask PASSED [ 49%]
+tests/unit/attention/test_attention_mechanisms.py::TestAttentionMechanisms::test_consciousness_broadcasting PASSED [ 50%]
+tests/unit/attention/test_attention_mechanisms.py::TestAttentionMechanisms::test_global_workspace_integration PASSED [ 52%]
+tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_cross_modal_attention FAILED [ 54%]
+tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_modality_specific_processing FAILED [ 56%]
+tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_integration_stability PASSED [ 58%]
+tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_cognitive_integration FAILED [ 60%]
+tests/unit/integration/test_state_management.py::TestConsciousnessStateManager::test_state_updates PASSED [ 61%]
+tests/unit/integration/test_state_management.py::TestConsciousnessStateManager::test_rl_optimization PASSED [ 63%]
+tests/unit/integration/test_state_management.py::TestConsciousnessStateManager::test_adaptive_gating FAILED [ 65%]
+tests/unit/integration/test_state_management.py::TestConsciousnessStateManager::test_state_consistency PASSED [ 67%]
+tests/unit/memory/test_integration.py::TestInformationIntegration::test_phi_metric_computation PASSED [ 69%]
+tests/unit/memory/test_integration.py::TestInformationIntegration::test_information_flow FAILED [ 70%]
+tests/unit/memory/test_integration.py::TestInformationIntegration::test_entropy_calculations PASSED [ 72%]
+tests/unit/memory/test_integration.py::TestInformationIntegration::test_memory_integration PASSED [ 74%]
+tests/unit/memory/test_memory.py::TestGRUCell::test_gru_state_updates PASSED [ 76%]
+tests/unit/memory/test_memory.py::TestGRUCell::test_gru_reset_gate PASSED [ 78%]
+tests/unit/memory/test_memory.py::TestWorkingMemory::test_sequence_processing FAILED [ 80%]
+tests/unit/memory/test_memory.py::TestWorkingMemory::test_memory_retention FAILED [ 81%]
+tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_gru_state_updates PASSED [ 83%]
+tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_memory_sequence_processing FAILED [ 85%]
+tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_context_aware_gating FAILED [ 87%]
+tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_information_integration FAILED [ 89%]
+tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_memory_retention FAILED [ 90%]
+tests/unit/state/test_consciousness_state_management.py::TestStateManagement::test_state_updates PASSED [ 92%]
+tests/unit/state/test_consciousness_state_management.py::TestStateManagement::test_rl_optimization PASSED [ 94%]
+tests/unit/state/test_consciousness_state_management.py::TestStateManagement::test_energy_efficiency PASSED [ 96%]
+tests/unit/state/test_consciousness_state_management.py::TestStateManagement::test_state_value_estimation PASSED [ 98%]
+tests/unit/state/test_consciousness_state_management.py::TestStateManagement::test_adaptive_gating PASSED [100%]
 
 =================================== FAILURES ===================================
 ________________ TestConsciousnessModel.test_model_forward_pass ________________
 
-self = <tests.test_consciousness.TestConsciousnessModel object at 0x79bfcd5220f0>
+self = <tests.test_consciousness.TestConsciousnessModel object at 0x7c765283e720>
 model = ConsciousnessModel(
     # attributes
     hidden_dim = 64
@@ -72,10 +116,10 @@ E     TypeError: 'int' object is not subscriptable
 E     --------------------
 E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+/usr/local/python/3.12.1/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 ____________ TestConsciousnessModel.test_model_state_initialization ____________
 
-self = <tests.test_consciousness.TestConsciousnessModel object at 0x79bfcc8f1460>
+self = <tests.test_consciousness.TestConsciousnessModel object at 0x7c765283eab0>
 model = ConsciousnessModel(
     # attributes
     hidden_dim = 64
@@ -123,10 +167,10 @@ E     TypeError: 'int' object is not subscriptable
 E     --------------------
 E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+/usr/local/python/3.12.1/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 ________________ TestConsciousnessModel.test_model_state_update ________________
 
-self = <tests.test_consciousness.TestConsciousnessModel object at 0x79bfcc8f1670>
+self = <tests.test_consciousness.TestConsciousnessModel object at 0x7c765283ecc0>
 model = ConsciousnessModel(
     # attributes
     hidden_dim = 64
@@ -174,10 +218,10 @@ E     TypeError: 'int' object is not subscriptable
 E     --------------------
 E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+/usr/local/python/3.12.1/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 _____________ TestConsciousnessModel.test_model_attention_weights ______________
 
-self = <tests.test_consciousness.TestConsciousnessModel object at 0x79bfcc8f1880>
+self = <tests.test_consciousness.TestConsciousnessModel object at 0x7c765283ef00>
 model = ConsciousnessModel(
     # attributes
     hidden_dim = 64
@@ -225,10 +269,10 @@ E     TypeError: 'int' object is not subscriptable
 E     --------------------
 E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+/usr/local/python/3.12.1/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 __________________ TestARCReasoning.test_pattern_recognition ___________________
 
-self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x79bfcc8f3110>
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x7c765283f800>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -282,10 +326,10 @@ E     TypeError: 'int' object is not subscriptable
 E     --------------------
 E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+/usr/local/python/3.12.1/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 _________________ TestARCReasoning.test_abstraction_capability _________________
 
-self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x79bfcc8f35c0>
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x7c765283f0e0>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -344,11 +388,11 @@ E     TypeError: 'int' object is not subscriptable
 E     --------------------
 E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+/usr/local/python/3.12.1/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 
 During handling of the above exception, another exception occurred:
 
-self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x79bfcc8f35c0>
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x7c765283f0e0>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -413,7 +457,7 @@ E           Failed: Abstraction capability test failed: 'int' object is not subs
 tests/benchmarks/test_arc_reasoning.py:136: Failed
 __________________ TestARCReasoning.test_conscious_adaptation __________________
 
-self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x79bfcc8f29f0>
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x7c7652680980>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -474,11 +518,11 @@ E     TypeError: 'int' object is not subscriptable
 E     --------------------
 E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+/usr/local/python/3.12.1/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 
 During handling of the above exception, another exception occurred:
 
-self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x79bfcc8f29f0>
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x7c7652680980>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -550,7 +594,7 @@ E           Failed: Conscious adaptation test failed: 'int' object is not subscr
 tests/benchmarks/test_arc_reasoning.py:193: Failed
 _____________________ TestARCReasoning.test_working_memory _____________________
 
-self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x79bfcc8f2e10>
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x7c7652680d40>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -603,10 +647,10 @@ E     TypeError: 'int' object is not subscriptable
 E     --------------------
 E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+/usr/local/python/3.12.1/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 _____________ TestARCReasoning.test_cognitive_process_integration ______________
 
-self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x79bfcc8f2720>
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x7c7652680e30>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -659,10 +703,10 @@ E     TypeError: 'int' object is not subscriptable
 E     --------------------
 E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+/usr/local/python/3.12.1/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 ______________ TestARCReasoning.test_consciousness_state_manager _______________
 
-self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x79bfcc8f23f0>
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x7c7652681b20>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -715,10 +759,10 @@ E     TypeError: 'int' object is not subscriptable
 E     --------------------
 E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+/usr/local/python/3.12.1/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 ________________ TestARCReasoning.test_information_integration _________________
 
-self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x79bfcc8f23c0>
+self = <tests.benchmarks.test_arc_reasoning.TestARCReasoning object at 0x7c7652680860>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -771,10 +815,10 @@ E     TypeError: 'int' object is not subscriptable
 E     --------------------
 E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+/usr/local/python/3.12.1/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 ______________ TestBigBenchReasoning.test_reasoning_capabilities _______________
 
-self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x79bfcc8f2150>
+self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x7c7652680080>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -818,10 +862,10 @@ E     TypeError: 'int' object is not subscriptable
 E     --------------------
 E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+/usr/local/python/3.12.1/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 ___________________ TestBigBenchReasoning.test_meta_learning ___________________
 
-self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x79bfcc8f38f0>
+self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x7c7652680230>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -875,10 +919,10 @@ E     TypeError: 'int' object is not subscriptable
 E     --------------------
 E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+/usr/local/python/3.12.1/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 ______________ TestBigBenchReasoning.test_consciousness_emergence ______________
 
-self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x79bfcc8f3aa0>
+self = <tests.benchmarks.test_bigbench_reasoning.TestBigBenchReasoning object at 0x7c76526828a0>
 key = Array([0, 0], dtype=uint32)
 consciousness_model = ConsciousnessModel(
     # attributes
@@ -932,10 +976,10 @@ E     TypeError: 'int' object is not subscriptable
 E     --------------------
 E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+/usr/local/python/3.12.1/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 __________ TestCognitiveProcessIntegration.test_cross_modal_attention __________
 
-self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x79bfcc6a6750>
+self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x7c765271f920>
 key = Array([0, 0], dtype=uint32)
 integration_module = CognitiveProcessIntegration(
     # attributes
@@ -986,15 +1030,18 @@ integration_module = CognitiveProcessIntegration(
                     assert map_key in attention_maps
                     attention_map = attention_maps[map_key]
                     # Check attention map properties
->                   assert attention_map.shape[-2:] == (seq_length, seq_length)
-E                   assert (8, 32) == (8, 8)
-E                     At index 1 diff: 32 != 8
-E                     Use -v to get more diff
+>                   assert attention_map.shape == (batch_size, 4, seq_length, seq_length)
+E                   assert (2, 8, 32) == (2, 4, 8, 8)
+E                     At index 1 diff: 8 != 4
+E                     Right contains one more item: 8
+E                     Full diff:
+E                     - (2, 4, 8, 8)
+E                     + (2, 8, 32)
 
 tests/unit/integration/test_cognitive_integration.py:68: AssertionError
 ______ TestCognitiveProcessIntegration.test_modality_specific_processing _______
 
-self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x79bfcc6a68d0>
+self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x7c765271f770>
 key = Array([0, 0], dtype=uint32)
 integration_module = CognitiveProcessIntegration(
     # attributes
@@ -1034,11 +1081,11 @@ integration_module = CognitiveProcessIntegration(
             deterministic=True
         )
 
-tests/unit/integration/test_cognitive_integration.py:99: 
+tests/unit/integration/test_cognitive_integration.py:94: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 models/consciousness_state.py:21: in __call__
     x = nn.LayerNorm()(x)
-/home/codespace/.local/lib/python3.12/site-packages/flax/linen/normalization.py:518: in __call__
+/usr/local/python/3.12.1/lib/python3.12/site-packages/flax/linen/normalization.py:518: in __call__
     return _normalize(
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
@@ -1079,8 +1126,8 @@ var = Array([[[0.85883766],
         [1.3724558 ]]], dtype=float32)
 reduction_axes = (2,), feature_axes = (2,), dtype = None
 param_dtype = <class 'jax.numpy.float32'>, epsilon = 1e-06, use_bias = True
-use_scale = True, bias_init = <function zeros at 0x79bfcd5d27a0>
-scale_init = <function ones at 0x79bfcd46e200>, force_float32_reductions = True
+use_scale = True, bias_init = <function zeros at 0x7c76535165c0>
+scale_init = <function ones at 0x7c76533ba020>, force_float32_reductions = True
 
     def _normalize(
       mdl: Module,
@@ -1144,10 +1191,10 @@ E       flax.errors.ScopeParamNotFoundError: Could not find parameter named "sca
 E       --------------------
 E       For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-/home/codespace/.local/lib/python3.12/site-packages/flax/linen/normalization.py:204: ScopeParamNotFoundError
+/usr/local/python/3.12.1/lib/python3.12/site-packages/flax/linen/normalization.py:204: ScopeParamNotFoundError
 __________ TestCognitiveProcessIntegration.test_cognitive_integration __________
 
-self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x79bfcc6a6bd0>
+self = <test_cognitive_integration.TestCognitiveProcessIntegration object at 0x7c765271fda0>
 key = Array([0, 0], dtype=uint32)
 integration_module = CognitiveProcessIntegration(
     # attributes
@@ -1189,15 +1236,18 @@ integration_module = CognitiveProcessIntegration(
                     map_key = f"{target}-{source}"
                     assert map_key in attention_maps
                     attention_map = attention_maps[map_key]
->                   assert attention_map.shape[-2:] == (seq_length, seq_length)
-E                   assert (8, 32) == (8, 8)
-E                     At index 1 diff: 32 != 8
-E                     Use -v to get more diff
+>                   assert attention_map.shape == (batch_size, 4, seq_length, seq_length)
+E                   assert (2, 8, 32) == (2, 4, 8, 8)
+E                     At index 1 diff: 8 != 4
+E                     Right contains one more item: 8
+E                     Full diff:
+E                     - (2, 4, 8, 8)
+E                     + (2, 8, 32)
 
-tests/unit/integration/test_cognitive_integration.py:183: AssertionError
+tests/unit/integration/test_cognitive_integration.py:178: AssertionError
 ______________ TestConsciousnessStateManager.test_adaptive_gating ______________
 
-self = <test_state_management.TestConsciousnessStateManager object at 0x79bfcc6a77a0>
+self = <test_state_management.TestConsciousnessStateManager object at 0x7c7652620ec0>
 key = Array([0, 0], dtype=uint32)
 state_manager = ConsciousnessStateManager(
     # attributes
@@ -1238,10 +1288,10 @@ state_manager = ConsciousnessStateManager(
         # Memory gate should be more open (lower values) for different inputs
 >       assert jnp.mean(metrics1['memory_gate']) > jnp.mean(metrics2['memory_gate'])
 E       assert Array(0.50011224, dtype=float32) > Array(0.50012636, dtype=float32)
-E        +  where Array(0.50011224, dtype=float32) = <function mean at 0x79bfcd8e67a0>(Array([[0.5569959 , 0.58251977, 0.4551106 , 0.41000992, 0.5886512 ,\n        0.5248869 , 0.56394213, 0.42929018, 0.5237....39520618, 0.44670913, 0.47268876, 0.4021517 ,\n        0.57144237, 0.53708297, 0.579201  , 0.44888377]], dtype=float32))
-E        +    where <function mean at 0x79bfcd8e67a0> = jnp.mean
-E        +  and   Array(0.50012636, dtype=float32) = <function mean at 0x79bfcd8e67a0>(Array([[0.55393577, 0.57986414, 0.4609477 , 0.4116633 , 0.5870904 ,\n        0.5233553 , 0.5625932 , 0.43273216, 0.5196....39790606, 0.45207238, 0.47798336, 0.4020855 ,\n        0.56832683, 0.5379167 , 0.5762647 , 0.45469669]], dtype=float32))
-E        +    where <function mean at 0x79bfcd8e67a0> = jnp.mean
+E        +  where Array(0.50011224, dtype=float32) = <function mean at 0x7c7653829e40>(Array([[0.5569959 , 0.58251977, 0.4551106 , 0.41000992, 0.5886512 ,\n        0.5248869 , 0.56394213, 0.42929018, 0.52373725, 0.43073928,\n        0.5560609 , 0.5365713 , 0.57343745, 0.5510005 , 0.46364447,\n        0.55716056, 0.49676794, 0.43726805, 0.46605015, 0.4916361 ,\n        0.5365895 , 0.42146388, 0.46984726, 0.43375024, 0.52835745,\n        0.45338744, 0.39385158, 0.42974815, 0.5041834 , 0.47624955,\n        0.4498324 , 0.46109813, 0.5002207 , 0.5144065 , 0.45792368,\n        0.5597307 , 0.5530455 , 0.5081003 , 0.50030327, 0.44230324,\n        0.56657314, 0.42469397, 0.5380949 , 0.5980489 , 0.5179267 ,\n        0.444867  , 0.40991288, 0.48311535, 0.413042  , 0.56675696,\n        0.4086064 , 0.56567556, 0.44358099, 0.5780904 , 0.41708514,\n        0.47650623, 0.5461101 , 0.57643324, 0.4961652 , 0.5864874 ,\n        0.40106806, 0.49770194, 0.5822421 , 0.53138745],\n       [0.4649354 , 0.44044584, 0.5759249 , 0.5783886 , 0.4830024 ,\n        0.42769018, 0.5260912 , 0.5564756 , 0.4420735 , 0.40587786,\n        0.48896214, 0.5732889 , 0.49164522, 0.5123783 , 0.480117  ,\n        0.4802663 , 0.55790687, 0.53788453, 0.5913491 , 0.52619004,\n        0.46648335, 0.541619  , 0.5459627 , 0.5717533 , 0.4232392 ,\n        0.5175632 , 0.5598467 , 0.5399829 , 0.4648205 , 0.5912877 ,\n        0.4924797 , 0.5312876 , 0.5929902 , 0.41570896, 0.47676528,\n        0.47305754, 0.51279414, 0.5134713 , 0.4279621 , 0.4386084 ,\n        0.50162774, 0.4594272 , 0.47931737, 0.416697  , 0.4323587 ,\n        0.43040848, 0.54078853, 0.47023147, 0.5910801 , 0.40390602,\n        0.47587082, 0.5794478 , 0.5804481 , 0.5677156 , 0.5771174 ,\n        0.55593556, 0.39520618, 0.44670913, 0.47268876, 0.4021517 ,\n        0.57144237, 0.53708297, 0.579201  , 0.44888377]], dtype=float32))
+E        +    where <function mean at 0x7c7653829e40> = jnp.mean
+E        +  and   Array(0.50012636, dtype=float32) = <function mean at 0x7c7653829e40>(Array([[0.55393577, 0.57986414, 0.4609477 , 0.4116633 , 0.5870904 ,\n        0.5233553 , 0.5625932 , 0.43273216, 0.519662  , 0.43434072,\n        0.5519249 , 0.5332739 , 0.56812286, 0.54836863, 0.46952665,\n        0.5519448 , 0.49521926, 0.43715358, 0.4649006 , 0.49499494,\n        0.5368282 , 0.42316458, 0.4686326 , 0.43779483, 0.5327941 ,\n        0.455311  , 0.3962937 , 0.4297973 , 0.50303286, 0.47992012,\n        0.45112354, 0.46840954, 0.5006357 , 0.51366365, 0.4594331 ,\n        0.5581316 , 0.5463879 , 0.504885  , 0.49451125, 0.44428033,\n        0.5656645 , 0.42878458, 0.53857195, 0.59396756, 0.5157558 ,\n        0.4415278 , 0.4113021 , 0.48302144, 0.41511068, 0.5636861 ,\n        0.41428253, 0.564493  , 0.44844654, 0.5762937 , 0.41993946,\n        0.47554606, 0.5436165 , 0.57131255, 0.49761721, 0.58471435,\n        0.40252283, 0.49731925, 0.57737094, 0.5248695 ],\n       [0.46304396, 0.44600025, 0.57161534, 0.5776995 , 0.4797131 ,\n        0.42903933, 0.522686  , 0.55571973, 0.44669724, 0.40787914,\n        0.4921955 , 0.56942445, 0.49310967, 0.51150864, 0.47662893,\n        0.48553166, 0.56111187, 0.53364414, 0.589056  , 0.5238696 ,\n        0.4650085 , 0.535258  , 0.5442894 , 0.56864464, 0.4247595 ,\n        0.5183726 , 0.5541273 , 0.54069966, 0.46637693, 0.5881314 ,\n        0.49670732, 0.53207326, 0.5879672 , 0.4211707 , 0.4811377 ,\n        0.47747976, 0.5128542 , 0.51321757, 0.43545303, 0.4410682 ,\n        0.50041115, 0.46221933, 0.4847349 , 0.41921678, 0.43617672,\n        0.43633124, 0.53917694, 0.47211322, 0.59034956, 0.40541074,\n        0.4747601 , 0.57346654, 0.57791615, 0.56577915, 0.57428247,\n        0.5532286 , 0.39790606, 0.45207238, 0.47798336, 0.4020855 ,\n        0.56832683, 0.5379167 , 0.5762647 , 0.45469669]], dtype=float32))
+E        +    where <function mean at 0x7c7653829e40> = jnp.mean
 
 tests/unit/integration/test_state_management.py:127: AssertionError
 ----------------------------- Captured stdout call -----------------------------
@@ -1575,47 +1625,9 @@ new_state: [[-0.70663726 -0.26219922 -0.804299    0.15398161  0.47760376 -0.6743
   -0.78813064  0.17742154 -1.0394287  -0.36911482 -0.94220823  0.392737
   -0.01899424 -0.17665568  0.07043868 -0.00798692 -0.46981484  0.35609698
    0.39673343 -0.80392474 -0.03970083  0.5607664 ]]
-____________ TestInformationIntegration.test_phi_metric_computation ____________
-
-self = <test_integration.TestInformationIntegration object at 0x79bfcc6a78c0>
-key = Array([0, 0], dtype=uint32)
-integration_module = InformationIntegration(
-    # attributes
-    hidden_dim = 64
-    num_modules = 4
-    dropout_rate = 0.1
-)
-
-    def test_phi_metric_computation(self, key, integration_module):
-        # Test dimensions
-        batch_size = 2
-        num_modules = 4
-        input_dim = 32
-    
-        # Create sample inputs
-        inputs = random.normal(key, (batch_size, num_modules, input_dim))
-    
-        # Initialize parameters
-        input_shape = (integration_module.hidden_dim,)
-        variables = integration_module.init(key, inputs)
-    
-        # Process through integration
-        output, phi = integration_module.apply(
-            variables,
-            inputs,
-            deterministic=True
-        )
-    
-        # Test output shapes
->       assert output.shape == inputs.shape
-E       assert (2, 4, 64) == (2, 4, 32)
-E         At index 2 diff: 64 != 32
-E         Use -v to get more diff
-
-tests/unit/memory/test_integration.py:46: AssertionError
 _______________ TestInformationIntegration.test_information_flow _______________
 
-self = <test_integration.TestInformationIntegration object at 0x79bfcc6a69f0>
+self = <test_integration.TestInformationIntegration object at 0x7c7652621c40>
 key = Array([0, 0], dtype=uint32)
 integration_module = InformationIntegration(
     # attributes
@@ -1658,44 +1670,10 @@ integration_module = InformationIntegration(
 >       assert input_output_correlation > 0.1
 E       assert Array(nan, dtype=float32) > 0.1
 
-tests/unit/memory/test_integration.py:106: AssertionError
-______________ TestInformationIntegration.test_memory_integration ______________
-
-self = <test_integration.TestInformationIntegration object at 0x79bfcc6bc110>
-key = Array([0, 0], dtype=uint32)
-integration_module = InformationIntegration(
-    # attributes
-    hidden_dim = 64
-    num_modules = 4
-    dropout_rate = 0.1
-)
-
-    def test_memory_integration(self, key, integration_module):
-        batch_size = 2
-        num_modules = 4
-        input_dim = 32
-    
-        inputs = random.normal(key, (batch_size, num_modules, input_dim))
-        input_shape = (integration_module.hidden_dim,)
-        variables = integration_module.init(key, inputs)
-    
-        # Process through integration
-        output, phi = integration_module.apply(
-            variables,
-            inputs,
-            deterministic=True
-        )
-    
-        # Test output shapes
->       assert output.shape == inputs.shape
-E       assert (2, 4, 64) == (2, 4, 32)
-E         At index 2 diff: 64 != 32
-E         Use -v to get more diff
-
-tests/unit/memory/test_integration.py:163: AssertionError
+tests/unit/memory/test_integration.py:105: AssertionError
 __________________ TestWorkingMemory.test_sequence_processing __________________
 
-self = <test_memory.TestWorkingMemory object at 0x79bfcc6bcef0>
+self = <test_memory.TestWorkingMemory object at 0x7c7652620bf0>
 key = Array([0, 0], dtype=uint32)
 memory_module = WorkingMemory(
     # attributes
@@ -1742,10 +1720,10 @@ E     TypeError: 'int' object is not subscriptable
 E     --------------------
 E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+/usr/local/python/3.12.1/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 ___________________ TestWorkingMemory.test_memory_retention ____________________
 
-self = <test_memory.TestWorkingMemory object at 0x79bfcc6bd070>
+self = <test_memory.TestWorkingMemory object at 0x7c7652620650>
 key = Array([0, 0], dtype=uint32)
 memory_module = WorkingMemory(
     # attributes
@@ -1759,7 +1737,7 @@ memory_module = WorkingMemory(
         input_dim = 32
     
         inputs = random.normal(key, (batch_size, seq_length, input_dim))
-        input_shape = (batch_size,)
+        input_shape = (batch_size, input_dim)  # Correct shape
 >       variables = memory_module.init(key, inputs)
 
 tests/unit/memory/test_memory.py:132: 
@@ -1788,10 +1766,10 @@ E     TypeError: 'int' object is not subscriptable
 E     --------------------
 E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+/usr/local/python/3.12.1/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 _____________ TestMemoryComponents.test_memory_sequence_processing _____________
 
-self = <test_memory_components.TestMemoryComponents object at 0x79bfcc6be300>
+self = <test_memory_components.TestMemoryComponents object at 0x7c7652623500>
 working_memory = WorkingMemory(
     # attributes
     hidden_dim = 64
@@ -1838,10 +1816,10 @@ E     TypeError: 'int' object is not subscriptable
 E     --------------------
 E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+/usr/local/python/3.12.1/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 ________________ TestMemoryComponents.test_context_aware_gating ________________
 
-self = <test_memory_components.TestMemoryComponents object at 0x79bfcc6be480>
+self = <test_memory_components.TestMemoryComponents object at 0x7c76526236b0>
 working_memory = WorkingMemory(
     # attributes
     hidden_dim = 64
@@ -1894,10 +1872,10 @@ E     TypeError: 'int' object is not subscriptable
 E     --------------------
 E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+/usr/local/python/3.12.1/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 ______________ TestMemoryComponents.test_information_integration _______________
 
-self = <test_memory_components.TestMemoryComponents object at 0x79bfcc6be600>
+self = <test_memory_components.TestMemoryComponents object at 0x7c7652623830>
 info_integration = InformationIntegration(
     # attributes
     hidden_dim = 64
@@ -1928,12 +1906,15 @@ hidden_dim = 64
 >       assert phi.shape == (batch_size,)
 E       assert (2, 4) == (2,)
 E         Left contains one more item: 4
-E         Use -v to get more diff
+E         Full diff:
+E         - (2,)
+E         + (2, 4)
+E         ?    ++
 
 tests/unit/memory/test_memory_components.py:137: AssertionError
 __________________ TestMemoryComponents.test_memory_retention __________________
 
-self = <test_memory_components.TestMemoryComponents object at 0x79bfcc6be780>
+self = <test_memory_components.TestMemoryComponents object at 0x7c76526239b0>
 working_memory = WorkingMemory(
     # attributes
     hidden_dim = 64
@@ -1985,7 +1966,7 @@ E     TypeError: 'int' object is not subscriptable
 E     --------------------
 E     For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
 
-/home/codespace/.local/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
+/usr/local/python/3.12.1/lib/python3.12/site-packages/flax/linen/recurrent.py:187: TypeError
 =========================== short test summary info ============================
 FAILED tests/test_consciousness.py::TestConsciousnessModel::test_model_forward_pass
 FAILED tests/test_consciousness.py::TestConsciousnessModel::test_model_state_initialization
@@ -2005,13 +1986,11 @@ FAILED tests/unit/integration/test_cognitive_integration.py::TestCognitiveProces
 FAILED tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_modality_specific_processing
 FAILED tests/unit/integration/test_cognitive_integration.py::TestCognitiveProcessIntegration::test_cognitive_integration
 FAILED tests/unit/integration/test_state_management.py::TestConsciousnessStateManager::test_adaptive_gating
-FAILED tests/unit/memory/test_integration.py::TestInformationIntegration::test_phi_metric_computation
 FAILED tests/unit/memory/test_integration.py::TestInformationIntegration::test_information_flow
-FAILED tests/unit/memory/test_integration.py::TestInformationIntegration::test_memory_integration
 FAILED tests/unit/memory/test_memory.py::TestWorkingMemory::test_sequence_processing
 FAILED tests/unit/memory/test_memory.py::TestWorkingMemory::test_memory_retention
 FAILED tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_memory_sequence_processing
 FAILED tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_context_aware_gating
 FAILED tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_information_integration
 FAILED tests/unit/memory/test_memory_components.py::TestMemoryComponents::test_memory_retention
-======================== 27 failed, 28 passed in 13.47s ========================
+======================== 25 failed, 30 passed in 32.74s ========================

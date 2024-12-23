@@ -128,7 +128,7 @@ class TestWorkingMemory:
         input_dim = 32
 
         inputs = random.normal(key, (batch_size, seq_length, input_dim))
-        input_shape = (batch_size,)
+        input_shape = (batch_size, input_dim)  # Correct shape
         variables = memory_module.init(key, inputs)
 
         # Test with different initial states
