@@ -1,0 +1,6 @@
+{
+  "tasks": {
+    "test": "pytest",
+    "build": "pip install -r requiremts.txt"
+  }
+}

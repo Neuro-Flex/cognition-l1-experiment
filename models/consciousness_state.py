@@ -90,6 +90,13 @@ class ConsciousnessStateManager(nn.Module):
         # State update with smooth gating
         new_state = memory_gate * state + (1 - memory_gate) * candidate_state
 
+        # Print intermediate values for debugging
+        print(f"memory_gate: {memory_gate}")
+        print(f"state: {state}")
+        print(f"inputs: {inputs}")
+        print(f"candidate_state: {candidate_state}")
+        print(f"new_state: {new_state}")
+
         # Energy efficiency metric
         energy_cost = jnp.mean(jnp.abs(new_state - state))
 
